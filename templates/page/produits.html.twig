@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Produits {% endblock %}
+
+{% block body %}
+    <div class="row my-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    Create New Product
+                </div>
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                    {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
