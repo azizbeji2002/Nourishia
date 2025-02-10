@@ -28,67 +28,73 @@ final class PosteController extends AbstractController
     }
 
     #[Route('/ajouterPoste', name: 'ajouterPoste')]
-    public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $poste = new Poste();
-
-        // Create the form and handle the request
-        $form = $this->createForm(PosteType::class, $poste);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $poste->setDatePublication(new DateTime());
-            $poste->setEtat(false);
-            // Save the post to the database
-            $entityManager->persist($poste);
-            $entityManager->flush();
-
-            // Redirect to the posts list or success page
-            return $this->redirectToRoute('app_posts');
-        }
-
-        // Render the form
-        return $this->render('poste/ajouterPoste.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    // Dans le fichier PosteController.php
-
-#[Route('/post_edit/{id}', name: 'post_edit')]
-public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
+public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
 {
-    // Récupérer le poste à modifier
-    $poste = $entityManager->getRepository(Poste::class)->find($id);
+    // Création d'un nouvel objet Poste
+    $poste = new Poste();
 
-    // Vérifier si le poste existe
-    if (!$poste) {
-        $this->addFlash('error', 'Le poste n\'existe pas.');
-        return $this->redirectToRoute('app_posts');
-    }
-
-    // Créer le formulaire avec les données du poste existant
+    // Création du formulaire et gestion de la requête
     $form = $this->createForm(PosteType::class, $poste);
     $form->handleRequest($request);
 
     // Si le formulaire est soumis et valide
     if ($form->isSubmitted() && $form->isValid()) {
-        // Mettre à jour le poste dans la base de données
+        // Définir la date de publication et l'état par défaut
+        $poste->setDatePublication(new DateTime());
+        $poste->setEtat(false); // Par défaut, le poste est en attente
+
+        // Enregistrer le poste dans la base de données
+        $entityManager->persist($poste);
         $entityManager->flush();
 
-        // Ajouter un message de succès
-        $this->addFlash('success', 'Le poste a été modifié avec succès.');
-
-        // Rediriger vers la liste des posts
+        // Rediriger vers la page des posts
         return $this->redirectToRoute('app_posts');
     }
 
-    // Si le formulaire n'est pas encore soumis ou n'est pas valide, afficher la vue
-    return $this->render('poste/modifierPoste.html.twig', [
+    // Rendu du formulaire dans la vue
+    return $this->render('poste/ajouterPoste.html.twig', [
         'form' => $form->createView(),
     ]);
 }
 
+
+
+    #[Route('/post_edit/{id}', name: 'post_edit')]
+    public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer le poste à modifier
+        $poste = $entityManager->getRepository(Poste::class)->find($id);
+    
+        // Vérifier si le poste existe
+        if (!$poste) {
+            $this->addFlash('error', 'Le poste n\'existe pas.');
+            return $this->redirectToRoute('app_posts');
+        }
+    
+        // Créer le formulaire avec les données du poste existant
+        $form = $this->createForm(PosteType::class, $poste);
+        $form->handleRequest($request);
+    
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Mettre à jour le poste dans la base de données
+            $entityManager->flush();
+    
+            // Ajouter un message de succès
+            $this->addFlash('success', 'Le poste a été modifié avec succès.');
+    
+            // Rediriger vers la liste des posts
+            return $this->redirectToRoute('app_posts');
+        }
+    
+        // Si le formulaire n'est pas encore soumis ou n'est pas valide, afficher la vue
+        return $this->render('poste/modifierPoste.html.twig', [
+            'form' => $form->createView(),
+            'poste' => $poste, // Passer le poste pour l'afficher si nécessaire dans le template
+        ]);
+    }
+    
+    
 
     #[Route('/post_delete/{id}', name: 'post_delete')]
     public function supprimerPoste(int $id, EntityManagerInterface $entityManager): RedirectResponse
