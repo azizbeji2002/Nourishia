@@ -9,7 +9,6 @@ use App\Entity\Poste;
 use App\Form\PosteType;
 use App\Repository\PosteRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Date;
 use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +26,8 @@ final class PosteController extends AbstractController
             'posts' => $posts,
         ]);
     }
-    #[Route('/ajouterPoste', name: 'ajouterPoste')]
 
+    #[Route('/ajouterPoste', name: 'ajouterPoste')]
     public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
     {
         $poste = new Poste();
@@ -44,7 +43,6 @@ final class PosteController extends AbstractController
             $entityManager->persist($poste);
             $entityManager->flush();
 
-
             // Redirect to the posts list or success page
             return $this->redirectToRoute('app_posts');
         }
@@ -54,40 +52,60 @@ final class PosteController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/post_edit/{id}', name: 'post_edit')]
-    public function modifierPoste(int  $id)
-{
-    
-}
-#[Route('/post_delete/{id}', name: 'post_delete')]
-    public function supprimerPoste(int  $id ,EntityManagerInterface $entityManager ): RedirectResponse
 
+    // Dans le fichier PosteController.php
+
+#[Route('/post_edit/{id}', name: 'post_edit')]
+public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
 {
+    // Récupérer le poste à modifier
     $poste = $entityManager->getRepository(Poste::class)->find($id);
-    
+
+    // Vérifier si le poste existe
     if (!$poste) {
-      //  $this->addFlash('error', 'The post does not exist.');
-        return $this->redirectToRoute('app_posts'); 
+        $this->addFlash('error', 'Le poste n\'existe pas.');
+        return $this->redirectToRoute('app_posts');
     }
 
-    $entityManager->remove($poste);
-    $entityManager->flush();
+    // Créer le formulaire avec les données du poste existant
+    $form = $this->createForm(PosteType::class, $poste);
+    $form->handleRequest($request);
 
-    return $this->redirectToRoute('app_posts');
-}
-
-}
-
-/*$poste = new Poste(); 
-        $poste->setTitre("fatma");
-        $poste->setContenue("88888");
-        $poste->setDatePublication(new DateTime());
-        $poste->setEtat(false);
-
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
-        $entityManager->persist($poste);
-
-        // actually executes the queries (i.e. the INSERT query)
+    // Si le formulaire est soumis et valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Mettre à jour le poste dans la base de données
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_posts');*/
+        // Ajouter un message de succès
+        $this->addFlash('success', 'Le poste a été modifié avec succès.');
+
+        // Rediriger vers la liste des posts
+        return $this->redirectToRoute('app_posts');
+    }
+
+    // Si le formulaire n'est pas encore soumis ou n'est pas valide, afficher la vue
+    return $this->render('poste/modifierPoste.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+
+    #[Route('/post_delete/{id}', name: 'post_delete')]
+    public function supprimerPoste(int $id, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $poste = $entityManager->getRepository(Poste::class)->find($id);
+
+        if (!$poste) {
+            // Post does not exist, redirect back
+            $this->addFlash('error', 'Le poste n\'existe pas.');
+            return $this->redirectToRoute('app_posts');
+        }
+
+        // Remove the post from the database
+        $entityManager->remove($poste);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le poste a été supprimé avec succès.');
+        return $this->redirectToRoute('app_posts');
+    }
+}
