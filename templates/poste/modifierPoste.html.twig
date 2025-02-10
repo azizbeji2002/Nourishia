@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier le poste{% endblock %}
+{% block title %}Modifier un poste{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -11,6 +11,7 @@
                         <h2 class="mb-0"><i class="fas fa-edit"></i> Modifier un Post</h2>
                     </div>
                     <div class="card-body p-4">
+
                         {# Démarrage du formulaire avec des attributs personnalisés #}
                         {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
