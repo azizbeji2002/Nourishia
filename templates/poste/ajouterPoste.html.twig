@@ -1,10 +1,77 @@
-{% block title %}Add Post{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un nouveau post - Nourishia{% endblock %}
 
 {% block body %}
-    <h1>Add a New Post</h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp" style="background: linear-gradient(135deg, #f0f4f8, #e8eff5);">
+                    <div class="card-header text-center animate__animated animate__fadeInDown" 
+                        style="background: linear-gradient(135deg, #3e7cb1, #5a98d0); color: white; border-radius: 0.375rem 0.375rem 0 0; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
+                        <h3 class="mb-0"><i class="fas fa-pencil-alt"></i> Ajouter un Post</h3>
+                    </div>
+                    <div class="card-body p-5 animate__animated animate__fadeInUp animate__delay-1s">
+                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    {{ form_end(form) }}
+                        {% for field in form %}
+                            {% if field.vars.name != '_token' %}
+                                <div class="mb-4">
+                                    {{ form_label(field, null, {'label_attr': {'class': 'form-label text-secondary fw-semibold'}}) }}
+                                    <div class="position-relative">
+                                        {{ form_widget(field, {'attr': {'class': 'form-control form-control-lg border-2 border-light rounded-3 input-effect'}}) }}
+                                        <span class="focus-border"></span>
+                                    </div>
+                                    {{ form_errors(field) }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="text-center animate__animated animate__pulse animate__infinite animate__delay-2s">
+                            <button type="submit" class="btn btn-lg btn-primary text-white px-5 py-2 rounded-pill btn-glow">
+                                <i class="fas fa-paper-plane"></i> Publier
+                            </button>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Effet sur les champs de formulaire */
+        .input-effect {
+            position: relative;
+            background: #ffffff;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .input-effect:focus {
+            border-color: #3e7cb1 !important;
+            box-shadow: 0px 0px 10px rgba(62, 124, 177, 0.5);
+        }
+
+        /* Effet glow sur le bouton */
+        .btn-glow {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 4px 10px rgba(62, 124, 177, 0.4);
+        }
+
+        .btn-glow:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 15px rgba(62, 124, 177, 0.6);
+        }
+
+        /* Effet interactif sur l'en-tête */
+        .card-header {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card-header:hover {
+            background: linear-gradient(135deg, #5a98d0, #3e7cb1);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 {% endblock %}

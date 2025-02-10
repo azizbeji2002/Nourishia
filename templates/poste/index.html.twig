@@ -1,39 +1,94 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}Liste des Posts{% endblock %}
 
 {% block body %}
-    <h1>All Posts</h1>
+    <div class="container mt-5">
+        <!-- Nouveau style du titre -->
+        <h1 class="post-title text-center animate__animated animate__fadeIn">
+            <span class="text-gradient">📝 Liste des Posts</span>
+        </h1>
+        <hr class="title-underline">
 
-    {% if posts is not empty %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Status</th>
-                <th>Posted On</th>
-                <th>Actions</th> <!-- Colonne pour les actions -->
-            </tr>
-        </thead>
-        <tbody>
-            {% for post in posts %}
-                <tr>
-                    <td>{{ post.titre }}</td>
-                    <td>{{ post.contenue }}</td>
-                    <td>{{ post.etat }}</td>
-                    <td>{{ post.datePublication|date('Y-m-d') }}</td>
-                    <td>
-                        <!-- Boutons Modifier et Supprimer -->
-                        <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-primary">Modifier</a>
-                        <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?')">Supprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No posts found.</p>
-{% endif %}
+        {% if posts is not empty %}
+            <div class="d-flex flex-column align-items-center">
+                {% for post in posts %}
+                    <div class="post-card w-100 mb-4 p-4 shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
+                        <h3 class="text-primary fw-bold">{{ post.titre }}</h3>
 
+                        <p class="text-muted">📅 Publié le : {{ post.datePublication|date('d M Y') }}</p>
+
+                        <p>
+                            <strong>📌 Statut :</strong>
+                            <span class="badge {% if post.etat %}bg-success{% else %}bg-warning{% endif %}">
+                                {{ post.etat ? 'Publié' : 'En attente' }}
+                            </span>
+                        </p>
+
+                        <p><strong>📝 Détails :</strong> {{ post.contenue }}</p> <!-- Affiche tout le contenu sans le slice -->
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary btn-animate">
+                                ✏️ Modifier
+                            </a>
+                            <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-outline-danger btn-animate"
+                               onclick="return confirm('Voulez-vous vraiment supprimer ce post ?')">
+                                🗑️ Supprimer
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center animate__animated animate__fadeIn">
+                📭 Aucun post trouvé. Ajoutez-en un !
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        /* Style du titre */
+        .post-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Effet de ligne sous le titre */
+        .title-underline {
+            width: 50px;
+            height: 4px;
+            background: #ff66b2;
+            border: none;
+            margin: 0 auto 30px auto;
+            border-radius: 2px;
+        }
+
+        /* Effet sur les posts */
+        .post-card {
+            background: #fff;
+            width: 80%;
+            max-width: 800px;
+            border-left: 5px solid #ff66b2;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Boutons interactifs */
+        .btn-animate {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-animate:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+    <!-- Ajout d'Animate.css pour l'animation -->
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
 {% endblock %}

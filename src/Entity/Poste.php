@@ -21,7 +21,7 @@ class Poste
     private ?string $contenue = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $datePublication = null;
+    private ?\DateTime $datePublication = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $etat = null;
