@@ -15,30 +15,10 @@ class PosteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Le titre ne peut pas être vide.'
-                    ]),
-                    new Assert\Length([
-                        'min' => 8,
-                        'max' => 50,
-                        'minMessage' => 'Le titre doit comporter au moins {{ limit }} caractères.',
-                        'maxMessage' => 'Le titre ne peut pas dépasser {{ limit }} caractères.',
-                    ]),
-                    new Assert\Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
-                        'message' => 'Le titre ne doit contenir que des lettres.',
-                    ])
-                ]
-            ])
-            ->add('contenue', TextareaType::class, [
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Le contenu ne peut pas être vide.'
-                    ])
-                ]
-            ])
+            ->add('titre', TextType::class)
+            ->add('contenue', TextareaType::class )
+                
+    
         ;
     }
 

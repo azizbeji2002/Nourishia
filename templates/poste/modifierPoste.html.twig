@@ -1,37 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier un poste{% endblock %}
+{% block title %}Modifier un post{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp" style="background: #f8f9fa;">
-                    <div class="card-header bg-primary text-white text-center rounded-top-4">
-                        <h2 class="mb-0"><i class="fas fa-edit"></i> Modifier un Post</h2>
+                <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb);">
+                    <div class="card-header bg-primary text-white text-center rounded-top-4 animate__animated animate__fadeInDown">
+                        <h2 class="mb-0"><i class="fas fa-edit"></i> Modifier le Post</h2>
                     </div>
-                    <div class="card-body p-4">
+                    <div class="card-body p-5 animate__animated animate__fadeInUp animate__delay-1s">
+                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate', 'id': 'postForm'}}) }}
 
-                        {# Démarrage du formulaire avec des attributs personnalisés #}
-                        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
-
-                        {# Boucle sur tous les champs du formulaire, en excluant le champ CSRF nommé "_token" #}
                         {% for field in form %}
                             {% if field.vars.name != '_token' %}
-                                <div class="mb-3">
-                                    {{ form_label(field, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-                                    {{ form_widget(field, {'attr': {'class': 'form-control', 'placeholder': 'Entrez ' ~ field.vars.label}}) }}
-                                    {{ form_errors(field) }}
+                                <div class="mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                                    {{ form_label(field, null, {'label_attr': {'class': 'form-label text-secondary fw-semibold'}}) }}
+                                    <div class="position-relative">
+                                        {{ form_widget(field, {'attr': {
+                                            'class': 'form-control form-control-lg border-2 rounded-3 input-effect',
+                                            'required': 'required'
+                                        }}) }}
+                                        <span class="focus-border"></span>
+                                    </div>
+
+                                    
+                                    <div class="error-message" style="display: none;"></div>
                                 </div>
                             {% endif %}
                         {% endfor %}
 
-                        {# Affichage des champs restants (comme le token CSRF) en mode caché #}
-                        {{ form_rest(form) }}
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg px-4 rounded-pill animate__animated animate__pulse animate__infinite">
-                                <i class="fas fa-save"></i> Enregistrer les modifications
+                        <div class="text-center animate__animated animate__pulse animate__infinite animate__delay-3s">
+                            <button type="submit" class="btn btn-lg btn-primary text-white px-5 py-2 rounded-pill btn-glow animate__animated animate__bounceIn animate__delay-2s">
+                                <i class="fas fa-paper-plane"></i> Mettre à jour
                             </button>
                         </div>
 
@@ -41,4 +43,7 @@
             </div>
         </div>
     </div>
+
+    <!-- Ajout d'Animate.css pour l'animation -->
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
 {% endblock %}

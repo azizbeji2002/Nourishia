@@ -26,10 +26,7 @@
                                         <span class="focus-border"></span>
                                     </div>
 
-                                    {# Message d'erreur dynamique #}
-                                    <div class="invalid-feedback d-block" style="display: none;">
-                                        Ce champ est obligatoire.
-                                    </div>
+                                    
                                     <div class="error-message" style="display: none;"></div>
                                 </div>
                             {% endif %}
@@ -48,97 +45,9 @@
         </div>
     </div>
 
-    <style>
-        /* Styles de base */
-        .input-effect {
-            transition: all 0.3s ease-in-out;
-        }
+    
 
-        /* Champ valide (vert) */
-        .form-control.is-valid {
-            border-color: green !important;
-            box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.3);
-        }
 
-        /* Champ invalide (rouge) */
-        .form-control.is-invalid {
-            border-color: red !important;
-            box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.3);
-        }
-
-        /* Message d'erreur visible */
-        .invalid-feedback {
-            color: red;
-            font-size: 0.875em;
-            margin-top: 5px;
-        }
-
-        .error-message {
-            color: orange;
-            font-size: 0.875em;
-            margin-top: 5px;
-        }
-    </style>
-
-    <script>
-        // Fonction de validation pour chaque champ
-        function validateField(input) {
-            let errorMessage = input.parentElement.nextElementSibling; // Sélection du message d'erreur
-            let errorDiv = input.parentElement.nextElementSibling.nextElementSibling; // Div pour les messages d'erreur personnalisés
-
-            // Vérification si le champ est vide
-            if (input.value.trim() === '') {
-                input.classList.add('is-invalid');
-                input.classList.remove('is-valid');
-                errorMessage.style.display = 'block'; // Afficher l'erreur obligatoire
-                errorDiv.style.display = 'none'; // Cacher les erreurs spécifiques
-            } else {
-                // Validation supplémentaire selon le type de champ
-                if (input.type === 'email' && !validateEmail(input.value)) {
-                    input.classList.add('is-invalid');
-                    input.classList.remove('is-valid');
-                    errorMessage.style.display = 'none';
-                    errorDiv.textContent = 'Le format de l\'email est incorrect.';
-                    errorDiv.style.display = 'block';
-                } else if (input.type === 'text' && input.value.length < 3) {
-                    input.classList.add('is-invalid');
-                    input.classList.remove('is-valid');
-                    errorMessage.style.display = 'none';
-                    errorDiv.textContent = 'Le texte est trop court.';
-                    errorDiv.style.display = 'block';
-                } else {
-                    input.classList.add('is-valid');
-                    input.classList.remove('is-invalid');
-                    errorMessage.style.display = 'none';
-                    errorDiv.style.display = 'none';
-                }
-            }
-        }
-
-        // Fonction de validation pour les emails
-        function validateEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Validation lors de la soumission du formulaire
-        document.getElementById("postForm").addEventListener("submit", function(event) {
-            let fields = document.querySelectorAll(".form-control");
-            let hasError = false;
-
-            fields.forEach(function(field) {
-                validateField(field);
-                if (field.classList.contains('is-invalid')) {
-                    hasError = true;
-                }
-            });
-
-            if (hasError) {
-                event.preventDefault(); // Empêcher l'envoi si erreur
-                document.querySelector('.is-invalid').scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-        });
-    </script>
 
     <!-- Ajout d'Animate.css pour l'animation -->
     <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">

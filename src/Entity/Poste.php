@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PosteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,10 +25,8 @@ class Poste
         minMessage: "Le titre doit comporter au moins {{ limit }} caractères.",
         maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."
     )]
-    #[Assert\Regex(
-        pattern: "/^[a-zA-Z]+$/",
-        message: "Le titre ne doit contenir que des lettres."
-    )]
+   
+
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -34,11 +34,41 @@ class Poste
     private ?string $contenue = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\Date(message: "La date de publication doit être une date valide.")]
     private ?\DateTimeInterface $datePublication = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Choice(choices: [true, false], message: "L'état doit être vrai ou faux.")]
     private ?bool $etat = null;
 
+    
+
+private ?string $logs = null;
+
+/**
+ * @var Collection<int, Commentaire>
+ */
+#[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'poste')]
+private Collection $commentaires;
+
+public function getLogs(): ?string
+{
+    return $this->logs;
+}
+
+public function setLogs(?string $logs): static
+{
+    $this->logs = $logs;
+
+    return $this;
+}
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+    }
+
+    // Getters et setters
     public function getId(): ?int
     {
         return $this->id;
@@ -91,4 +121,36 @@ class Poste
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): static
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setPoste($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): static
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getPoste() === $this) {
+                $commentaire->setPoste(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
