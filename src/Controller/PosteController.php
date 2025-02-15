@@ -15,9 +15,11 @@ use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+
 final class PosteController extends AbstractController
 {
     #[Route('/posts', name: 'app_posts')]
+    
     public function getallpost(PosteRepository $postRepository): Response
     {
         // Retrieve all posts from the repository
@@ -36,7 +38,31 @@ final class PosteController extends AbstractController
             'posts' => $posts,
             'commentForms' => $forms,
         ]);
+        
     }
+    //backoffice poste
+    #[Route('/backoffice', name: 'backoffice')]
+public function backoffice(PosteRepository $postRepository): Response
+{
+    // Récupérer toutes les publications depuis le repository
+    $posts = $postRepository->findAllWithComments();
+    $forms = [];
+    
+    // Créer un formulaire pour chaque publication
+    foreach ($posts as $post) {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire, [
+            'action' => $this->generateUrl('creecommentaire', ['postId' => $post->getId()]),
+        ]);
+        $forms[$post->getId()] = $form->createView();
+    }
+    
+    // Affichage dans la page backoffice.html.twig
+    return $this->render('poste/backoffice.html.twig', [
+        'posts' => $posts,
+        'commentForms' => $forms,
+    ]);
+}
 
     #[Route('/ajouterPoste', name: 'ajouterPoste')]
     public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
@@ -61,6 +87,7 @@ final class PosteController extends AbstractController
         return $this->render('poste/ajouterPoste.html.twig', [
             'form' => $form->createView(),
         ]);
+        
     }
     #[Route('/modifierPoste/{id}', name: 'modifierPoste')]
     public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
@@ -88,9 +115,6 @@ final class PosteController extends AbstractController
             'poste' => $poste,
         ]);
     }
-
-
-
 
 
 
@@ -194,4 +218,37 @@ final class PosteController extends AbstractController
             'commentaire' => $commentaire, // Passer le commenatire pour l'afficher si nécessaire dans le template
         ]);
     }
+    
+    #[Route('/commentaire_signal/{id}', name: 'commentaire_signal')]
+public function signalerCommentaire(int $id, EntityManagerInterface $entityManager): Response
+{
+    // Récupérer le commentaire à signaler
+    $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
+
+    // Vérifier si le commentaire existe
+    if (!$commentaire) {
+        $this->addFlash('error', 'Le commentaire n\'existe pas.');
+        return $this->redirectToRoute('app_posts');
+    }
+
+    // Incrémenter le compteur de signalement
+    $commentaire->setNbrSignal($commentaire->getNbrSignal() + 1);
+
+    // Si le nombre de signalements atteint 10, supprimer le commentaire
+    if ($commentaire->getNbrSignal() >= 10) {
+        $entityManager->remove($commentaire);
+        $this->addFlash('success', 'Le commentaire a été supprimé en raison d\'un trop grand nombre de signalements.');
+    } else {
+        $entityManager->persist($commentaire);
+        $this->addFlash('success', 'Le commentaire a été signalé.');
+    }
+
+    // Sauvegarder les modifications
+    $entityManager->flush();
+
+    // Rediriger vers la liste des posts
+    return $this->redirectToRoute('app_posts');
+}
+
+
 }

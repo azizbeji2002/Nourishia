@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Gestion de publications{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="post-title text-center animate__animated animate__fadeIn">
+            <span class="text-gradient">📭 Gestion des publications</span>
+        </h1>
+        <hr class="title-underline animate__animated animate__fadeInUp">
+        
+        {% if posts is not empty %}
+            <div class="table-wrapper animate__animated animate__fadeIn">
+                <table class="table table-custom">
+                    <thead>
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Détails</th>
+                            <th scope="col">Date de publication</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                            <tr class="post-row">
+                                <td class="font-weight-bold">{{ post.titre }}</td>
+                                <td>{{ post.contenue }}</td>
+                                <td>{{ post.datePublication|date('d M Y') }}</td>
+                                <td>
+                                    <span class="badge {% if post.etat %}bg-success{% else %}bg-warning{% endif %}">
+                                        {{ post.etat ? 'Publié' : 'En attente' }}
+                                    </span>
+                                </td>
+                                <td class="action-buttons">
+                                    <a href="{{ path('modifierPoste', {'id': post.id}) }}" class="btn btn-sm btn-success btn-custom">✔️ Accepter</a>
+                                    <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-danger btn-custom" onclick="return confirm('Voulez-vous vraiment refuser ce post ?')">❌ Refuser</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center animate__animated animate__fadeIn">
+                📭 Aucun post trouvé.
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .post-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title-underline {
+            width: 70px;
+            height: 5px;
+            background: linear-gradient(135deg, #ff66b2, #ff6600);
+            border-radius: 3px;
+            margin: 0 auto 40px;
+        }
+
+        .table-wrapper {
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            padding: 20px;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border-spacing: 0;
+            margin-bottom: 0;
+        }
+
+        .table-custom th, .table-custom td {
+            padding: 15px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 1rem;
+            color: #34495e;
+        }
+
+        .table-custom th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .post-row {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-row:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #f9f9f9;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 15px;
+        }
+
+        .btn-custom {
+            padding: 10px 15px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+{% endblock %}
