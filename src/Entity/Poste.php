@@ -18,9 +18,8 @@ class Poste
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "Le titre ne peut pas être vide.")]
     #[Assert\Length(
-        min: 8,
+        min: 5,
         max: 50,
         minMessage: "Le titre doit comporter au moins {{ limit }} caractères.",
         maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."

@@ -16,6 +16,16 @@ class PosteRepository extends ServiceEntityRepository
         parent::__construct($registry, Poste::class);
     }
 
+public function findAllWithComments()
+{
+    return $this->createQueryBuilder('p')
+        ->addSelect('c')
+        ->leftJoin('p.commentaires', 'c')
+        ->orderBy('p.datePublication', 'DESC')
+        ->addOrderBy('c.dateCreation', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
 //    /**
 //     * @return Poste[] Returns an array of Poste objects
 //     */
