@@ -33,7 +33,7 @@
                                     </span>
                                 </td>
                                 <td class="action-buttons">
-                                    <a href="{{ path('modifierPoste', {'id': post.id}) }}" class="btn btn-sm btn-success btn-custom">✔️ Accepter</a>
+                                    <a href="{{ path('acceptePoste', {'id': post.id}) }}" class="btn btn-sm btn-success btn-custom">✔️ Accepter</a>
                                     <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-danger btn-custom" onclick="return confirm('Voulez-vous vraiment refuser ce post ?')">❌ Refuser</a>
                                 </td>
                             </tr>

@@ -21,10 +21,7 @@
 						<p class="text-muted">📅 Publié le : {{ post.datePublication|date('d M Y') }}</p>
 
 						<p>
-							<strong>📌 Statut :</strong>
-							<span class="badge {% if post.etat %}bg-success{% else %}bg-warning{% endif %}">
-								{{ post.etat ? 'Publié' : 'En attente' }}
-							</span>
+							
 						</p>
 
 						<p><strong>📝 Détails :</strong> {{ post.contenue }}</p>

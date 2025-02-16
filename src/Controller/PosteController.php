@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class PosteController extends AbstractController
 {
     #[Route('/posts', name: 'app_posts')]
-    
+
     public function getallpost(PosteRepository $postRepository): Response
     {
         // Retrieve all posts from the repository
@@ -38,31 +38,30 @@ final class PosteController extends AbstractController
             'posts' => $posts,
             'commentForms' => $forms,
         ]);
-        
     }
     //backoffice poste
     #[Route('/backoffice', name: 'backoffice')]
-public function backoffice(PosteRepository $postRepository): Response
-{
-    // Récupérer toutes les publications depuis le repository
-    $posts = $postRepository->findAllWithComments();
-    $forms = [];
-    
-    // Créer un formulaire pour chaque publication
-    foreach ($posts as $post) {
-        $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class, $commentaire, [
-            'action' => $this->generateUrl('creecommentaire', ['postId' => $post->getId()]),
+    public function backoffice(PosteRepository $postRepository): Response
+    {
+        // Récupérer toutes les publications depuis le repository
+        $posts = $postRepository->findAll();
+        $forms = [];
+
+        // Créer un formulaire pour chaque publication
+        foreach ($posts as $post) {
+            $commentaire = new Commentaire();
+            $form = $this->createForm(CommentaireType::class, $commentaire, [
+                'action' => $this->generateUrl('creecommentaire', ['postId' => $post->getId()]),
+            ]);
+            $forms[$post->getId()] = $form->createView();
+        }
+
+        // Affichage dans la page backoffice.html.twig
+        return $this->render('poste/backoffice.html.twig', [
+            'posts' => $posts,
+            'commentForms' => $forms,
         ]);
-        $forms[$post->getId()] = $form->createView();
     }
-    
-    // Affichage dans la page backoffice.html.twig
-    return $this->render('poste/backoffice.html.twig', [
-        'posts' => $posts,
-        'commentForms' => $forms,
-    ]);
-}
 
     #[Route('/ajouterPoste', name: 'ajouterPoste')]
     public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
@@ -87,35 +86,39 @@ public function backoffice(PosteRepository $postRepository): Response
         return $this->render('poste/ajouterPoste.html.twig', [
             'form' => $form->createView(),
         ]);
-        
     }
     #[Route('/modifierPoste/{id}', name: 'modifierPoste')]
-    public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // Récupérer le poste à modifier
-        $poste = $entityManager->getRepository(Poste::class)->find($id);
+public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Récupérer le poste à modifier
+    $poste = $entityManager->getRepository(Poste::class)->find($id);
 
-        // Créer le formulaire avec les données du poste existant
-        $form = $this->createForm(PosteType::class, $poste);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() /*&& $form->isValid()*/) {
-            // Save the valid data
-            $poste->setEtat(false);
-
-            $entityManager->persist($poste);
-            $entityManager->flush();
-
-            // Redirect to another route after successful submission
-            return $this->redirectToRoute('app_posts');
-        }
-
-        return $this->render('poste/modifierPoste.html.twig', [
-            'form' => $form->createView(),
-            'poste' => $poste,
-        ]);
+    // Vérifier si le poste existe
+    if (!$poste) {
+        throw $this->createNotFoundException('Poste non trouvé');
     }
 
+    // Créer le formulaire
+    $form = $this->createForm(PosteType::class, $poste);
+
+    // Désactiver la validation automatique de toutes les valeurs de la requête
+    $form->submit($request->request->all(), false);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Modifier les autres champs si nécessaire
+        $poste->setEtat(false);
+
+        $entityManager->flush();
+
+        // Redirection après modification
+        return $this->redirectToRoute('app_posts');
+    }
+
+    return $this->render('poste/modifierPoste.html.twig', [
+        'form' => $form->createView(),
+        'poste' => $poste,
+    ]);
+}
 
 
     #[Route('/post_delete/{id}', name: 'post_delete')]
@@ -134,6 +137,24 @@ public function backoffice(PosteRepository $postRepository): Response
         $entityManager->flush();
 
         $this->addFlash('success', 'Le poste a été supprimé avec succès.');
+        return $this->redirectToRoute('app_posts');
+    }
+    #[Route('/acceptePoste/{id}', name: 'acceptePoste')]
+    public function acceptePoste(int $id, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $poste = $entityManager->getRepository(Poste::class)->find($id);
+
+        if (!$poste) {
+            // Post does not exist, redirect back
+            $this->addFlash('error', 'Le poste n\'existe pas.');
+            return $this->redirectToRoute('app_posts');
+        }
+
+        // accepte the post from the database
+        $poste->setEtat(true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Le poste a été accepte avec succès.');
         return $this->redirectToRoute('app_posts');
     }
 
@@ -218,38 +239,35 @@ public function backoffice(PosteRepository $postRepository): Response
             'commentaire' => $commentaire, // Passer le commenatire pour l'afficher si nécessaire dans le template
         ]);
     }
-     // 1er metier "signale"
+    // 1er metier "signale"
     #[Route('/commentaire_signal/{id}', name: 'commentaire_signal')]
-public function signalerCommentaire(int $id, EntityManagerInterface $entityManager): Response
-{
-    // Récupérer le commentaire à signaler
-    $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
+    public function signalerCommentaire(int $id, EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer le commentaire à signaler
+        $commentaire = $entityManager->getRepository(Commentaire::class)->find($id);
 
-    // Vérifier si le commentaire existe
-    if (!$commentaire) {
-        $this->addFlash('error', 'Le commentaire n\'existe pas.');
+        // Vérifier si le commentaire existe
+        if (!$commentaire) {
+            $this->addFlash('error', 'Le commentaire n\'existe pas.');
+            return $this->redirectToRoute('app_posts');
+        }
+
+        // Incrémenter le compteur de signalement
+        $commentaire->setNbrSignal($commentaire->getNbrSignal() + 1);
+
+        // Si le nombre de signalements atteint 10, supprimer le commentaire
+        if ($commentaire->getNbrSignal() >= 10) {
+            $entityManager->remove($commentaire);
+            $this->addFlash('success', 'Le commentaire a été supprimé en raison d\'un trop grand nombre de signalements.');
+        } else {
+            $entityManager->persist($commentaire);
+            $this->addFlash('success', 'Le commentaire a été signalé.');
+        }
+
+        // Sauvegarder les modifications
+        $entityManager->flush();
+
+        // Rediriger vers la liste des posts
         return $this->redirectToRoute('app_posts');
     }
-
-    // Incrémenter le compteur de signalement
-    $commentaire->setNbrSignal($commentaire->getNbrSignal() + 1);
-
-    // Si le nombre de signalements atteint 10, supprimer le commentaire
-    if ($commentaire->getNbrSignal() >= 10) {
-        $entityManager->remove($commentaire);
-        $this->addFlash('success', 'Le commentaire a été supprimé en raison d\'un trop grand nombre de signalements.');
-    } else {
-        $entityManager->persist($commentaire);
-        $this->addFlash('success', 'Le commentaire a été signalé.');
-    }
-
-    // Sauvegarder les modifications
-    $entityManager->flush();
-
-    // Rediriger vers la liste des posts
-    return $this->redirectToRoute('app_posts');
-}
-
-
-
 }

@@ -33,11 +33,9 @@ class Poste
     private ?string $contenue = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Assert\Date(message: "La date de publication doit être une date valide.")]
     private ?\DateTimeInterface $datePublication = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Choice(choices: [true, false], message: "L'état doit être vrai ou faux.")]
     private ?bool $etat = null;
 
     
