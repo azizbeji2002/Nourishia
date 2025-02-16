@@ -26,6 +26,7 @@ public function findAllWithComments()
         ->getQuery()
         ->getResult();
 }
+
 //    /**
 //     * @return Poste[] Returns an array of Poste objects
 //     */

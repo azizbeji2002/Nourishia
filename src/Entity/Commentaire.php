@@ -31,6 +31,8 @@ class Commentaire
     private ?int $nbrSignal = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+
     private ?Poste $poste = null;
 
     

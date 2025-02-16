@@ -218,7 +218,7 @@ public function backoffice(PosteRepository $postRepository): Response
             'commentaire' => $commentaire, // Passer le commenatire pour l'afficher si nécessaire dans le template
         ]);
     }
-    
+     // 1er metier "signale"
     #[Route('/commentaire_signal/{id}', name: 'commentaire_signal')]
 public function signalerCommentaire(int $id, EntityManagerInterface $entityManager): Response
 {
@@ -249,6 +249,7 @@ public function signalerCommentaire(int $id, EntityManagerInterface $entityManag
     // Rediriger vers la liste des posts
     return $this->redirectToRoute('app_posts');
 }
+
 
 
 }

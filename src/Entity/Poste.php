@@ -47,7 +47,7 @@ private ?string $logs = null;
 /**
  * @var Collection<int, Commentaire>
  */
-#[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'poste')]
+#[ORM\OneToMany(mappedBy: "poste", targetEntity: Commentaire::class, cascade: ["remove"])]
 private Collection $commentaires;
 
 public function getLogs(): ?string
