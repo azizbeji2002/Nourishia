@@ -28,6 +28,7 @@ class PosteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    
 
 
 //    /**

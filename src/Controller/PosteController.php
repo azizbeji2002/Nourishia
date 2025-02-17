@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Poste;
 use App\Form\CommentaireType;
 use App\Form\PosteType;
+use App\Repository\CommentaireRepository;
 use App\Repository\PosteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
@@ -90,33 +91,38 @@ final class PosteController extends AbstractController
     #[Route('/modifierPoste/{id}', name: 'modifierPoste')]
 public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
 {
-    // Récupérer le poste à modifier
-    $poste = $entityManager->getRepository(Poste::class)->find($id);
+    // Récupérer le commentaire à modifier
+    $post = $entityManager->getRepository(Poste::class)->find($id);
 
-    // Vérifier si le poste existe
-    if (!$poste) {
-        throw $this->createNotFoundException('Poste non trouvé');
-    }
-
-    // Créer le formulaire
-    $form = $this->createForm(PosteType::class, $poste);
-
-    // Désactiver la validation automatique de toutes les valeurs de la requête
-    $form->submit($request->request->all(), false);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Modifier les autres champs si nécessaire
-        $poste->setEtat(false);
-
-        $entityManager->flush();
-
-        // Redirection après modification
+    // Vérifier si le commentaire existe
+    if (!$post) {
+        $this->addFlash('error', 'Le commentaire n\'existe pas.');
         return $this->redirectToRoute('app_posts');
     }
 
+    // Créer le formulaire avec les données du commentaire existant
+    $form = $this->createForm(PosteType::class, $post);
+    $form->handleRequest($request);
+
+    // Si le formulaire est soumis et valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Mettre à jour le commentaire dans la base de données
+        $post->setEtat(false);
+
+        $entityManager->persist($post);
+
+        $entityManager->flush();
+        // Ajouter un message de succès
+        // $this->addFlash('success', 'Le commentaire a été modifié avec succès.');
+
+        // Rediriger vers la liste des posts
+        return $this->redirectToRoute('app_posts');
+    }
+
+    // Si le formulaire n'est pas encore soumis ou n'est pas valide, afficher la vue
     return $this->render('poste/modifierPoste.html.twig', [
         'form' => $form->createView(),
-        'poste' => $poste,
+        'poste' => $post, // Passer le commenatire pour l'afficher si nécessaire dans le template
     ]);
 }
 
@@ -270,4 +276,34 @@ public function modifierPoste(int $id, Request $request, EntityManagerInterface 
         // Rediriger vers la liste des posts
         return $this->redirectToRoute('app_posts');
     }
+    
+    #[Route('/commentaireba', name: 'commentaireba')]
+public function commentaireBa(PosteRepository $postRepository, CommentaireRepository $commentRepository): Response
+{
+    // Récupérer tous les posts avec leurs commentaires et signalements
+    $posts = $postRepository->findAllWithComments();
+    
+    // Pour chaque post, récupérer les commentaires avec leur nombre de signalements
+    $postComments = [];
+    foreach ($posts as $post) {
+        $comments = $post->getCommentaires(); // Récupérer les commentaires du post
+        $commentsData = [];
+        foreach ($comments as $comment) {
+            $commentsData[] = [
+                'comment' => $comment,
+                'signalements' => $comment->getNbrSignal(), // Nombre de signalements
+            ];
+        }
+        $postComments[] = [
+            'post' => $post,
+            'comments' => $commentsData,
+        ];
+    }
+
+    // Passer les données à la vue Twig
+    return $this->render('commentaire/commentaireba.html.twig', [
+        'postComments' => $postComments,
+    ]);
+}
+
 }
