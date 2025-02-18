@@ -65,7 +65,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,  // Le champ n'est pas lié à une propriété de l'entité
                 'constraints' => [
                     new Assert\IsTrue([
-                        'message' => 'Vous devez accepter les termes et conditions.',
+                        'message' => 'Vous devez accepter les termes .',
                     ]),
                 ],
                 'attr' => ['class' => 'form-check-input'],
