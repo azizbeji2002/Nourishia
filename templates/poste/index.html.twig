@@ -45,7 +45,7 @@
 										{% else %}
 											<div>
 												<a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
-												<a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">🗑️ Supprimer</a>
+												<a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-danger" >🗑️ Supprimer</a>
 												<a href="{{ path('commentaire_signal', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-warning">⚠️ Signaler</a>
 											</div>
 										{% endif %}
@@ -59,7 +59,7 @@
 						<div class="d-flex justify-content-between mt-3">
 							<a href="{{ path('modifierPoste', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
 							<a href="{{ path('creecommentaire', {'postId': post.id}) }}" class="btn btn-sm btn-outline-success">💬 Ajouter un Commentaire</a>
-							<a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce post ?')">🗑️ Supprimer</a>
+							<a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-outline-danger" >🗑️ Supprimer</a>
 						</div>
 					</div>
 				{% endfor %}

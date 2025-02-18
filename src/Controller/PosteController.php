@@ -126,7 +126,6 @@ public function modifierPoste(int $id, Request $request, EntityManagerInterface 
     ]);
 }
 
-
     #[Route('/post_delete/{id}', name: 'post_delete')]
     public function supprimerPoste(int $id, EntityManagerInterface $entityManager): RedirectResponse
     {
@@ -276,33 +275,26 @@ public function modifierPoste(int $id, Request $request, EntityManagerInterface 
         // Rediriger vers la liste des posts
         return $this->redirectToRoute('app_posts');
     }
-    
-    #[Route('/commentaireba', name: 'commentaireba')]
-public function commentaireBa(PosteRepository $postRepository, CommentaireRepository $commentRepository): Response
+
+    #[Route('/consulter_commentaires/{postId}', name: 'consulter_commentaires')]
+public function consulterCommentaires(int $postId, EntityManagerInterface $entityManager): Response
 {
-    // Récupérer tous les posts avec leurs commentaires et signalements
-    $posts = $postRepository->findAllWithComments();
-    
-    // Pour chaque post, récupérer les commentaires avec leur nombre de signalements
-    $postComments = [];
-    foreach ($posts as $post) {
-        $comments = $post->getCommentaires(); // Récupérer les commentaires du post
-        $commentsData = [];
-        foreach ($comments as $comment) {
-            $commentsData[] = [
-                'comment' => $comment,
-                'signalements' => $comment->getNbrSignal(), // Nombre de signalements
-            ];
-        }
-        $postComments[] = [
-            'post' => $post,
-            'comments' => $commentsData,
-        ];
+    // Récupérer le poste en fonction de l'ID
+    $post = $entityManager->getRepository(Poste::class)->find($postId);
+
+    // Vérifier si le poste existe
+    if (!$post) {
+        $this->addFlash('error', 'Le poste n\'existe pas.');
+        return $this->redirectToRoute('app_posts');
     }
 
-    // Passer les données à la vue Twig
-    return $this->render('commentaire/commentaireba.html.twig', [
-        'postComments' => $postComments,
+    // Récupérer les commentaires associés au poste
+    $commentaires = $entityManager->getRepository(Commentaire::class)->findBy(['poste' => $post]);
+
+    // Afficher les commentaires avec leur nombre de signalements
+    return $this->render('commentaire/consulterCommentaire.html.twig', [
+        'post' => $post,
+        'commentaires' => $commentaires,
     ]);
 }
 

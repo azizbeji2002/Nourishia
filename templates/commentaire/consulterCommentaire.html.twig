@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Backoffice - Commentaires{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center animate__animated animate__fadeIn">
+            <span class="post-title">Commentaires pour le poste :</span>
+            <span class="post-name">{{ post.titre }}</span>
+        </h2>
+
+        <hr class="title-underline animate__animated animate__fadeInUp">
+
+        {% if commentaires is not empty %}
+            <div class="comments-section animate__animated animate__fadeIn">
+                {% for commentaire in commentaires %}
+                    <div class="comment-card mb-4 p-4 border rounded-lg shadow-lg hover-effect">
+                        <div class="comment-content mb-3">
+                            <p class="fw-bold text-dark">{{ commentaire.contenu }}</p>
+                        </div>
+                        <div class="comment-meta d-flex justify-content-between align-items-center">
+                            <p class="text-muted">Nombre de signalements :
+                                <span class="badge bg-warning px-3 py-2 rounded-pill">{{ commentaire.nbrSignal }}</span>
+                            </p>
+                            <span class="timestamp text-muted">{{ commentaire.dateCreation|date("d M Y, H:i") }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center animate__animated animate__fadeIn">
+                📭 Aucun commentaire pour ce poste.
+            </div>
+        {% endif %}
+
+        <div class="mt-4 text-center">
+            <a href="{{ path('backoffice') }}" class="btn btn-secondary btn-custom">Retour aux posts</a>
+        </div>
+    </div>
+
+    <style>
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 10px;
+            padding-bottom: 10px;
+        }
+
+        .post-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #d97baf;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f77a8f, #ff66b2);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .title-underline {
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(135deg, #f77a8f, #ff66b2);
+            border-radius: 3px;
+            margin: 0 auto 40px;
+        }
+
+        .comment-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            padding: 20px;
+            border-left: 5px solid #ff66b2;
+        }
+
+        .comment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #f9f9f9;
+        }
+
+        .btn-custom {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            background-color: #f77a8f;
+        }
+
+        .badge {
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 6px 15px;
+            border-radius: 20px;
+        }
+
+        .badge.bg-warning {
+            background-color: #f0ad4e;
+        }
+
+        .alert-info {
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+            color: #31708f;
+            font-size: 1.1rem;
+        }
+
+        .hover-effect {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hover-effect:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 102, 178, 0.2);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .hover-effect:hover:before {
+            transform: scale(1);
+        }
+
+        .comment-meta {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .timestamp {
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+{% endblock %}

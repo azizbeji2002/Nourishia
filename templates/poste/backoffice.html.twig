@@ -8,7 +8,7 @@
             <span class="text-gradient">📭 Gestion des publications</span>
         </h1>
         <hr class="title-underline animate__animated animate__fadeInUp">
-        
+
         {% if posts is not empty %}
             <div class="table-wrapper animate__animated animate__fadeIn">
                 <table class="table table-custom">
@@ -34,7 +34,8 @@
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{{ path('acceptePoste', {'id': post.id}) }}" class="btn btn-sm btn-success btn-custom">✔️ Accepter</a>
-                                    <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-danger btn-custom" onclick="return confirm('Voulez-vous vraiment refuser ce post ?')">❌ Refuser</a>
+                                    <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-danger btn-custom">❌ Refuser</a>
+                                    <a href="{{ path('consulter_commentaires', {'postId': post.id}) }}" class="btn btn-consulter btn-sm">Consulter</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -50,7 +51,7 @@
 
     <style>
         .post-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: #d97baf; /* Rose doux */
             margin-bottom: 20px;
@@ -74,6 +75,7 @@
             overflow: hidden;
             background: #fff;
             padding: 20px;
+            animation: fadeIn 1s ease-in;
         }
 
         .table-custom {
@@ -85,7 +87,8 @@
             margin-bottom: 0;
         }
 
-        .table-custom th, .table-custom td {
+        .table-custom th,
+        .table-custom td {
             padding: 15px;
             vertical-align: middle;
             border-bottom: 1px solid #f1f1f1;
@@ -101,6 +104,10 @@
 
         .post-row {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
         }
 
         .post-row:hover {
@@ -151,6 +158,31 @@
 
         .btn-success:hover {
             background-color: #f77a8f; /* Couleur de survol plus foncée */
+        }
+
+        .btn-consulter {
+            background: linear-gradient(135deg, #6a5acd, #00bfff); /* Dégradé violet à bleu clair */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px; /* Bordure arrondie */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Ombre subtile pour profondeur */
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-consulter:hover {
+            transform: scale(1.05); /* Effet de zoom au survol */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée au survol */
+            background: linear-gradient(135deg, #4b0082, #00bfff); /* Changement de dégradé pour l'effet hover */
+        }
+
+        .btn-consulter:focus {
+            outline: none; /* Supprimer la bordure de focus par défaut */
+            box-shadow: 0 0 10px 2px rgba(0, 0, 255, 0.6); /* Lueur bleue au focus */
         }
     </style>
 
