@@ -56,15 +56,17 @@
                 <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-instagram text-secondary"></i></a>
                 <a href="" class="btn btn-light btn-sm-square rounded-circle me-0"><i class="fab fa-linkedin-in text-secondary"></i></a>
             </div>
+            {% block iconedec %}
             <!-- Icône de déconnexion à l'extrême droite avec une classe spécifique -->
             <a href="logout.php" class="btn btn-light btn-sm-square rounded-circle btn-signout">
                 <i class="fas fa-sign-out-alt text-primary"></i> <!-- Couleur différente -->
             </a>
         </div>
+        {% endblock %}
     </div>
 </div>
 
-
+{% block header %}
             <div class="container px-0">
                 <nav class="navbar navbar-light navbar-expand-xl py-3">
                     <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
@@ -132,8 +134,11 @@
     </div>
   </div>
 </div>
+{% endblock %}
 
-        {% block body %}{% endblock %}
+{% block body %}{% endblock %}
+
+{% block footer %}
 <!-- Footer Start -->
 <div class="container-fluid footer py-3 wow fadeIn" data-wow-delay="0.1s">
     <div class="container py-3">
@@ -176,5 +181,6 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js')}}"></script>
+    {% endblock %}
     </body>
 </html>
