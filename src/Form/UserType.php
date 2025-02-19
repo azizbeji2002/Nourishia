@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +27,7 @@ class UserType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
                 'html5' => true, 
-            ]) 
+            ])
             ->add('email')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

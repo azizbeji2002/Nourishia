@@ -86,6 +86,8 @@ private ?string $password = null;
     #[ORM\Column]
     private bool $isVerified = false;
 
+   
+
     public function getId(): ?int
     {
         return $this->id;
@@ -224,4 +226,6 @@ public function setRoles(string $roles): self
 
         return $this;
     }
+
+    
 }
