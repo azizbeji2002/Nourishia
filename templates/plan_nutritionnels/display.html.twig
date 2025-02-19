@@ -1,0 +1,62 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <div class="flex justify-between items-center my-6">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Liste des Plans Nutritionnels
+            </h2>
+            <!-- Add Plan Button -->
+            <a href="{{ path('app_plan_new') }}" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                ➕ Ajouter un Plan
+            </a>
+        </div>
+
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Aliment Recommandé</th>
+                            <th class="px-4 py-3">Aliment Évité</th>
+                            <th class="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {% for plan in plans %}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3">{{ plan.alimentRecommende }}</td>
+                            <td class="px-4 py-3">{{ plan.alimentEvite }}</td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center space-x-4 text-sm">
+                                    <a href="{{ path('plan_edit', { 'id': plan.idplan }) }}" class="text-purple-600 dark:text-gray-400">
+                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                                        </svg>
+                                    </a>
+                                    <form action="{{ path('delete_plan', {'id': plan.getIdPlan()}) }}" method="POST">
+                                        <button type="submit" class="text-red-600 dark:text-gray-400" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce plan ?');">
+                                            🗑
+                                        </button>
+                                    </form>
+                                </div>
+                                <a href="{{ path('plan_activities', {'id': plan.getIdPlan()}) }}" class="text-blue-600 hover:text-blue-800">
+                                    📋 Voir Activités
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="px-4 py-3 text-center text-gray-500 dark:text-gray-400">
+                                Aucun plan nutritionnel trouvé.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

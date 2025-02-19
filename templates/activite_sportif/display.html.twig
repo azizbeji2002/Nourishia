@@ -1,0 +1,57 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Activités Sportives pour {{ plan.alimentRecommende }}
+        </h2>
+
+        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            Liste des activités associées
+        </h4>
+
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            {% if activities is empty %}
+                <p class="text-gray-500 dark:text-gray-400">Aucune activité trouvée.</p>
+            {% else %}
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr class="text-left font-semibold text-gray-600 uppercase bg-gray-200 dark:bg-gray-700">
+                            <th class="px-4 py-3">Type</th>
+                            <th class="px-4 py-3">Durée</th>
+                            <th class="px-4 py-3">Fréquence</th>
+                            <th class="px-4 py-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {% for activity in activities %}
+                        <tr>
+                            <td class="px-4 py-3 text-sm">{{ activity.type }}</td>
+                            <td class="px-4 py-3 text-sm">{{ activity.duree }} min</td>
+                            <td class="px-4 py-3 text-sm">{{ activity.frequence }} fois/semaine</td>
+                           <td  <!-- Edit Button -->
+                            <a href="{{ path('edit_activite', {'id': activity.getIdActivite()}) }}" 
+                                class="text-blue-600 hover:text-blue-800 mx-2">
+                                ✏️ Modifier
+                            </a>
+
+                            <!-- Delete Button with Confirmation -->
+                            <form action="{{ path('delete_activite', {'id': activity.getIdActivite()}) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?');">
+                                <button type="submit" class="text-red-600 hover:text-red-800 mx-2">
+                                    🗑 Supprimer
+                                </button>
+                            </form>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+
+        <a href="{{ path('add_activite', {'planId': plan.idPlan}) }}" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Ajouter une Activité
+        </a>
+    </div>
+</main>
+{% endblock %}
