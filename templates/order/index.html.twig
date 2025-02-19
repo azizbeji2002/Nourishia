@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block body %}
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        {# Flash messages for success with auto-dismiss #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #d4edda; color: #155724; border-left: 5px solid rgb(215, 230, 219);">
+                {{ message }}
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {# Card for displaying orders #}
+        <div class="card shadow-lg border-0" style="background-color: #f8f9fa;">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: rgba(126, 58, 242, var(--bg-opacity)); font-size: 1.25rem; padding: 15px;">
+                <h5 class="mb-0">clientOrders</h5>
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="padding: 15px;">ID</th>
+                            <th style="padding: 15px;">Product Name</th>
+                            <th style="padding: 15px;">Price</th>
+                            <th style="padding: 15px;">Status</th>
+                            <th style="padding: 15px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr style="height: 70px;">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.pname }}</td>
+                                <td>{{ order.prix }}</td>
+                                <td>{{ order.status }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            {{ order.status }}
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ path('order_statue_update', {order: order.id, status: 'livré'}) }}">livré</a></li>
+                                            <li><a class="dropdown-item" href="{{ path('order_statue_update', {order: order.id, status: 'Rejeté'}) }}">Rejeté</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                 <td>
+                                            <a href="{{ path('order_delete', { order: order.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                                        </td>
+
+                            </tr>
+                            
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="{{ path('app_statistiques_commandes') }}" class="btn btn-primary">Voir les statistiques des commandes</a>
+
+<!-- Manual dropdown initialization script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdowns = document.querySelectorAll('.dropdown-toggle');
+        dropdowns.forEach(function (dropdown) {
+            dropdown.addEventListener('click', function (e) {
+                e.preventDefault();
+                var dropdownMenu = this.nextElementSibling;
+                dropdownMenu.classList.toggle('show');
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.matches('.dropdown-toggle')) {
+                var dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                dropdownMenus.forEach(function (menu) {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

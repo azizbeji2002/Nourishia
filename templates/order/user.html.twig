@@ -1,0 +1,347 @@
+ <title>{% block title %}Nourishia{% endblock %}</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        {% block css%}
+        <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
+        <link href="{{asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+        <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+        {% endblock %}
+{% block body %}
+ <!-- Navbar start -->
+        <div class="container-fluid border-bottom bg-light wow fadeIn" data-wow-delay="0.1s">
+            <div class="container topbar bg-primary d-none d-lg-block py-2" style="border-radius: 0 40px">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">esprit Ariana Tunis، 2083</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Nourishia@gmail.com</a></small>
+                    </div>
+                    <div class="top-link pe-2">
+                        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-facebook-f text-secondary"></i></a>
+                        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-twitter text-secondary"></i></a>
+                        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-instagram text-secondary"></i></a>
+                        <a href="" class="btn btn-light btn-sm-square rounded-circle me-0"><i class="fab fa-linkedin-in text-secondary"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{asset('img/logo.png')}}" alt="Logo" width="150" height="60"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="index.html" class="nav-item nav-link">accueil</a>
+                            <a href="about.html" class="nav-item nav-link">à propos</a>
+                            <a href="service.html" class="nav-item nav-link">Produits</a>
+                            <a href="program.html" class="nav-item nav-link">Forum</a>
+                            <a href="event.html" class="nav-item nav-link">Événements</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="testimonial.html" class="dropdown-item">Consultation Médicale</a>
+                                    <a href="404.html" class="dropdown-item active">Nutrition et Bien-Être </a>
+                                    <a href="blog.html" class="dropdown-item">Our Blog</a>
+                                    <a href="team.html" class="dropdown-item">Our Team</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="d-flex me-4">
+                            <div id="phone-tada" class="d-flex align-items-center justify-content-center">
+                                <a href="" class="position-relative wow tada" data-wow-delay=".9s" >
+                                    <i class="fa fa-phone-alt text-primary fa-2x me-4"></i>
+                                    <div class="position-absolute" style="top: -7px; left: 20px;">
+                                        <span><i class="fa fa-comment-dots text-secondary"></i></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column pe-3 border-end border-primary">
+                                <span class="text-primary">Avez-vous des questions?</span>
+                                <a href="#"><span class="text-secondary">+216 54491504</span></a>
+                            </div>
+                        </div>
+                        <button class="btn-search btn btn-primary btn-md-square rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-white"></i></button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+        
+     <!-- Registration Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Inscription à l'événement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Nom Complet</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registrationDate" class="form-label">Date d'Inscription</label>
+                        <input type="date" class="form-control" id="registrationDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registrationStatus" class="form-label">Statut</label>
+                        <select class="form-control" id="registrationStatus">
+                            <option value="pending">En attente</option>
+                            <option value="confirmed">Confirmé</option>
+                            <option value="canceled">Annulé</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+        
+        <!-- Page Header Start -->
+        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container text-center py-5">
+                <h1 class="display-2 text-white mb-4">Produits</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white" aria-current="page">Produits/Order</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Page Header End -->
+<div class="mb-3">
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        {# Flash messages for success with auto-dismiss #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #d4edda; color: #155724; border-left: 5px solid rgb(215, 230, 219);">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+          <td>
+                                           
+                                            <a href="{{ path('app_produitss') }}" class="btn btn-sm btn-outline-dark mx-1">back</a>
+                                          
+                                        </td>
+
+        {# Flash messages for error with auto-dismiss #}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background-color: #f8d7da; color: #721c24; border-left: 5px solid rgb(220, 53, 69);">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {# Card for displaying orders #}
+        <div class="card shadow-lg border-0" style="background-color: #f8f9fa;">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: rgba(126, 58, 242, var(--bg-opacity)); font-size: 1.25rem; padding: 15px;">
+           <h5 class="mb-0" style="margin-bottom: 0;">Mes Commandes</h5> 
+<span style="font-size: small; color: black;">(Vous avez 24 heures pour remplir votre commande. Une fois ce délai passé, vous devrez payer 7 dinars pour votre prochaine livraison)</span>
+
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="padding: 15px;">ID</th>
+                            <th style="padding: 15px;">Nom du produit</th>
+                            <th style="padding: 15px;">Prix</th>
+                            <th style="padding: 15px;">Quantité</th>
+                            <th style="padding: 15px;">Prix total</th>
+                             <th style="padding: 15px;">Statut</th>
+                            <th style="padding: 15px;">Action</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set totalSum = 7 %}
+                        {% for order in orders %}
+                            {% set product = products|filter(p => p.nom == order.pname)|first %}
+                            {% set totalPrice = order.prix * order.quantity %}
+                            {% set totalSum = totalSum + totalPrice %}
+                            <tr style="height: 70px;">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.pname }} (Available: {{ product.quantite }})</td>
+                                <td class="fw-bold">{{ order.prix }} dt</td>
+                               <td>
+    {{ order.quantity }}
+                        <!-- Increment Button -->
+                        <form action="{{ path('order_increment', {order: order.id}) }}" method="POST" style="display: inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('increment' ~ order.id) }}">
+                            <button type="submit" class="btn btn-sm btn-success">+</button>
+                        </form>
+                        <!-- Decrement Button -->
+                        <form action="{{ path('order_decrement', {order: order.id}) }}" method="POST" style="display: inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('decrement' ~ order.id) }}">
+                            <button type="submit" class="btn btn-sm btn-danger">-</button>
+                        </form>
+</td>
+
+                                <td class="fw-bold">{{ totalPrice }} dt</td>
+                                <td>{{ order.status }}</td>
+                                <td>
+                                    <a href="{{ path('OOrder_delete1', { order: order.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="text-center">
+                         <tr>
+  <th colspan="4">Totale</th>
+  <td><span style="font-size: small; color: black;">(+ 7 dinars pour les frais de livraison)</span></td>
+</tr>
+
+                            <td class="fw-bold">{{ totalSum }} dt</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- Footer Start -->
+        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="footer-item">
+                            <h2 class="fw-bold mb-3"><span class="text-primary mb-0">Baby</span><span class="text-secondary">Care</span></h2>
+                            <p class="mb-4">There cursus massa at urnaaculis estieSed aliquamellus vitae ultrs condmentum leo massamollis its estiegittis miristum.</p>
+                            <div class="border border-primary p-3 rounded bg-light">
+                                <h5 class="mb-3">Newsletter</h5>
+                                <div class="position-relative mx-auto border border-primary rounded" style="max-width: 400px;">
+                                    <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                                    <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2 text-white">SignUp</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="footer-item">
+                            <div class="d-flex flex-column p-4 ps-5 text-dark border border-primary" 
+                            style="border-radius: 50% 20% / 10% 40%;">
+                                <p>Monday: 8am to 5pm</p>
+                                <p>Tuesday: 8am to 5pm</p>
+                                <p>Wednes: 8am to 5pm</p>
+                                <p>Thursday: 8am to 5pm</p>
+                                <p>Friday: 8am to 5pm</p>
+                                <p>Saturday: 8am to 5pm</p>
+                                <p class="mb-0">Sunday: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">LOCATION</h4>
+                            <div class="d-flex flex-column align-items-start">
+                                <a href="" class="text-body mb-4"><i class="fa fa-map-marker-alt text-primary me-2"></i> 104 North tower New York, USA</a>
+                                <a href="" class="text-start rounded-0 text-body mb-4"><i class="fa fa-phone-alt text-primary me-2"></i> (+012) 3456 7890 123</a>
+                                <a href="" class="text-start rounded-0 text-body mb-4"><i class="fas fa-envelope text-primary me-2"></i> exampleemail@gmail.com</a>
+                                <a href="" class="text-start rounded-0 text-body mb-4"><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</a>
+                                <div class="footer-icon d-flex">
+                                    <a class="btn btn-primary btn-sm-square me-3 rounded-circle text-white" href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a class="btn btn-primary btn-sm-square me-3 rounded-circle text-white" href=""><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="btn btn-primary btn-sm-square me-3 rounded-circle text-white"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="btn btn-primary btn-sm-square rounded-circle text-white"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="footer-item">
+                            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">OUR GALLARY</h4>
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-1.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                               <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-2.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-3.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-4.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-5.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                                <div class="col-4">
+                                    <div class="footer-galary-img rounded-circle border border-primary">
+                                        <img src="img/galary-6.jpg" class="img-fluid rounded-circle p-2" alt="">
+                                    </div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+
+</div>
+{% endblock %}

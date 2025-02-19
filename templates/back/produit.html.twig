@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Product{% endblock %}
+
+{% block body %}
+
+<div class="row my-5">
+    <div class="col-md-10 mx-auto">
+        {# Flash messages for success with auto-dismiss #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #d4edda; color:rgb(239, 243, 240); border-left: 5px solidrgb(215, 230, 219);">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        {# Card for displaying products #}
+        <div class="card shadow-lg border-0" style="background-color: #f8f9fa;">
+            <div class="card-header text-white d-flex justify-content-between align-items-center" style="background: rgba(126, 58, 242, var(--bg-opacity)); font-size: 1.25rem; padding: 15px;">
+                <h5 class="mb-0">liste de Produits</h5>
+             <a href="{{ path('produit_add') }}" class="btn btn-sm fw-bold" style="background-color: white; color: #7e3af2; border: 2px solid #7e3af2; border-radius: 20px; padding: 4px 12px; font-size: 0.875rem; box-shadow: 0 3px 6px rgba(126, 58, 242, 0.2); transition: all 0.3s ease;">
+    ➕ Add Product
+</a>
+
+<!-- Optional: Hover Effect -->
+<style>
+    .btn:hover {
+        background-color: #7e3af2;
+        color: white;
+        border-color: #7e3af2;
+        box-shadow: 0 4px 8px rgba(126, 58, 242, 0.3);
+    }
+</style>
+
+
+            </div>
+             {# Search Bar #}
+                <div class="card-body">
+                    <form action="{{ path('produit_search') }}" method="get" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="q" 
+                                   class="form-control" 
+                                   placeholder="Rechercher par nom..." 
+                                   value="{{ searchTerm ?? '' }}">
+                            <button type="submit" class="btn btn-primary" style="background-color: #7e3af2; border-color: #7e3af2;">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </form>
+
+            
+            
+
+            <div class="card-body">
+                {% if products|length == 0 %}
+                    <p class="text-muted fst-italic text-center" style="font-size: 1.2rem;">No products available. Add new products to get started.</p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover text-center align-middle" style="width: 100%; font-size: 1.2rem;">
+                            <thead class="text-white" style="background: linear-gradient(135deg, #5a8dee, #6fc3df); height: 60px;">
+                                <tr>
+                                   <tr>
+    <th style="padding: 15px;">ID</th>
+    <th style="padding: 15px;">Name</th>
+    <th style="padding: 15px;">Description</th>
+        <th style="padding: 15px;">quantite</th>
+    <th style="padding: 15px;">Category</th>
+    <th style="padding: 15px;">Price</th>
+    <th style="padding: 15px;">Image</th>
+    <th style="padding: 15px;">Action</th>
+</tr>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                    <tr style="height: 70px;">
+                                      
+                                        <td>{{ product.id }}</td>
+                                        <td class="fw-bold">{{ product.nom }}</td>
+                                       <td>{{ product.description }}</td>
+                                       <td>{{ product.quantite }}</td>
+
+                                        <td><span class="badge bg-info text-dark" style="font-size: 1rem; padding: 10px;">{{ product.categorie.nom }}</span></td>
+                                        <td class="text-success fw-bold">{{ product.prix | number_format(2, '.', ',') }} dt</td>
+                                        <td>
+                                            {% if product.image %}
+                                                <img src="{{ asset('uploads/' ~ product.image) }}" 
+                                                     alt="{{ product.nom }}" 
+                                                     class="img-fluid rounded"
+                                                     style="width: 80px; height: 80px; object-fit: cover;">
+                                            {% else %}
+                                                <span class="text-muted">No Image</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                           
+                                            <a href="{{ path('produit_edit', { id: product.id }) }}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{{ path('produit_delete', { id: product.id }) }}" class="btn btn-lg btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
