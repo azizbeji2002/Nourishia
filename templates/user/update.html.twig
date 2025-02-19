@@ -19,95 +19,75 @@
             <div class="card shadow-sm py-4 mt-5"> {# Réduction de la hauteur et levée du formulaire #}
                 <div class="card-body">
                     <div class="text-center">
-                        <h5 class="card-title pb-0 fs-5">Créer un Compte</h5>
-                        <p class="small">Entrez vos informations personnelles</p>
+                        <h5 class="card-title pb-0 fs-5">Modifier votre Compte</h5>
+                        
                     </div>
 
-                    {{ form_start(registrationForm, {attr: {novalidate: 'novalidate'}}) }}
+                    {{ form_start(f, {attr: {novalidate: 'novalidate'}}) }}
                     
                     <div class="col-12">
                         <label for="yourName" class="form-label">Votre Nom</label>
                         <div class="invalid-feedback">Please, enter your name!</div>
-                        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(registrationForm.nom) }}
+                        {{ form_widget(f.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.nom) }}
                     </div>
 
                     <div class="col-12">
                         <label for="yourPrenom" class="form-label">Votre Prenom</label>
-                        {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.prenom, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please enter a valid name!</div>
-                        {{ form_errors(registrationForm.prenom) }}
+                        {{ form_errors(f.prenom) }}
                     </div>
 
                     <div class="col-12">
                         <label for="yourEmail" class="form-label">Votre adresse</label>
-                        {{ form_widget(registrationForm.adr, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.adr, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please enter a valid address!</div>
-                        {{ form_errors(registrationForm.adr) }}
+                        {{ form_errors(f.adr) }}
                     </div>
 
                     <div class="col-12">
                         <label for="yourDate" class="form-label">Votre date de naissance</label>
-                        {{ form_widget(registrationForm.date, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please enter a valid date!</div>
-                        {{ form_errors(registrationForm.date) }}
+                        {{ form_errors(f.date) }}
                     </div>
 
                     <div class="col-12">
                         <label for="yourTel" class="form-label">Votre Tel</label>
-                        {{ form_widget(registrationForm.tel, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.tel, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please confirm your tel!</div>
-                        {{ form_errors(registrationForm.tel) }}
+                        {{ form_errors(f.tel) }}
                     </div>
 
-                    <div class="col-12">
+<div class="col-12">
                         <label for="yourEmail" class="form-label">Votre Email</label>
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.email, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please enter a valid Email address!</div>
-                        {{ form_errors(registrationForm.email) }}
+                        {{ form_errors(f.email) }}
                     </div>
-
-                    <div class="col-12">
-                        <label for="roles" class="form-check-label">Je suis :</label>
-                        {{ form_widget(registrationForm.roles, {'attr': {'class': 'form-check-inline'}}) }}
-                        <div class="invalid-feedback">Please select a role!</div>
-                        {{ form_errors(registrationForm.roles) }}
-
-                    </div>
-                    
                     <div class="col-12">
                         <label for="yourPassword" class="form-label">Password</label>
-                        {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.password.first, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please enter your password!</div>
-                        {{ form_errors(registrationForm.password.first) }}
+                        {{ form_errors(f.password.first) }}
                     </div>
 
                     <div class="col-12">
                         <label for="yourPassword" class="form-label">Confirm Password</label>
-                        {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_widget(f.password.second, {'attr': {'class': 'form-control'}}) }}
                         <div class="invalid-feedback">Please confirm your password!</div>
-                        {{ form_errors(registrationForm.password.second) }}
+                        {{ form_errors(f.password.second) }}
 
                     </div>
 
-                    <div class="col-12">
-    <div class="form-check">
-        {{ form_widget(registrationForm.terms, {'attr': {'class': 'form-check-input'}}) }}
-        <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-        <div class="invalid-feedback">
-            {{ form_errors(registrationForm.terms) }}
-        </div>
-    </div>
-</div>
 
 
                     <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                        <button class="btn btn-primary w-100" type="submit">Modifier Compte</button>
                     </div>
 
-                    <div class="col-12">
-                        <p class="small mb-0">Vous aver déja un compte? <a href="{{path('app_login')}}">Sign in</a></p>
-                    </div>
+                   
 
                 </div>
             </div>
@@ -115,5 +95,5 @@
     </div>
 </div>
 
-{{ form_end(registrationForm) }}
+{{ form_end(f) }}
 {% endblock %}

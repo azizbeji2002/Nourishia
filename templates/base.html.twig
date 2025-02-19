@@ -6,7 +6,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
-
+        {% block head %}
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,9 +56,10 @@
                 <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-instagram text-secondary"></i></a>
                 <a href="" class="btn btn-light btn-sm-square rounded-circle me-0"><i class="fab fa-linkedin-in text-secondary"></i></a>
             </div>
+            {% endblock %}
             {% block iconedec %}
             <!-- Icône de déconnexion à l'extrême droite avec une classe spécifique -->
-            <a href="logout.php" class="btn btn-light btn-sm-square rounded-circle btn-signout">
+            <a href="{{path('app_logout')}}" class="btn btn-light btn-sm-square rounded-circle btn-signout">
                 <i class="fas fa-sign-out-alt text-primary"></i> <!-- Couleur différente -->
             </a>
         </div>
@@ -73,16 +74,25 @@
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
+
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link">Accueil</a>
-                            <a href="service.html" class="nav-item nav-link">Produits</a>
-                            <a href="program.html" class="nav-item nav-link">Forum</a>
-                            <a href="event.html" class="nav-item nav-link">Événements</a>
-                            <a href="404.html" class="nav-item nav-link">Nutrition</a>
-                            <a href="404.html" class="nav-item nav-link">Consultation</a>
-                            </div>
-                        </div>
+    <div class="navbar-nav mx-auto">
+        <a href="#" class="nav-item nav-link">Accueil</a>
+        <a href="#" class="nav-item nav-link">Produits</a>
+        <a href="#" class="nav-item nav-link">Forum</a>
+        <a href="#" class="nav-item nav-link">Événements</a>
+        <a href="#" class="nav-item nav-link">Nutrition</a>
+
+{% if 'ROLE_DOCTEUR' in app.user.roles   %}
+        <a href="#" class="nav-item nav-link">Consultation</a>
+    {% endif %}
+    {% if 'ROLE_ADMIN' in app.user.roles   %}
+        <a href="{{ path('app_affiche') }}" class="nav-item nav-link">Dashbord</a>
+    {% endif %}
+
+    </div>
+</div>
+
                         <div class="d-flex me-4">
                             <div id="phone-tada" class="d-flex align-items-center justify-content-center">
                                 <a href="" class="position-relative wow tada" data-wow-delay=".9s" >
@@ -120,16 +130,25 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p><strong>Nom:</strong> Nourishia</p>
-        <p><strong>Email:</strong> Nourishia@gmail.com</p>
-        <p><strong>Adresse:</strong> esprit Ariana Tunis, 2083</p>
-        <p><strong>Téléphone:</strong> +216 54491504</p>
+   
+        {% if app.user is not null %}
+    <p><strong>Nom:</strong> {{ app.user.nom }}</p>
+    <p><strong>Prénom:</strong> {{ app.user.prenom }}</p>
+    <p><strong>Email:</strong> {{ app.user.email }}</p>
+    <p><strong>Adresse:</strong> {{ app.user.adr }}</p>
+    <p><strong>Téléphone:</strong> {{ app.user.tel }}</p>
+    <p><strong>Date de Naissance:</strong> {{ app.user.date|date('d/m/Y') }}</p>
 
-        <!-- Buttons for edit and delete -->
+    <!-- Vérification du rôle -->
+    {% if 'ROLE_ADMIN' not in app.user.roles %}
+        <!-- Boutons pour modifier et supprimer -->
         <div class="mt-4">
-          <a href="edit_profile.php" class="btn btn-modify btn-sm me-2">Modifier</a>
-          <a href="delete_profile.php" class="btn btn-delete btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">Supprimer le compte</a>
+            <a href="{{ path('app_update', { email: app.user.email }) }}" class="btn btn-modify btn-sm me-2">Modifier</a>
+            <a href="{{ path('app_supp_user', { email: app.user.email }) }}" class="btn btn-delete btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">Supprimer le compte</a>
         </div>
+    {% endif %}
+{% endif %}
+
       </div>
     </div>
   </div>
