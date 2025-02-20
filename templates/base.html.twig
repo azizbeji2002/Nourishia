@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Nourishia</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+        {% block head %}
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="{{ asset('lib/animate/animate.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+        <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ asset('css/style.css')}}" rel="stylesheet">
+
+    </head>
+    <body>
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar start -->
+<div class="container-fluid border-bottom bg-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container topbar bg-primary d-none d-lg-block py-2" style="border-radius: 0 40px">
+        <div class="d-flex justify-content-between">
+            <div class="top-info ps-2">
+                <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> 
+                    <a href="#" class="text-white">esprit Ariana Tunis،2083</a>
+                </small>
+                <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i>
+                    <a href="#" class="text-white">Nourishia@gmail.com</a>
+                </small>
+            </div>
+            <div class="top-link pe-2"> 
+                <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-facebook-f text-secondary"></i></a>
+                <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-twitter text-secondary"></i></a>
+                <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-instagram text-secondary"></i></a>
+                <a href="" class="btn btn-light btn-sm-square rounded-circle me-0"><i class="fab fa-linkedin-in text-secondary"></i></a>
+            </div>
+            {% endblock %}
+            {% block iconedec %}
+            <!-- Icône de déconnexion à l'extrême droite avec une classe spécifique -->
+            <a href="{{path('app_logout')}}" class="btn btn-light btn-sm-square rounded-circle btn-signout">
+                <i class="fas fa-sign-out-alt text-primary"></i> <!-- Couleur différente -->
+            </a>
+        </div>
+        {% endblock %}
+    </div>
+</div>
+
+{% block header %}
+            <div class="container px-0">
+                <nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav mx-auto">
+        <a href="{{ path('app_front') }}" class="nav-item nav-link">Accueil</a>
+        <a href="{{path('app_produitss')}}" class="nav-item nav-link">Produits</a>
+        <a href="{{path('user_order_list')}}" class="nav-item nav-link">Ordres</a>
+        <a href="{{path('app_posts')}}" class="nav-item nav-link">Forum</a>
+        <a href="#" class="nav-item nav-link">Événements</a>
+        <a href="{{path('app_plan')}}" class="nav-item nav-link">Nutrition</a>
+        <a href="{{path('app_rendez_vous_newFront')}}" class="nav-item nav-link">Consultation</a>
+{% if 'ROLE_DOCTEUR' in app.user.roles   %}
+        <a href="#" class="nav-item nav-link">Consultation</a>
+    {% endif %}
+    {% if 'ROLE_ADMIN' in app.user.roles   %}
+        <a href="{{ path('app_affiche') }}" class="nav-item nav-link">Dashbord</a>
+    {% endif %}
+
+    </div>
+</div>
+
+                        <div class="d-flex me-4">
+                            <div id="phone-tada" class="d-flex align-items-center justify-content-center">
+                                <a href="" class="position-relative wow tada" data-wow-delay=".9s" >
+                                    <i class="fa fa-phone-alt text-primary fa-2x me-4"></i>
+                                    <div class="position-absolute" style="top: -7px; left: 20px;">
+                                        <span><i class="fa fa-comment-dots text-secondary"></i></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="d-flex flex-column pe-3 border-end border-primary">
+                                <span class="text-primary">Avez-vous des questions?</span>
+                                <a href="#"><span class="text-secondary">+216 54491504</span></a>
+                            </div>
+                        </div>
+                        <div class="d-flex me-4">
+                            <div id="profile-icon" class="d-flex align-items-center justify-content-center">
+                                <!-- profile icon -->
+                                <a href="#" class="position-relative" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    <i class="fa fa-user text-primary fa-2x me-4"></i> 
+                                </a>
+                            </div>
+                        </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+
+      <!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileModalLabel">Mon Profil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+   
+        {% if app.user is not null %}
+    <p><strong>Nom:</strong> {{ app.user.nom }}</p>
+    <p><strong>Prénom:</strong> {{ app.user.prenom }}</p>
+    <p><strong>Email:</strong> {{ app.user.email }}</p>
+    <p><strong>Adresse:</strong> {{ app.user.adr }}</p>
+    <p><strong>Téléphone:</strong> {{ app.user.tel }}</p>
+    <p><strong>Date de Naissance:</strong> {{ app.user.date|date('d/m/Y') }}</p>
+
+    <!-- Vérification du rôle -->
+    {% if 'ROLE_ADMIN' not in app.user.roles %}
+        <!-- Boutons pour modifier et supprimer -->
+        <div class="mt-4">
+            <a href="{{ path('app_update', { email: app.user.email }) }}" class="btn btn-modify btn-sm me-2">Modifier</a>
+            <a href="{{ path('app_supp_user', { email: app.user.email }) }}" class="btn btn-delete btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">Supprimer le compte</a>
+        </div>
+    {% endif %}
+{% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+{% block footer %}
+<!-- Footer Start -->
+<div class="container-fluid footer py-3 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer-item">
+                    <div class="d-flex align-items-center">
+                        <small class="text-body me-4">
+                            <i class="fa fa-map-marker-alt text-primary me-2"></i> 
+                            esprit Ariana Tunis,2083
+                        </small>
+                        <small class="text-body me-4">
+                            <i class="fa fa-phone-alt text-primary me-2"></i> 
+                            <a href="tel:+01234567890123" class="text-body">+216 54491504</a>
+                        </small>
+                        <small class="text-body">
+                            <i class="fas fa-envelope text-primary me-2"></i> 
+                            <a href="mailto:exampleemail@gmail.com" class="text-body">nourishia@gmail.com</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('lib/wow/wow.min.js')}}"></script>
+    <script src="{{ asset('lib/easing/easing.min.js')}}"></script>
+    <script src="{{ asset('lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{ asset('lib/lightbox/js/lightbox.min.js')}}"></script>
+    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ asset('js/main.js')}}"></script>
+    {% endblock %}
+    </body>
+</html>

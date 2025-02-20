@@ -1,0 +1,90 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %} New Product{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3>Create New Product</h3>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                    <!-- Form Frame with Border -->
+                    <div class="border p-4 rounded-lg shadow-sm">
+
+                        <!-- Product Name Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.nom.vars.id }}" class="font-weight-bold">Product Name</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.nom) }}</span>
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.description.vars.id }}" class="font-weight-bold">Description</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.description) }}</span>
+                        </div>
+
+                        <!-- Price Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.prix.vars.id }}" class="font-weight-bold">Price</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.prix, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.prix) }}</span>
+                        </div>
+
+                        <!-- Quantity Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.quantite.vars.id }}" class="font-weight-bold">Quantity</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.quantite, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.quantite) }}</span>
+                        </div>
+
+                        <!-- Image Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.image.vars.id }}" class="font-weight-bold">Product Image</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.image, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.image) }}</span>
+                        </div>
+
+                        <!-- Category Field -->
+                        <div class="form-group mb-3">
+                            <label for="{{ form.categorie.vars.id }}" class="font-weight-bold">Category</label>
+                            <div class="border p-3 rounded-lg">
+                                {{ form_widget(form.categorie, {'attr': {'class': 'form-control border-0'}}) }}
+                            </div>
+                            <span style="color: red;">{{ form_errors(form.categorie) }}</span>
+                        </div>
+
+                        <!-- Styled Submit Button (Blue) -->
+                        <div class="text-center">
+                            {{ form_row(form.submit, {
+                                'attr': {'class': 'btn btn-primary btn-lg rounded-lg mt-3 shadow-sm' }
+                            }) }}
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_produit') }}" class="btn btn-sm btn-warning">Back</a>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

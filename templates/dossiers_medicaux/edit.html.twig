@@ -1,0 +1,186 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Éditer Dossier Médical{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center">Éditer le Dossier Médical - {{ dossiers_medicaux.id }}</h2>
+            <hr class="mb-4">
+
+            <div class="mt-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+                    
+                    <!-- Diagnostic Field -->
+                    <div class="mb-3">
+                        <label for="diagnostic" class="form-label">Diagnostic</label>
+                        {{ form_widget(form.diagnostic, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le diagnostic'}}) }}
+                        {% if form.diagnostic.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.diagnostic.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Traitement Field -->
+                    <div class="mb-3">
+                        <label for="traitement" class="form-label">Traitement</label>
+                        {{ form_widget(form.traitement, {'attr': {'class': 'form-control', 'rows': '4', 'placeholder': 'Décrivez le traitement'}}) }}
+                        {% if form.traitement.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.traitement.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Fichier Field -->
+                    <div class="mb-3">
+                        <label for="fichier" class="form-label">Fichier (PDF seulement)</label>
+                        {{ form_widget(form.fichier, {'attr': {'class': 'form-control'}}) }}
+                        {% if form.fichier.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.fichier.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Patient Field -->
+                    <div class="mb-3">
+                        <label for="patient" class="form-label">Patient</label>
+                        {{ form_widget(form.patient_id, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.patient_id.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.patient_id.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Docteur Field -->
+                    <div class="mb-3">
+                        <label for="docteur" class="form-label">Docteur</label>
+                        {{ form_widget(form.docteur_id, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.docteur_id.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.docteur_id.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- New Fields: Groupe Sanguin, Taille, Sexe, Allergie, Contact Urgence -->
+                    <div class="mb-3">
+                        <label for="groupeSanguin" class="form-label">Groupe Sanguin</label>
+                        {{ form_widget(form.groupeSanguin, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A+, B-, etc.'}}) }}
+                        {% if form.groupeSanguin.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.groupeSanguin.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="taille" class="form-label">Taille (en cm)</label>
+                        {{ form_widget(form.taille, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la taille en cm'}}) }}
+                        {% if form.taille.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.taille.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sexeBebe" class="form-label">Sexe du Bébé</label>
+                        {{ form_widget(form.sexeBebe, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.sexeBebe.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.sexeBebe.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="allergie" class="form-label">Allergie</label>
+                        {{ form_widget(form.allergie, {'attr': {'class': 'form-control', 'placeholder': 'Entrez les allergies si applicable'}}) }}
+                        {% if form.allergie.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.allergie.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contactUrgence" class="form-label">Contact d'Urgence</label>
+                        {{ form_widget(form.contactUrgence, {'attr': {'class': 'form-control', 'placeholder': 'Entrez un numéro de contact'}}) }}
+                        {% if form.contactUrgence.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.contactUrgence.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">✅ Mettre à jour</button>
+                    </div>
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_dossiers_medicaux_index') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i>⬅️ Retour à la liste
+                </a>
+            </div>
+
+            {{ include('dossiers_medicaux/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        let isValid = true;
+
+        document.querySelectorAll(".form-control").forEach(function (input) {
+            let errorDiv = input.parentElement.querySelector(".text-danger");
+
+            if (input.value.trim() === "") {
+                input.classList.add("is-invalid");
+                errorDiv.textContent = "⚠️ Ce champ est obligatoire";
+                isValid = false;
+            } else {
+                input.classList.remove("is-invalid");
+                errorDiv.textContent = "";
+            }
+        });
+
+        if (!isValid) event.preventDefault();
+    });
+});
+</script>
+{% endblock %}

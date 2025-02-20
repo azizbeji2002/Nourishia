@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s" style="background-image: url('https://images.radio-canada.ca/q_auto,w_960/v1/ici-premiere/16x9/medecin-sante-confiance-technologie-evolution.jpg'); background-size: cover; background-position: center;">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-blue mb-4">Activities for {{ plan.alimentRecommende }}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white" aria-current="page">Activities</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Service Start -->
+<div class="container-fluid service py-5">
+   
+        <div class="row g-5">
+            {% for activity in activities %}
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeIn" data-wow-delay="0.1s">
+                <div class="text-center border-primary border bg-white service-item">
+                    <div class="service-content d-flex align-items-center justify-content-center p-4">
+                        <div class="service-content-inner">
+                            <div class="p-4"><i class="fas fa-running fa-6x text-primary"></i></div>
+                            <a href="#" class="h4">{{ activity.type }}</a>
+                            <p class="my-3">Duration: {{ activity.duree }} minutes</p>
+                            <p class="my-3">Frequency: {{ activity.frequence }} times/week</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="col-12 text-center">
+                    <p>No activities available for this plan.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Service End -->
+
+{% endblock %}

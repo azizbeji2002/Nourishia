@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block iconedec %}
+{% endblock %}
+{% block header %}
+<div class="container px-0">
+<nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+
+                            </div>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-5"> {# Agrandir la taille du formulaire #}
+            <div class="card shadow-sm py-4 mt-5"> {# Réduction de la hauteur et levée du formulaire #}
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="card-title pb-0 fs-5">Créer un Compte</h5>
+                        <p class="small">Entrez vos informations personnelles</p>
+                    </div>
+
+                    {{ form_start(registrationForm, {attr: {novalidate: 'novalidate'}}) }}
+                    
+                    <div class="col-12">
+                        <label for="yourName" class="form-label">Votre Nom</label>
+                        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.nom) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourPrenom" class="form-label">Votre Prenom</label>
+                        {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.prenom) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourEmail" class="form-label">Votre adresse</label>
+                        {{ form_widget(registrationForm.adr, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.adr) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourDate" class="form-label">Votre date de naissance</label>
+                        {{ form_widget(registrationForm.date, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.date) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourTel" class="form-label">Votre Tel</label>
+                        {{ form_widget(registrationForm.tel, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.tel) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourEmail" class="form-label">Votre Email</label>
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="roles" class="form-check-label">Je suis :</label>
+                        {{ form_widget(registrationForm.roles, {'attr': {'class': 'form-check-inline'}}) }}
+                        {{ form_errors(registrationForm.roles) }}
+
+                    </div>
+                    
+                    <div class="col-12">
+                        <label for="yourPassword" class="form-label">Password</label>
+                        {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.password.first) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourPassword" class="form-label">Confirm Password</label>
+                        {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(registrationForm.password.second) }}
+
+                    </div>
+
+                    <div class="col-12">
+    <div class="form-check">
+        {{ form_widget(registrationForm.terms, {'attr': {'class': 'form-check-input'}}) }}
+        <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+        <div class="invalid-feedback">
+            {{ form_errors(registrationForm.terms) }}
+        </div>
+    </div>
+</div>
+
+
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                    </div>
+
+                    <div class="col-12">
+                        <p class="small mb-0">Vous aver déja un compte? <a href="{{path('app_login')}}">Sign in</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(registrationForm) }}
+{% endblock %}

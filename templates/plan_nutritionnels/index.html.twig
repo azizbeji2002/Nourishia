@@ -1,0 +1,46 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Ajouter un Plan
+        </h2>
+
+        <!-- Form -->
+        <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+            Remplissez les détails du plan nutritionnel
+        </h4>
+
+        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+            {{ form_start(form) }}
+
+            <!-- Aliments Recommandés -->
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Aliments Recommandés</span>
+                {{ form_widget(form.alimentRecommende, {'attr': {'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input'}}) }}
+                <div style="color: red; font-size: 0.875rem;">
+                    {{ form_errors(form.alimentRecommende) }}
+                </div>
+            </label>
+
+            <!-- Aliments à éviter -->
+            <label class="block text-sm mt-4">
+                <span class="text-gray-700 dark:text-gray-400">Aliments à éviter</span>
+                {{ form_widget(form.alimentEvite, {'attr': {'class': 'block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input'}}) }}
+                <div style="color: red; font-size: 0.875rem;">
+                    {{ form_errors(form.alimentEvite) }}
+                </div>
+            </label>
+
+            <div class="mt-6">
+                <button type="submit" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    Ajouter le Plan
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,122 @@
+ 
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 
+        
+     <!-- Registration Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Inscription à l'événement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Nom Complet</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registrationDate" class="form-label">Date d'Inscription</label>
+                        <input type="date" class="form-control" id="registrationDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registrationStatus" class="form-label">Statut</label>
+                        <select class="form-control" id="registrationStatus">
+                            <option value="pending">En attente</option>
+                            <option value="confirmed">Confirmé</option>
+                            <option value="canceled">Annulé</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+        
+        <!-- Page Header Start -->
+        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container text-center py-5">
+                <h1 class="display-2 text-white mb-4">Produits</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white" aria-current="page">Produits/Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Page Header End -->
+<div class="mb-3">
+ <!-- Navbar start -->
+<!-- Order Now Button (Above Product) -->
+<div class="text-center mb-4">
+</div>
+ <td>
+                                           
+                                            <a href="{{ path('app_produitss') }}" class="btn btn-sm btn-outline-dark mx-1">back</a>
+                                          
+                                        </td>
+    
+
+<!-- Product Display -->
+<div class="row justify-content-center">
+    {% if product %}
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                {% if product.image %}
+    <img src="{{ asset('uploads/' ~ product.image) }}" 
+         alt="{{ product.nom }}" 
+         class="img-fluid rounded"
+         style="width: 80px; height: 80px; object-fit: cover;">
+{% else %}
+    <img src="{{ asset('uploads/default.png.png.png') }}" 
+         alt="Default Image" 
+         class="img-fluid rounded"
+style="object-fit: contain; height: 400px; width: 100%;">
+{% endif %}
+                    
+                <!-- Product Details -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.nom }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <h5><span class="text-danger">{{ product.prix }} dt</span></h5>
+                    <h5><span class="text-success">{{ product.categorie.nom }}</span></h5>
+                     <a href="{{ path('order_add',{product: product.id}) }}" class="btn btn-sm btn-outline-dark mx-1">ORDER NOW</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">No Products found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
