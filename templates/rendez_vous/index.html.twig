@@ -1,0 +1,56 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}Liste des Rendez-vous{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center text-success">Liste des Rendez-vous</h2>
+            <hr class="mb-4">
+            
+            {% if app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {% for message in app.flashes('error') %}
+                        <p class="mb-0">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover mt-4">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center" style="width: 10%;">ID</th>
+                            <th class="text-center" style="width: 20%;">Date de Rendez-vous</th>
+                            <th class="text-center" style="width: 15%;">Statut</th>
+                            <th class="text-center" style="width: 20%;">Patient</th>
+                            <th class="text-center" style="width: 20%;">Docteur</th>
+                            <th class="text-center" style="width: 15%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rendez_vou in rendez_vouses %}
+                            <tr class="table-row-hover">
+                                <td class="text-center">{{ rendez_vou.id }}</td>
+                                <td class="text-center">{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('d/m/Y H:i') : '' }}</td>
+                                <td class="text-center">{{ rendez_vou.statut.value }}</td>
+                                <td class="text-center">{{ rendez_vou.patient ? rendez_vou.patient.nom : 'Non spécifié' }}</td>
+                                <td class="text-center">{{ rendez_vou.docteur ? rendez_vou.docteur.nom : 'Non spécifié' }}</td>
+                                <td class="text-center">
+                                    <a href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}" class="btn btn-info btn-sm">📝</a>
+                                    <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}" class="btn btn-warning btn-sm">✏️</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">Aucun rendez-vous trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+           
+        </div>
+    </div>
+{% endblock %}

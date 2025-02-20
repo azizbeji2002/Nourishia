@@ -1,0 +1,60 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}Liste des Consultations{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center text-success">Liste des Consultations</h2>
+            <hr class="mb-4">
+
+            {% if app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {% for message in app.flashes('error') %}
+                        <p class="mb-0">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover mt-4">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center" style="width: 10%;">ID</th>
+                            <th class="text-center" style="width: 10%;">Date de Consultation</th>
+                            <th class="text-center" style="width: 15%;">Statut</th>
+                            <th class="text-center" style="width: 20%;">Conseils</th>
+                            <th class="text-center" style="width: 10%;">Poids (kg)</th>
+                            <th class="text-center" style="width: 10%;">Tension</th>
+                            <th class="text-center" style="width: 15%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for consultation in consultations %}
+                            <tr class="table-row-hover">
+                                <td class="text-center">{{ consultation.id }}</td>
+                                <td class="text-center">{{ consultation.dateConsultation ? consultation.dateConsultation|date('d/m/Y') : '' }}</td>
+                                <td class="text-center">{{ consultation.statut.value }}</td>
+                                <td class="text-center">{{ consultation.conseils }}</td>
+                                <td class="text-center">{{ consultation.poids }}</td>
+                                <td class="text-center">{{ consultation.tension }}</td>
+                                <td class="text-center">
+                                    <a href="{{ path('app_consultation_show', {'id': consultation.id}) }}">📝</a>
+                                    <a href="{{ path('app_consultation_edit', {'id': consultation.id}) }}">✏️</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">Aucune consultation trouvée</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_consultation_new') }}" class="btn btn-ss btn-lg">Créer une Nouvelle Consultation</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'test.html.twig' %}
+
+{% block title %}RendezVous - {{ rendez_vou.id }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center text-success">Rendez-vous - {{ rendez_vou.id }}</h2>
+            <hr class="mb-4">
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ rendez_vou.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date du Rendez-vous</th>
+                        <td>{{ rendez_vou.dateRdv ? rendez_vou.dateRdv|date('d/m/Y H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Statut</th>
+                        <td>{{ rendez_vou.statut.value }}</td>
+                    </tr>
+                    <tr>
+                        <th>Patient</th>
+                        <td>{{ rendez_vou.patient.nom }} {{ rendez_vou.patient.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Docteur</th>
+                        <td>{{ rendez_vou.docteur.nom }} {{ rendez_vou.docteur.prenom }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_rendez_vous_index') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i> ⬅️ Retour à la liste
+                </a>
+                <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}" class="btn btn-primary btn-lg ms-3">Modifier</a>
+            </div>
+
+            {{ include('rendez_vous/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
