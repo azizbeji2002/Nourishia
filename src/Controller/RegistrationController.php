@@ -31,6 +31,11 @@ class RegistrationController extends AbstractController
         $selectedRole = $form->get('roles')->getData();
         $user->setRoles($selectedRole);
 
+        //pour ptiente le compte est aumatiquement verifié
+        if(in_array('ROLE_PATIENTE',$user->getRoles(),true)) {
+            $user->setIsVerified(true);
+        }
+
             $entityManager->persist($user);
             $entityManager->flush();
 

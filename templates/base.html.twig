@@ -83,10 +83,9 @@
         <a href="{{path('app_posts')}}" class="nav-item nav-link">Forum</a>
         <a href="#" class="nav-item nav-link">Événements</a>
         <a href="{{path('app_plan')}}" class="nav-item nav-link">Nutrition</a>
-        <a href="{{path('app_rendez_vous_newFront')}}" class="nav-item nav-link">Consultation</a>
 {% if 'ROLE_DOCTEUR' in app.user.roles   %}
-        <a href="#" class="nav-item nav-link">Consultation</a>
-    {% endif %}
+        <a href="{{path('app_rendez_vous_newFront')}}" class="nav-item nav-link">Consultation</a>
+    {% endif %}  
     {% if 'ROLE_ADMIN' in app.user.roles   %}
         <a href="{{ path('app_affiche') }}" class="nav-item nav-link">Dashbord</a>
     {% endif %}

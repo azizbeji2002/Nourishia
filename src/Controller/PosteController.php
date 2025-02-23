@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
+
 final class PosteController extends AbstractController
 {
     #[Route('/posts', name: 'app_posts')]
@@ -64,30 +65,32 @@ final class PosteController extends AbstractController
         ]);
     }
 
-    #[Route('/ajouterPoste', name: 'ajouterPoste')]
-    public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $poste = new Poste();
-        $form = $this->createForm(PosteType::class, $poste);
 
-        $form->handleRequest($request);
+#[Route('/ajouterPoste', name: 'ajouterPoste')]
+public function ajouterPoste(Request $request, EntityManagerInterface $entityManager): Response
+{
+    
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Save the valid data
-            $poste->setDatePublication(new \DateTime());
-            $poste->setEtat(false);
+    $poste = new Poste();
+    $form = $this->createForm(PosteType::class, $poste);
+    $form->handleRequest($request);
 
-            $entityManager->persist($poste);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $poste->setDatePublication(new \DateTime());
+        $poste->setEtat(false);
+        
 
-            // Redirect to another route after successful submission
-            return $this->redirectToRoute('app_posts');
-        }
+        $entityManager->persist($poste);
+        $entityManager->flush();
 
-        return $this->render('poste/ajouterPoste.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('app_posts');
     }
+
+    return $this->render('poste/ajouterPoste.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
     #[Route('/modifierPoste/{id}', name: 'modifierPoste')]
 public function modifierPoste(int $id, Request $request, EntityManagerInterface $entityManager): Response
 {

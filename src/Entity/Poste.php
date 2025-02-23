@@ -48,6 +48,8 @@ private ?string $logs = null;
 #[ORM\OneToMany(mappedBy: "poste", targetEntity: Commentaire::class, cascade: ["remove"])]
 private Collection $commentaires;
 
+
+
 public function getLogs(): ?string
 {
     return $this->logs;
@@ -63,6 +65,7 @@ public function setLogs(?string $logs): static
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        
     }
 
     // Getters et setters
@@ -149,5 +152,10 @@ public function setLogs(?string $logs): static
         return $this;
     }
 
+    
+
+    
+
+   
     
 }

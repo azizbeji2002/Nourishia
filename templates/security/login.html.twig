@@ -22,7 +22,12 @@
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-    
+    {% if app.request.get('error') %}
+    <div class="alert alert-danger">
+        {{ app.request.get('error') }}
+    </div>
+{% endif %}
+
     <div class="container d-flex justify-content-center">
     <div class="row justify-content-center w-100">
         <!-- Agrandir la taille de la colonne en modifiant la classe -->
