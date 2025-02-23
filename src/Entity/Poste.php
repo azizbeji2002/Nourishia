@@ -148,6 +148,19 @@ public function setLogs(?string $logs): static
 
         return $this;
     }
-
+ 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $epingle = false;
     
+    // Getter et Setter pour l'épinglage
+    public function isEpingle(): bool
+    {
+        return $this->epingle;
+    }
+    
+    public function setEpingle(bool $epingle): static
+    {
+        $this->epingle = $epingle;
+        return $this;
+    }
 }

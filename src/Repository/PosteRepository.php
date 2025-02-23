@@ -28,7 +28,19 @@ class PosteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+    public function findAllWithEpingle()
+{
+    return $this->createQueryBuilder('p')
+        ->addSelect('c')
+        ->leftJoin('p.commentaires', 'c')
+        ->where('p.etat = :etat')
+        ->setParameter('etat', true)
+        ->orderBy('p.epingle', 'DESC')  // Trier d'abord par epingle (true en premier)
+        ->addOrderBy('p.datePublication', 'DESC')  // Puis trier par date de publication
+        ->addOrderBy('c.dateCreation', 'ASC')  // Et enfin trier par date de création des commentaires
+        ->getQuery()
+        ->getResult();
+}
 
 
 //    /**

@@ -44,6 +44,7 @@ final class PosteController extends AbstractController
     #[Route('/backoffice', name: 'backoffice')]
     public function backoffice(PosteRepository $postRepository): Response
     {
+        
         // Récupérer toutes les publications depuis le repository
         $posts = $postRepository->findAll();
         $forms = [];
@@ -112,10 +113,6 @@ public function modifierPoste(int $id, Request $request, EntityManagerInterface 
         $entityManager->persist($post);
 
         $entityManager->flush();
-        // Ajouter un message de succès
-        // $this->addFlash('success', 'Le commentaire a été modifié avec succès.');
-
-        // Rediriger vers la liste des posts
         return $this->redirectToRoute('app_posts');
     }
 
@@ -296,6 +293,34 @@ public function consulterCommentaires(int $postId, EntityManagerInterface $entit
         'post' => $post,
         'commentaires' => $commentaires,
     ]);
-}
 
+}
+// src/Controller/PosteController.php
+
+#[Route('/post/{id}/toggle-epingle', name: 'toggle_epingle')]
+    public function toggleEpingle(int $id, EntityManagerInterface $em): RedirectResponse
+    {
+        // Récupérer le poste via l'id
+        $poste = $em->getRepository(Poste::class)->find($id);
+
+        if ($poste) {
+            // Inverser l'état d'épinglage du poste
+            $poste->setEpingle(!$poste->isEpingle());
+
+            // Sauvegarder l'état mis à jour
+            $em->flush();
+        }
+
+        // Rediriger vers la liste des posts
+        return $this->redirectToRoute('app_posts');
+    }
+#[Route('/posts', name: 'app_posts')]
+
+public function index(PosteRepository $posteRepository): Response
+{
+    $posts = $posteRepository->findAllWithEpingle();  // Appelle la méthode avec tri des épinglés
+    return $this->render('poste/index.html.twig', [
+        'posts' => $posts,
+    ]);
+}
 }
