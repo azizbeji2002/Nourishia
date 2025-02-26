@@ -300,5 +300,31 @@ public function consulterCommentaires(int $postId, EntityManagerInterface $entit
         'commentaires' => $commentaires,
     ]);
 }
+#[Route('/post/{id}/toggle-epingle', name: 'toggle_epingle')]
+    public function toggleEpingle(int $id, EntityManagerInterface $em): RedirectResponse
+    {
+        // Récupérer le poste via l'id
+        $poste = $em->getRepository(Poste::class)->find($id);
+
+        if ($poste) {
+            // Inverser l'état d'épinglage du poste
+            $poste->setEpingle(!$poste->isEpingle());
+
+            // Sauvegarder l'état mis à jour
+            $em->flush();
+        }
+
+        // Rediriger vers la liste des posts
+        return $this->redirectToRoute('app_posts');
+    }
+#[Route('/posts', name: 'app_posts')]
+
+public function index(PosteRepository $posteRepository): Response
+{
+    $posts = $posteRepository->findAllWithEpingle();  // Appelle la méthode avec tri des épinglés
+    return $this->render('poste/affichage.html.twig', [
+        'posts' => $posts,
+    ]);
+}
 
 }

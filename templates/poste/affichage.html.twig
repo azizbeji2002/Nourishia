@@ -1,160 +1,208 @@
+{% extends 'base.html.twig' %}
 
-   {% extends 'base.html.twig' %}
+{% block title %}Liste des Posts{% endblock %}
 
 {% block body %}
+    <div class="container mt-5">
+        <h1 class="post-title text-center animate__animated animate__fadeIn">
+            <span class="text-gradient">📝 Liste des Posts</span>
+        </h1>
+        <hr class="title-underline mb-5">
 
-
-        
-        <!-- Page Header Start -->
-        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container text-center py-5">
-                <h1 class="display-2 text-white mb-4">Forum</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-center mb-0">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white" aria-current="page">Forum</li>
-                    </ol>
-                </nav>
-            </div>
+        <div class="text-center mb-4">
+            <a href="{{ path('ajouterPoste') }}" class="btn btn-gradient btn-lg shadow-sm">➕ Ajouter un Poste</a>
         </div>
-        <!-- Page Header End -->
-	<div class="container mt-5">
-		<h1 class="post-title text-center animate__animated animate__fadeIn">
-			<span class="text-gradient">📝 Liste des Posts</span>
-		</h1>
-		<hr class="title-underline mb-5">
 
-		<div class="text-center mb-4">
-		 <td>
-                                           
-                                            <a href="{{ path('app_front') }}" class="btn btn-sm btn-outline-dark mx-1">back</a>
-                                          
-                                        </td>
-			<a href="{{ path('ajouterPoste') }}" class="btn btn-success btn-lg shadow-sm">➕ Ajouter un Poste</a>
-		</div>
+        {% if posts is not empty %}
+            <div class="d-flex flex-column align-items-center">
+                {% set sortedPosts = posts|sort((a, b) => b.isEpingle() ? 1 : -1) %}
 
-		{% if posts is not empty %}
-			<div class="d-flex flex-column align-items-center">
-				{% for post in posts %}
-					<div class="post-card w-100 mb-4 p-4 shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
-						<h3 class="text-primary fw-bold">{{ post.titre }}</h3>
-						<p class="text-muted">📅 Publié le : {{ post.datePublication|date('d M Y') }}</p>
+                {% for post in sortedPosts %}
+                    <div class="post-card w-100 mb-4 p-4 shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp {% if post.isEpingle() %}epingle{% endif %}">
 
-						<p>
-							
-						</p>
+                        {% if post.isEpingle() %}
+                            <div class="epingle-alert text-center p-3 mb-3 rounded-3 animate__animated animate__fadeInUp">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-pin-fill text-warning me-2" style="font-size: 2.5rem; animation: rotatePin 1.5s infinite;"></i>
+                                    <span class="text-dark fw-bold fs-4">Ce poste est épinglé!</span>
+                                </div>
+                            </div>
+                        {% endif %}
 
-						<p><strong>📝 Détails :</strong> {{ post.contenue }}</p>
+                        <h3 class="text-primary fw-bold">{{ post.titre }}</h3>
+                        <p class="text-muted">📅 Publié le :
+                            {{ post.datePublication|date('d M Y') }}</p>
+                        <p>
+                            <strong>📝 Détails :</strong>
+                            {{ post.contenue }}</p>
 
-						{% if post.commentaires is not empty %}
-							<div class="mt-3">
-								<h5 class="text-secondary">💬 Commentaires</h5>
+                        {% if post.commentaires is not empty %}
+                            <div class="mt-3">
+                                <h5 class="text-secondary">💬 Commentaires</h5>
 
-								{% for commentaire in post.commentaires %}
-									{% if commentaire.nbrSignal >= 1 %}
-										<div class="alert alert-warning text-center alert-fade" role="alert">
-											🚨 Ce commentaire a été signalé pour non-conformité !
-										</div>
-									{% endif %}
+                                {% for commentaire in post.commentaires %}
+                                    {% if commentaire.nbrSignal >= 1 %}
+                                        <div class="alert alert-warning text-center alert-fade" role="alert">
+                                            🚨 Ce commentaire a été signalé pour non-conformité !
+                                        </div>
+                                    {% endif %}
 
-									<div class="comment-card mt-2 p-3 bg-light rounded d-flex justify-content-between align-items-center">
-										<p class="mb-0">{{ commentaire.contenu }}</p>
+                                    <div class="comment-card mt-2 p-3 bg-light rounded d-flex justify-content-between align-items-center">
+                                        <p class="mb-0">{{ commentaire.contenu }}</p>
 
-										{% if commentaire.nbrSignal >= 10 %}
-											<span class="badge bg-danger">Supprimé</span>
-										{% else %}
-											<div>
-												<a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
-												<a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-danger" >🗑️ Supprimer</a>
-												<a href="{{ path('commentaire_signal', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-warning">⚠️ Signaler</a>
-											</div>
-										{% endif %}
-									</div>
-								{% endfor %}
-							</div>
-						{% else %}
-							<p class="text-muted mt-2">Aucun commentaire pour le moment</p>
-						{% endif %}
+                                        {% if commentaire.nbrSignal >= 10 %}
+                                            <span class="badge bg-danger">Supprimé</span>
+                                        {% else %}
+                                            <div>
+                                                <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
+                                                <a href="{{ path('commentaire_delete', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-danger">🗑️ Supprimer</a>
+                                                <a href="{{ path('commentaire_signal', {'id': commentaire.id}) }}" class="btn btn-sm btn-outline-warning">⚠️ Signaler</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted mt-2">Aucun commentaire pour le moment</p>
+                        {% endif %}
 
-						<div class="d-flex justify-content-between mt-3">
-							<a href="{{ path('modifierPoste', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
-							<a href="{{ path('creecommentaire', {'postId': post.id}) }}" class="btn btn-sm btn-outline-success">💬 Ajouter un Commentaire</a>
-							<a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-outline-danger" >🗑️ Supprimer</a>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		{% else %}
-			<div class="alert alert-info text-center animate__animated animate__fadeIn">
-				📭 Aucun post trouvé. Ajoutez-en un !
-			</div>
-		{% endif %}
-	</div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="{{ path('modifierPoste', {'id': post.id}) }}" class="btn btn-sm btn-outline-primary">✏️ Modifier</a>
+                            <a href="{{ path('creecommentaire', {'postId': post.id}) }}" class="btn btn-sm btn-outline-success">💬 Ajouter un Commentaire</a>
+                            <a href="{{ path('post_delete', {'id': post.id}) }}" class="btn btn-sm btn-outline-danger">🗑️ Supprimer</a>
 
-	<style>
-		.post-title {
-			font-size: 2.2rem;
-			font-weight: bold;
-			color: #333;
-			margin-bottom: 10px;
-		}
-		.title-underline {
-			width: 50px;
-			height: 4px;
-			background: #ff66b2;
-			border-radius: 2px;
-			margin: 0 auto 30px;
-		}
-		.post-card {
-			background: #fff;
-			width: 80%;
-			max-width: 800px;
-			border-left: 5px solid #ff66b2;
-			transition: all 0.3s ease-in-out;
-		}
-		.post-card:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-		}
-		.btn-sm {
-			padding: 5px 10px;
-			font-size: 0.875rem;
-		}
-		.btn-lg {
-			padding: 10px 20px;
-			font-size: 1rem;
-		}
-		.comment-card {
-			border-left: 3px solid #ff66b2;
-		}
-		.alert-custom {
-			background-color: #ffcc00;
-			color: #000;
-			border-radius: 5px;
-			padding: 15px;
-			margin-bottom: 20px;
-			display: none; /* Initialement caché */
-			transition: opacity 0.5s ease-in-out;
-		}
-	</style>
+                            {% if post.isEpingle() %}
+                                <a href="{{ path('toggle_epingle', {'id': post.id}) }}" class="btn btn-sm btn-outline-info">❌ Désépingler</a>
+                            {% else %}
+                                <a href="{{ path('toggle_epingle', {'id': post.id}) }}" class="btn btn-sm btn-outline-info">📌 Épingler</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center animate__animated animate__fadeIn">
+                📭 Aucun post trouvé. Ajoutez-en un !
+            </div>
+        {% endif %}
+    </div>
 
-	<style>
-		.alert-fade {
-			animation: fadeOut 10s forwards;
-		}
+    <style>
+        /* Titre principal */
+        .post-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #9b4d96; /* Rose doux */
+            margin-bottom: 15px;
+            font-family: 'Roboto', sans-serif;
+        }
 
-		@keyframes fadeOut {
-			0% {
-				opacity: 1;
-			}
-			100% {
-				opacity: 0;
-				display: none;
-			}
-		}
-	</style>
+        .title-underline {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #ff69b4, #d36d9c); /* Dégradé de rose clair à foncé */
+            border-radius: 2px;
+            margin: 0 auto 30px;
+        }
 
-	<link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+        /* Card de post avec animations */
+        .post-card {
+            background: #fff;
+            width: 90%;
+            max-width: 850px;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
 
+        .post-card:hover {
+            transform: scale(1.05); /* Zoom au survol */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+          /*   change le couleur du pôste si il est epingler  */
+        .post-card.epingle {
+            background: #f7e5f9; /* Rose pâle */
+            border-left: 8px solid #ff4c9c; /* Rose vif */
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3); /* Ombre rose douce */
+        }
+
+        /* Alertes pour les épingles */
+        .epingle-alert {
+            background: linear-gradient(to right, #f7a7c8, #ff69b4); /* Dégradé rose */
+            color: white;
+            font-size: 1.3rem;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.2);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .epingle-alert span {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .epingle-alert .bi-pin-fill {
+            animation: rotatePin 1.5s infinite;
+        }
+
+        /* Animation de rotation des icônes */
+        @keyframes rotatePin {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Commentaires */
+        .comment-card {
+            border-left: 4px solid #ff69b4; /* Rose vif */
+            background-color: #f8e0f5; /* Rose clair */
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .comment-card:hover {
+            background-color: #f7c1e3; /* Rose moyen */
+        }
+
+        /* Boutons avec effets */
+        .btn-gradient {
+            background: linear-gradient(to right, #ff69b4, #d36d9c); /* Dégradé rose */
+            color: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #d36d9c, #ff69b4); /* Dégradé rose inversé */
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-lg {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+
+        /* Animation de l'alerte de signalement */
+        .alert-fade {
+            animation: fadeOut 10s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
 {% endblock %}

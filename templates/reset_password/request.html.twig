@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block iconedec %}
+{% endblock %}
+{% block header %}
+<div class="container px-0">
+<nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+
+                            </div>
+{% endblock %}
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <h1>Réinitialiser votre mot de passe</h1>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.email) }}
+        <div>
+            <small>
+                Entrez votre adresse e-mail, et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+            </small>
+        </div>
+
+        <button class="btn btn-primary">Envoyer l'e-mail de réinitialisation</button>
+    {{ form_end(requestForm) }}
+{% endblock %}
+

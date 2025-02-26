@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block iconedec %}
+{% endblock %}
+{% block header %}
+<div class="container px-0">
+<nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+
+                            </div>
+{% endblock %}
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    <h1>Réinitialiser votre mot de passe</h1>
+
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="btn btn-primary">Réinitialiser le mot de passe</button>
+    {{ form_end(resetForm) }}
+{% endblock %}
+
+

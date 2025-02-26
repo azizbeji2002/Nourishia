@@ -43,7 +43,7 @@ security:
     - { path: ^/back/user, roles: ROLE_DOCTEUR, allow_if: false } #mch admin ikoli access denied
     - { path: ^/back/user, roles: ROLE_PATIENTE, allow_if: false }
     - { path: ^/front, roles: IS_AUTHENTICATED_FULLY } #had mayodkhel lil front ken o howa authentifier snn iraj3ou lil login
-    # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^(login|register|reset-password), roles: [ROLE_ADMIN, ROLE_DOCTEUR, ROLE_PATIENTE] }
 
 when@test:
     security:
