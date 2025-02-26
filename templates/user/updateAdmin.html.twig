@@ -42,11 +42,19 @@
                         {{ form_errors(f.tel) }}
                     </div>
 
-                    <div class="mb-3">
-    {{ form_label(f.isVerified, 'Vérification') }}
-    {{ form_widget(f.isVerified, {'attr': {'class': 'form-check-input'}}) }}
+<div class="mb-3">
+    {{ form_label(f.isVerified, 'Vérification', {'label_attr': {'class': 'form-check-label'}}) }}
+    
+    {% for widget in f.isVerified %}
+        <div class="form-check">
+            {{ form_widget(widget, {'attr': {'class': 'form-check-input'}}) }}
+            {{ form_label(widget, widget.vars.label, {'label_attr': {'class': 'form-check-label'}}) }}
+        </div>
+    {% endfor %}
+
     {{ form_errors(f.isVerified) }}
 </div>
+
 
 
                     <div class="mb-3">

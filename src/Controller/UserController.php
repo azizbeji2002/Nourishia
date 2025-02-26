@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 final class UserController extends AbstractController
@@ -90,5 +90,51 @@ final class UserController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('app_affiche');
     }
+    #[Route('/filter', name: 'filter', methods: ['GET'])]
+    public function getUsersByStatus(Request $request, UserRepository $userRepository): JsonResponse
+    {
+        $verified = $request->query->getBoolean('verified');
+        $users = $userRepository->findBy(['verified' => $verified]);
+
+        return $this->json($users);
+    }
+
+    #[Route('/search', name: 'search', methods: ['GET'])]
+    public function searchUsers(Request $request, UserRepository $userRepository): JsonResponse
+    {
+        $name = $request->query->get('name', '');
+        $verified = $request->query->getBoolean('verified');
+
+        $users = $userRepository->searchByNameAndStatus($name, $verified);
+
+        return $this->json($users);
+    }
+    #[Route('/', name: 'app_user_index', methods: ['GET'])]
+    public function index(Request $request, UserRepository $userRepository): Response
+    {
+        // Récupérer les paramètres de la requête
+        $verified = $request->query->get('verified'); // Paramètre de vérification (1 ou 0)
+        $name = $request->query->get('name', ''); // Recherche par nom (par défaut vide)
+    
+        // Créer un tableau de critères pour la recherche
+        $criteria = [];
+    
+        if ($verified !== null) {
+            // Si un filtre "verified" est passé, nous l'ajoutons aux critères
+            $criteria['isVerified'] = (bool) $verified;
+        }
+    
+        if (!empty($name)) {
+            // Si un nom est passé, ajoutez-le également comme critère de recherche
+            $users = $userRepository->searchByNameAndStatus($name, $criteria['isVerified'] ?? null);
+        } else {
+            // Sinon, si aucun nom n'est fourni, nous appliquons seulement le filtre de vérification
+            $users = $userRepository->findBy($criteria);
+        }
+    
+        return $this->render('back1/index.html.twig', [
+            'users' => $users,
+        ]);
+}
 }
 

@@ -4,6 +4,12 @@
     <div class="container mt-5">
         <h1 class="text-center chic-header">Liste des utilisateurs</h1>
 
+        <!-- Boutons de filtrage pour vérifié/non vérifié (alignés à droite) -->
+        <div class="flex justify-end mb-4">
+            <a href="{{ path('app_user_index', {'verified': 1}) }}" class="btn chic-btn-filter mr-2">Vérifiés</a>
+            <a href="{{ path('app_user_index', {'verified': 0}) }}" class="btn chic-btn-filter">Non Vérifiés</a>
+        </div>
+
         <table class="table chic-table table-hover">
             <thead class="chic-thead">
                 <tr>
@@ -21,31 +27,30 @@
             </thead>
             <tbody class="chic-tbody">
                 {% for user in users %}
-    {% if 'ROLE_ADMIN' not in user.roles %}
-        <tr class="chic-row">
-            <td>{{ user.id }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.nom }}</td>
-            <td>{{ user.prenom }}</td>
-            <td>{{ user.roles[0] }}</td>
-            <td>{{ user.tel }}</td>
-            <td>{{ user.adr }}</td>
-            <td>{{ user.date ? user.date|date('Y-m-d') : 'N/A' }}</td>
-            <td>
-                <span class="badge {{ user.isVerified ? 'badge-verified' : 'badge-unverified' }}">
-                    {{ user.isVerified ? 'Oui' : 'Non' }}
-                </span>
-            </td>
-            <td class="actions">
-                <a href="{{ path('app_updateAdmin', { id: user.id }) }}" class="btn chic-btn-edit">Modifier</a>
-                <form action="{{ path('app_supp_admin', { id: user.id }) }}" method="POST" class="form-delete" style="display:inline;">
-                    <button type="submit" class="btn chic-btn-delete">Supprimer</button>
-                </form>
-            </td>
-        </tr>
-    {% endif %}
-{% endfor %}
-
+                    {% if 'ROLE_ADMIN' not in user.roles %}
+                        <tr class="chic-row">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.roles[0] }}</td>
+                            <td>{{ user.tel }}</td>
+                            <td>{{ user.adr }}</td>
+                            <td>{{ user.date ? user.date|date('Y-m-d') : 'N/A' }}</td>
+                            <td>
+                                <span class="badge {{ user.isVerified ? 'badge-verified' : 'badge-unverified' }}">
+                                    {{ user.isVerified ? 'Oui' : 'Non' }}
+                                </span>
+                            </td>
+                            <td class="actions">
+                                <a href="{{ path('app_updateAdmin', { id: user.id }) }}" class="btn chic-btn-edit">Modifier</a>
+                                <form action="{{ path('app_supp_admin', { id: user.id }) }}" method="POST" class="form-delete" style="display:inline;">
+                                    <button type="submit" class="btn chic-btn-delete">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -72,12 +77,12 @@
         margin: 0 auto;
         border-collapse: separate;
         border-spacing: 0 8px; /* Espacement entre les lignes */
-        background-color:rgb(239, 233, 233);
+        background-color: rgb(239, 233, 233);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
 
     .chic-thead {
-        background-color:rgba(110, 81, 160, 0.98); /* Mauve foncé */
+        background-color: rgba(110, 81, 160, 0.98); /* Mauve foncé */
         color: white;
         text-transform: uppercase;
         font-size: 0.85rem; /* Plus petit pour une lecture compacte */
@@ -131,13 +136,28 @@
     }
 
     .chic-btn-delete {
-        background-color:  #9C66B2; /* Violet clair pour le bouton de suppression */
+        background-color: #9C66B2; /* Violet clair pour le bouton de suppression */
         color: white;
         border: none;
     }
 
     .chic-btn-delete:hover {
         background-color: #7D4C99; /* Violet légèrement plus foncé pour le hover */
+        transform: translateY(-2px);
+    }
+
+    .chic-btn-filter {
+        padding: 6px 14px; /* Même padding que pour les autres boutons */
+        border-radius: 20px;
+        font-weight: 600;
+        background-color: #9C66B2; /* Violet clair pour le filtre */
+        color: white;
+        text-align: center;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .chic-btn-filter:hover {
+        background-color: #7D4C99; /* Hover plus foncé pour le filtre */
         transform: translateY(-2px);
     }
 

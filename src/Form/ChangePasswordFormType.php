@@ -32,14 +32,14 @@ class ChangePasswordFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères.',
+                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
                         'max' => 4096,
                     ]),
                     new Regex([
                         'pattern' => '/^(?=.*[A-Z])(?=.*\d).+$/',
                         'message' => 'Le mot de passe doit contenir au moins une lettre majuscule et un chiffre.',
                     ]),
-                    new NotCompromisedPassword(),
+                    
                 ],
                 'label' => 'Nouveau mot de passe',
             ],
