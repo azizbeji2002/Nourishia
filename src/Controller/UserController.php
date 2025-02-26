@@ -136,5 +136,21 @@ final class UserController extends AbstractController
             'users' => $users,
         ]);
 }
+#[Route('/pie', name: 'app_pie')]
+public function dashboard(UserRepository $userRepository): Response
+{
+    // Compter les utilisateurs par rôle
+    $rolesCount = [
+        'Admin' => $userRepository->countUsersByRole('ROLE_ADMIN'),
+        'Docteur' => $userRepository->countUsersByRole('ROLE_DOCTEUR'),
+        'Femme Enceinte' => $userRepository->countUsersByRole('ROLE_PATIENTE'),
+    ];
+
+    return $this->render('back1/index1.html.twig', [
+        'rolesCount' => $rolesCount,
+    ]);
+}
+
+
 }
 

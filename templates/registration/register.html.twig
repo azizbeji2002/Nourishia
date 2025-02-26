@@ -82,19 +82,19 @@
                     </div>
 
                     <div class="col-12">
-    <div class="form-check">
-        {{ form_widget(registrationForm.terms, {'attr': {'class': 'form-check-input'}}) }}
-        <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-        <div class="invalid-feedback">
-            {{ form_errors(registrationForm.terms) }}
-        </div>
-    </div>
-</div>
 
+    <div class="col-12">
+                    
+{{ form_label(registrationForm.captcha) }}
+{{ form_widget(registrationForm.captcha)}}
+<br>
+</div>
+</div>
 
                     <div class="col-12">
                         <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>
+<br>
 
                     <div class="col-12">
                         <p class="small mb-0">Vous aver déja un compte? <a href="{{path('app_login')}}">Sign in</a></p>

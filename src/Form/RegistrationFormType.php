@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -60,16 +60,12 @@ class RegistrationFormType extends AbstractType
             ]),
         ],
             ])
-            
-            ->add('terms', CheckboxType::class, [
-                'mapped' => false,  // Le champ n'est pas lié à une propriété de l'entité
-                'constraints' => [
-                    new Assert\IsTrue([
-                        'message' => 'Vous devez accepter les termes .',
-                    ]),
-                ],
-                'attr' => ['class' => 'form-check-input'],
-            ]);
+    
+            ->add('captcha', CaptchaType::class, array(
+                'width' => 200,
+                'height' => 40,
+                'length' => 6,
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
