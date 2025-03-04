@@ -1,0 +1,30 @@
+{% extends 'front office/base.html.twig' %}
+
+{% block title %}Nouvelle Réservation{% endblock %}
+
+{% block body %}
+    <div class="container-fluid py-5 bg-light">
+        <div class="container py-5">
+            <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 700px;">
+                <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">Réservation</h4>
+                <h1 class="mb-5 display-3">Faire une réservation</h1>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            {{ include('front office/reservation/_form.html.twig', {'button_label': 'Réserver'}) }}
+                            
+                            <div class="text-center mt-4">
+                                <a href="{{ path('app_reservation_index') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

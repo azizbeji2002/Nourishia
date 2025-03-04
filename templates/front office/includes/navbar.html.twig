@@ -1,0 +1,61 @@
+<!-- Navbar start -->
+<div class="container-fluid border-bottom bg-light wow fadeIn" data-wow-delay="0.1s">
+  <div class="container topbar bg-primary d-none d-lg-block py-2" style="border-radius: 0 40px">
+    <div class="d-flex justify-content-between">
+      <div class="top-info ps-2">
+        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">esprit Ariana Tunis، 2083</a></small>
+        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Nourishia@gmail.com</a></small>
+      </div>
+      <div class="top-link pe-2">
+        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-facebook-f text-secondary"></i></a>
+        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-twitter text-secondary"></i></a>
+        <a href="" class="btn btn-light btn-sm-square rounded-circle"><i class="fab fa-instagram text-secondary"></i></a>
+        <a href="" class="btn btn-light btn-sm-square rounded-circle me-0"><i class="fab fa-linkedin-in text-secondary"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="container px-0">
+    <nav class="navbar navbar-light navbar-expand-xl py-3">
+      <a href="index.html.twig" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('front office/img/logo.png') }}" alt="Logo" width="150" height="60"></a>
+      <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars text-primary"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mx-auto">
+          <a href="index.html.twig" class="nav-item nav-link">accueil</a>
+          <a href="about.html.twig" class="nav-item nav-link">à propos</a>
+          <a href="service.html.twig" class="nav-item nav-link">Produits</a>
+          <a href="program.html.twig" class="nav-item nav-link">Forum</a>
+          <a href="{{ path('app_event_list') }}" class="nav-item nav-link">Événements</a>
+          <a href="{{ path('app_reservation_index') }}" class="nav-item nav-link">Mes Réservations</a>
+          {# <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+            <div class="dropdown-menu m-0 bg-secondary rounded-0">
+              <a href="testimonial.html" class="dropdown-item">Consultation Médicale</a>
+              <a href="404.html" class="dropdown-item active">Nutrition et Bien-Être </a>
+              <a href="blog.html" class="dropdown-item">Our Blog</a>
+              <a href="team.html" class="dropdown-item">Our Team</a>
+            </div>
+          </div> #}
+          <a href="contact.html" class="nav-item nav-link a">inscription</a>
+        </div>
+        <div class="d-flex me-4">
+          <div id="phone-tada" class="d-flex align-items-center justify-content-center">
+            <a href="" class="position-relative wow tada" data-wow-delay=".9s" >
+              <i class="fa fa-phone-alt text-primary fa-2x me-4"></i>
+              <div class="position-absolute" style="top: -7px; left: 20px;">
+                <span><i class="fa fa-comment-dots text-secondary"></i></span>
+              </div>
+            </a>
+          </div>
+          <div class="d-flex flex-column pe-3 border-end border-primary">
+            <span class="text-primary">Avez-vous des questions?</span>
+            <a href="#"><span class="text-secondary">+216 54491504</span></a>
+          </div>
+        </div>
+        <button class="btn-search btn btn-primary btn-md-square rounded-circle" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-white"></i></button>
+      </div>
+    </nav>
+  </div>
+</div>
+<!-- Navbar End -->
