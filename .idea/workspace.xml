@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="front office all done">
-      <change afterPath="$PROJECT_DIR$/src/Service/EmailSender.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="API mail reservation">
+      <change beforePath="$PROJECT_DIR$/public/uploads/images/67c861f42f12f.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +230,7 @@
       <workItem from="1741083022396" duration="1719000" />
       <workItem from="1741084932337" duration="589000" />
       <workItem from="1741085527870" duration="81000" />
-      <workItem from="1741173228224" duration="12115000" />
+      <workItem from="1741173228224" duration="12963000" />
     </task>
     <task id="LOCAL-00001" summary="crud reservation / event">
       <option name="closed" value="true" />
@@ -255,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741178784328</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="API mail reservation">
+      <option name="closed" value="true" />
+      <created>1741187685502</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741187685502</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,6 +267,7 @@
     <MESSAGE value="Front all done" />
     <MESSAGE value="crud reservation / event" />
     <MESSAGE value="front office all done" />
-    <option name="LAST_COMMIT_MESSAGE" value="front office all done" />
+    <MESSAGE value="API mail reservation" />
+    <option name="LAST_COMMIT_MESSAGE" value="API mail reservation" />
   </component>
 </project>
