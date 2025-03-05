@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Events;  // Add this import
+use App\Entity\Events;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
@@ -10,11 +10,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Service\EmailSender;  // Ajouter l'import du service EmailSender
 
 #[Route('/reservation')]
 final class ReservationController extends AbstractController
 {
+    private EmailSender $emailSender;
+
+    // Ajouter EmailSender au constructeur
+    public function __construct(EmailSender $emailSender)
+    {
+        $this->emailSender = $emailSender;
+    }
+
     #[Route(name: 'app_reservation_index', methods: ['GET'])]
     public function index(ReservationRepository $reservationRepository): Response
     {
@@ -27,8 +36,8 @@ final class ReservationController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $reservation = new Reservation();
-        
-        // Get event ID from URL and set it to the reservation
+
+        // Récupérer l'ID de l'événement depuis l'URL et l'associer à la réservation
         $eventId = $request->query->get('event');
         if ($eventId) {
             $event = $entityManager->getRepository(Events::class)->find($eventId);
@@ -41,9 +50,17 @@ final class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Sauvegarder la réservation dans la base de données
             $entityManager->persist($reservation);
             $entityManager->flush();
 
+            // Envoyer un email à une adresse statique pour le test
+            $this->emailSender->sendReservationDetailsEmail(
+                'adam.lassidi@ieee.org', // Adresse email statique pour le test
+                $reservation
+            );
+
+            // Rediriger vers la page des réservations
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 

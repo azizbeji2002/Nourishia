@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="crud reservation / event">
+    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="front office all done">
+      <change afterPath="$PROJECT_DIR$/src/Service/EmailSender.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front office/event/editEvent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front office/event/editEvent.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/front office/event/newEvent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front office/event/newEvent.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +171,7 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
       <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/symfony/google-mailer" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -179,6 +185,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "PHPUnit.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -198,6 +205,7 @@
       <recent name="C:\Users\medma\Desktop\adam\public\front office" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mon Pc\Desktop\Nourishia\src" />
       <recent name="C:\Users\Mon Pc\Desktop\adam (1)\adam\adam\templates\front office\event" />
     </key>
   </component>
@@ -229,7 +237,7 @@
       <workItem from="1741083022396" duration="1719000" />
       <workItem from="1741084932337" duration="589000" />
       <workItem from="1741085527870" duration="81000" />
-      <workItem from="1741173228224" duration="4320000" />
+      <workItem from="1741173228224" duration="12115000" />
     </task>
     <task id="LOCAL-00001" summary="crud reservation / event">
       <option name="closed" value="true" />
@@ -239,7 +247,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741085126771</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="front office all done">
+      <option name="closed" value="true" />
+      <created>1741178784327</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741178784328</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +263,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
+    <MESSAGE value="Front all done" />
     <MESSAGE value="crud reservation / event" />
-    <option name="LAST_COMMIT_MESSAGE" value="crud reservation / event" />
+    <MESSAGE value="front office all done" />
+    <option name="LAST_COMMIT_MESSAGE" value="front office all done" />
   </component>
 </project>
