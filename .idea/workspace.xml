@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="crud reservation / event" />
+    <list default="true" id="bb41916a-8e23-4fdf-ac9c-fdb81343f40b" name="Changes" comment="crud reservation / event">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front office/event/editEvent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front office/event/editEvent.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front office/event/newEvent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front office/event/newEvent.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -178,7 +182,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "event-reservation",
+    "git-widget-placeholder": "#3 on event-reservation",
     "last_opened_file_path": "C:/Users/Mon Pc/Desktop/Nourishia",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -225,6 +229,7 @@
       <workItem from="1741083022396" duration="1719000" />
       <workItem from="1741084932337" duration="589000" />
       <workItem from="1741085527870" duration="81000" />
+      <workItem from="1741173228224" duration="4320000" />
     </task>
     <task id="LOCAL-00001" summary="crud reservation / event">
       <option name="closed" value="true" />
