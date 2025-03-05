@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assign Questionnaire{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Assign Questionnaire to {{ patient.name }}</h1>
+                <i class="fas fa-arrow-left"></i> Back to Patient
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> 
+                    Selecting a questionnaire will send an email to the patient with a link to complete it.
+                    The patient's responses will help you determine the most appropriate nutritional plan.
+                </div>
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="questionnaire" class="form-label">Select Questionnaire</label>
+                        <select name="questionnaire" id="questionnaire" class="form-select" required>
+                            <option value="">Choose a questionnaire...</option>
+                            {% for q in questionnaires %}
+                                <option value="{{ q.id }}">{{ q.title }} ({{ q.questions|length }} questions)</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Questionnaire
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Questionnaire{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <h1>Create New Questionnaire</h1>
+
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.title) }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <h4>Questions</h4>
+                    
+                    <ul class="questions-list" 
+                        data-index="{{ form.questions|length > 0 ? form.questions|last.vars.name + 1 : 0 }}" 
+                        data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+                        {% for questionForm in form.questions %}
+                            <li class="card mb-3 question-item">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5>Question {{ loop.index }}</h5>
+                                    <button type="button" class="btn btn-sm btn-danger remove-question">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    {{ form_widget(questionForm) }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <button type="button" class="btn btn-info add-question-button">
+                        <i class="fas fa-plus"></i> Add Question
+                    </button>
+
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ path('app_questionnaire_index') }}" class="btn btn-secondary">Back to List</a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Save Questionnaire
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup for adding new questions
+            const questionsHolder = document.querySelector('.questions-list');
+            const addQuestionButton = document.querySelector('.add-question-button');
+            
+            let questionIndex = parseInt(questionsHolder.dataset.index || 0);
+            
+            // Add new question
+            addQuestionButton.addEventListener('click', function() {
+                const prototype = questionsHolder.dataset.prototype;
+                const newForm = prototype.replace(/__name__/g, questionIndex);
+                
+                const questionItem = document.createElement('li');
+                questionItem.className = 'card mb-3 question-item';
+                questionItem.innerHTML = `
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>Question ${questionsHolder.children.length + 1}</h5>
+                        <button type="button" class="btn btn-sm btn-danger remove-question">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        ${newForm}
+                    </div>
+                `;
+                
+                questionsHolder.appendChild(questionItem);
+                
+                // Set position value
+                const positionField = questionItem.querySelector('.question-position');
+                if (positionField) {
+                    positionField.value = questionsHolder.children.length;
+                }
+                
+                // Setup question type change handler
+                setupQuestionTypeHandler(questionItem);
+                
+                // Setup remove button
+                questionItem.querySelector('.remove-question').addEventListener('click', function() {
+                    questionItem.remove();
+                    renumberQuestions();
+                });
+                
+                questionIndex++;
+            });
+            
+            // Setup handlers for existing questions
+            document.querySelectorAll('.question-item').forEach(function(item, index) {
+                // Set position value
+                const positionField = item.querySelector('.question-position');
+                if (positionField) {
+                    positionField.value = index + 1;
+                }
+                
+                // Setup question type change handler
+                setupQuestionTypeHandler(item);
+                
+                // Setup remove button
+                item.querySelector('.remove-question').addEventListener('click', function() {
+                    item.remove();
+                    renumberQuestions();
+                });
+            });
+            
+            // Function to handle question type changes
+            function setupQuestionTypeHandler(questionItem) {
+                const typeSelect = questionItem.querySelector('.question-type');
+                const optionsField = questionItem.querySelector('.question-options');
+                
+                if (typeSelect && optionsField) {
+                    const updateOptionsVisibility = function() {
+                        const showOptions = ['choice', 'multiple_choice'].includes(typeSelect.value);
+                        optionsField.closest('.form-group').style.display = showOptions ? 'block' : 'none';
+                    };
+                    
+                    typeSelect.addEventListener('change', updateOptionsVisibility);
+                    updateOptionsVisibility(); // Initial setup
+                }
+            }
+            
+            // Renumber questions in the UI
+            function renumberQuestions() {
+                document.querySelectorAll('.question-item').forEach(function(item, index) {
+                    const header = item.querySelector('.card-header h5');
+                    if (header) {
+                        header.textContent = `Question ${index + 1}`;
+                    }
+                    
+                    const positionField = item.querySelector('.question-position');
+                    if (positionField) {
+                        positionField.value = index + 1;
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+

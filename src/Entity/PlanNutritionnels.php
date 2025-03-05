@@ -24,6 +24,12 @@ class PlanNutritionnels
     #[ORM\OneToMany(targetEntity: ActiviteSportif::class, mappedBy: 'plan')]
     private Collection $activites;
 
+    #[ORM\OneToMany(targetEntity: Patient::class, mappedBy: 'plan')]
+    private Collection $patients;
+
+
+    
+
     public function getIdPlan(): ?int
     {
         return $this->idplan;
@@ -64,6 +70,12 @@ class PlanNutritionnels
         return $this->activites;
     }
 
+    public function getPatients(): Collection
+    {
+        return $this->patients;
+    }
+    // Add the getActivities method
+ 
     public function removeActivite(ActiviteSportif $activite): static
     {
         if ($this->activites->removeElement($activite)) {
@@ -72,5 +84,10 @@ class PlanNutritionnels
             }
         }
         return $this;
+    }
+    // Add __toString() method
+    public function __toString(): string
+    {
+        return $this->name ?? 'Unnamed Plan';
     }
 }

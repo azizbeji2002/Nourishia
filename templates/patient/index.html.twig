@@ -1,0 +1,208 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+        <div class="flex justify-between items-center my-6">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Liste des Patients
+            </h2>
+            <!-- Add Patient Button could go here if needed -->
+        </div>
+        
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3">Nom</th>
+                            <th class="px-4 py-3">Email</th>
+                            <th class="px-4 py-3">Plan Nutritionnel</th>
+                            <th class="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        {% for patient in patients %}
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3">{{ patient.name }}</td>
+                                <td class="px-4 py-3">{{ patient.email }}</td>
+                                <td class="px-4 py-3">{{ patient.plan ? patient.plan.alimentRecommende : 'Aucun plan assigné' }}</td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <a href="{{ path('assign_plan_to_patient', { 'id': patient.idPatient }) }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-blue-600 rounded-lg dark:text-blue-500 hover:text-blue-800 dark:hover:text-blue-400">
+                                            <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            Assigner Plan
+                                        </a>
+                                        <a href="{{ path('app_patient_assign_questionnaire', { 'id': patient.idPatient }) }}" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-green-500 hover:text-green-800 dark:hover:text-green-400">
+                                            <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            Assign Questionnaire
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            {% if patient.questionnaireResponses is defined and patient.questionnaireResponses|length > 0 %}
+                                <tr>
+                                    <td colspan="4" class="px-0 py-0">
+                                        <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg mb-4 mx-2">
+                                            <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                                                Patient Questionnaires
+                                            </h4>
+                                            
+                                            <table class="w-full">
+                                                <thead>
+                                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase dark:text-gray-400">
+                                                        <th class="px-3 py-2">Questionnaire</th>
+                                                        <th class="px-3 py-2">Status</th>
+                                                        <th class="px-3 py-2">Submitted Date</th>
+                                                        <th class="px-3 py-2">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for response in patient.questionnaireResponses %}
+                                                        <tr class="bg-white dark:bg-gray-700">
+                                                            <td class="px-3 py-2">
+                                                                <div class="font-semibold text-gray-700 dark:text-gray-200">
+                                                                    {{ response.questionnaire.title }}
+                                                                </div>
+                                                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                                    {{ response.questionnaire.questions|length }} questions
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-3 py-2">
+                                                                {% if response.status == 'pending' %}
+                                                                    <span class="px-2 py-1 text-xs font-medium leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">
+                                                                        Pending
+                                                                    </span>
+                                                                {% elseif response.status == 'completed' %}
+                                                                    <span class="px-2 py-1 text-xs font-medium leading-tight text-yellow-700 bg-yellow-100 rounded-full dark:text-yellow-100 dark:bg-yellow-700">
+                                                                        Awaiting Review
+                                                                    </span>
+                                                                {% elseif response.status == 'processed' %}
+                                                                    <span class="px-2 py-1 text-xs font-medium leading-tight text-green-700 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-700">
+                                                                        Processed
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="px-2 py-1 text-xs font-medium leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700">
+                                                                        {{ response.status }}
+                                                                    </span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="px-3 py-2">
+                                                                {% if response.submittedAt %}
+                                                                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                                                                        {{ response.submittedAt|date('Y-m-d H:i') }}
+                                                                    </span>
+                                                                {% else %}
+                                                                    <span class="text-sm text-gray-500 dark:text-gray-400 italic">
+                                                                        Not submitted yet
+                                                                    </span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="px-3 py-2">
+                                                                {% if response.status == 'completed' %}
+                                                                <a href="{{ path('app_doctor_review_response', { 'id': response.id }) }}" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">                                                                    Review & Assign Plan
+                                                                    </a>
+                                                                {% elseif response.status == 'processed' %}
+                                                                    <a href="#" class="px-3 py-1 text-sm font-medium leading-5 text-blue-600 transition-colors duration-150 border border-blue-600 rounded-md active:bg-blue-600 hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-blue">
+                                                                        View Responses
+                                                                    </a>
+                                                                {% elseif response.status == 'pending' %}
+                                                                    <div class="flex items-center space-x-2">
+                                                                        <span class="px-3 py-1 text-sm font-medium leading-5 text-gray-600 transition-colors duration-150 border border-gray-300 rounded-md focus:outline-none opacity-50 cursor-not-allowed">
+                                                                            Awaiting Patient
+                                                                        </span>
+                                                                        <button type="button" class="px-2 py-1 text-sm font-medium leading-5 text-blue-600 transition-colors duration-150 border border-blue-600 rounded-md hover:bg-blue-700 hover:text-white focus:outline-none focus:shadow-outline-blue"
+                                                                                data-modal-toggle="resendModal{{ response.id }}">
+                                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                                                            </svg>
+                                                                        </button>
+                                                                        
+                                                                        <div id="resendModal{{ response.id }}" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full h-full flex items-center justify-center">
+                                                                            <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                                                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                                    <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
+                                                                                        <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                                                                                            Resend Questionnaire
+                                                                                        </h3>
+                                                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="resendModal{{ response.id }}">
+                                                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="p-6">
+                                                                                        <p class="text-gray-500 dark:text-gray-400 mb-4">
+                                                                                            Do you want to resend the questionnaire invitation to {{ patient.name }}?
+                                                                                        </p>
+                                                                                        <div class="flex justify-end space-x-2">
+                                                                                            <button type="button" data-modal-toggle="resendModal{{ response.id }}" class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-100">
+                                                                                                Cancel
+                                                                                            </button>
+                                                                                            <a href="#" class="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                                                                                Resend Invitation
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="px-4 py-3 text-center text-gray-500 dark:text-gray-400">
+                                    Aucun patient trouvé.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalToggles = document.querySelectorAll('[data-modal-toggle]');
+        
+        modalToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-toggle');
+                const modal = document.getElementById(modalId);
+                
+                if (modal.classList.contains('hidden')) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            this.classList.add('hidden');
+                            this.classList.remove('flex');
+                        }
+                    });
+                } else {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

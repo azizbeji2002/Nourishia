@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questionnaire Details{% endblock %}
+
+{% block body %}
+    <h1>{{ questionnaire.title }}</h1>
+    <p>{{ questionnaire.description }}</p>
+    <p>Created by: {{ questionnaire.createdBy }}</p>
+    <p>Created at: {{ questionnaire.createdAt ? questionnaire.createdAt|date('Y-m-d H:i') : '' }}</p>
+
+    <a href="{{ path('app_questionnaire_edit', {'id': questionnaire.id}) }}" class="btn btn-primary">
+        <i class="fas fa-edit"></i> Edit
+    </a>
+    <a href="{{ path('app_questionnaire_index') }}" class="btn btn-secondary">
+        Back to list
+    </a>
+{% endblock %}

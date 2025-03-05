@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .header { background-color: #4a90e2; color: white; padding: 10px 20px; }
+        .content { padding: 20px; background-color: #f9f9f9; }
+        .button { display: inline-block; background-color: #4a90e2; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; margin-top: 20px; }
+        .footer { font-size: 12px; color: #777; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Health Questionnaire</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ patient.name }},</p>
+            
+            <p>Your healthcare provider has prepared a questionnaire to help create a personalized nutritional plan for you.</p>
+            
+            <p><strong>Questionnaire:</strong> {{ questionnaire.title }}</p>
+            
+            <p>Your responses will help us understand your dietary preferences, lifestyle, and health goals to develop the most effective nutritional plan for you.</p>
+            
+            <p>
+                <a href="{{ link }}" class="button">Complete Your Questionnaire</a>
+            </p>
+            
+            <p>If the button doesn't work, you can copy and paste this link into your browser:</p>
+            <p>{{ link }}</p>
+            
+            <p>Thank you for taking the time to complete this questionnaire. It should only take a few minutes.</p>
+            
+            <p>Best regards,<br>Your Healthcare Team</p>
+        </div>
+        <div class="footer">
+            <p>This email was sent automatically. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>

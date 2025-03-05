@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Plan Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Nutritional Plan Assignment</h1>
+    </div>
+    <div class="content">
+        <div class="section">
+            <h2>Patient Information</h2>
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Email:</strong> {{ patient.email }}</p>
+        </div>
+        <div class="section">
+            <h2>Plan Information</h2>
+            <p><strong>Recommended Foods:</strong> {{ plan.alimentRecommende }}</p>
+            <p><strong>Foods to Avoid:</strong> {{ plan.alimentEvite }}</p>
+        </div>
+        <div class="section">
+            <h2>Doctor's Feedback</h2>
+            <p>{{ response.doctorNotes }}</p>
+        </div>
+    </div>
+</body>
+</html>

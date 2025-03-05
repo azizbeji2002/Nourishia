@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .header { background-color: #4a90e2; color: white; padding: 10px 20px; }
+        .content { padding: 20px; background-color: #f9f9f9; }
+        .plan-details { background-color: #eef7ff; padding: 15px; border-left: 4px solid #4a90e2; margin: 15px 0; }
+        .doctor-notes { background-color: #fffde7; padding: 15px; border-left: 4px solid #ffc107; margin: 15px 0; }
+        .footer { font-size: 12px; color: #777; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Personalized Nutrition Plan</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ patient.name }},</p>
+            
+            <p>Thank you for completing the health questionnaire. Based on your responses, we have created a personalized nutritional plan for you.</p>
+            
+            <div class="plan-details">
+                <h2>{{ plan.alimentRecommende }}</h2>
+                {% if plan.description is defined and plan.description %}
+                    <p>{{ plan.description }}</p>
+                {% endif %}
+                
+                {# Add any other plan details you want to display #}
+                {% if plan.calorieTarget is defined and plan.calorieTarget %}
+                    <p><strong>Daily Calorie Target:</strong> {{ plan.calorieTarget }} calories</p>
+                {% endif %}
+            </div>
+            
+            {% if doctorNotes %}
+                <div class="doctor-notes">
+                    <h3>Doctor's Notes</h3>
+                    <p>{{ doctorNotes|nl2br }}</p>
+                </div>
+            {% endif %}
+            
+            <p>If you have any questions about your nutritional plan, please don't hesitate to contact us.</p>
+            
+            <p>Best regards,<br>Your Healthcare Team</p>
+        </div>
+        <div class="footer">
+            <p>This email was sent automatically. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>

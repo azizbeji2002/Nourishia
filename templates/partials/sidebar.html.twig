@@ -1,0 +1,24 @@
+{# Add this to your existing sidebar or navigation menu #}
+<li class="nav-item">
+    <a class="nav-link {% if app.request.get('_route') starts with 'app_questionnaire_' %}active{% endif %}" 
+       href="{{ path('app_questionnaire_index') }}">
+        <i class="fas fa-clipboard-list"></i>
+        <span>Questionnaires</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {% if app.request.get('_route') == 'app_questionnaire_responses' %}active{% endif %}" 
+       href="{{ path('app_questionnaire_responses') }}">
+        <i class="fas fa-comments"></i>
+        <span>Patient Responses</span>
+        {% set pendingCount = 0 %}
+        {% for response in app.session.get('pending_responses', []) %}
+            {% if response.status == 'completed' %}
+                {% set pendingCount = pendingCount + 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if pendingCount > 0 %}
+            <span class="badge bg-danger ms-2">{{ pendingCount }}</span>
+        {% endif %}
+    </a>
+</li>

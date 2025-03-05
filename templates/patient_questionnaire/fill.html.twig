@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Health Questionnaire{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ questionnaire.title }}</h2>
+                {% if questionnaire.description %}
+                    <p class="mb-0">{{ questionnaire.description }}</p>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <p><i class="fas fa-info-circle"></i> Please answer all questions to help us provide you with the most appropriate nutritional plan.</p>
+                </div>
+                
+                {{ form_start(form) }}
+                    {% for question in questionnaire.questions %}
+                        <div class="mb-4">
+                            {% set fieldName = 'question_' ~ question.id %}
+                            {{ form_row(form[fieldName]) }}
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="mt-4 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Answers
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
