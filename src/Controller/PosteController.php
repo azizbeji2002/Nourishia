@@ -295,7 +295,7 @@ public function consulterCommentaires(int $postId, EntityManagerInterface $entit
     ]);
 
 }
-// src/Controller/PosteController.php
+
 
 #[Route('/post/{id}/toggle-epingle', name: 'toggle_epingle')]
     public function toggleEpingle(int $id, EntityManagerInterface $em): RedirectResponse

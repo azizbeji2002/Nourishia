@@ -88,6 +88,7 @@
     </div>
 
     <style>
+        /* Titre principal */
         .post-title {
             font-size: 2.5rem;
             font-weight: bold;
@@ -104,33 +105,80 @@
             margin: 0 auto 30px;
         }
 
+        /* Card de post avec animations */
         .post-card {
             background: #fff;
             width: 90%;
             max-width: 850px;
             border-radius: 15px;
-            transition: all 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .post-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05); /* Zoom au survol */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
-
+          /*   change le couleur du pôste si il est epingler  */
         .post-card.epingle {
             background: #f7e5f9; /* Rose pâle */
             border-left: 8px solid #ff4c9c; /* Rose vif */
             box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3); /* Ombre rose douce */
         }
 
+        /* Alertes pour les épingles */
         .epingle-alert {
-            background: linear-gradient(to right, #ff69b4, #d36d9c); /* Dégradé de rose vif */
-            color: #fff;
-            font-size: 1.1rem;
-            padding: 12px 18px;
+            background: linear-gradient(to right, #f7a7c8, #ff69b4); /* Dégradé rose */
+            color: white;
+            font-size: 1.3rem;
+            padding: 12px 20px;
             border-radius: 10px;
             box-shadow: 0 6px 20px rgba(255, 105, 180, 0.2);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .epingle-alert span {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .epingle-alert .bi-pin-fill {
+            animation: rotatePin 1.5s infinite;
+        }
+
+        /* Animation de rotation des icônes */
+        @keyframes rotatePin {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Commentaires */
+        .comment-card {
+            border-left: 4px solid #ff69b4; /* Rose vif */
+            background-color: #f8e0f5; /* Rose clair */
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .comment-card:hover {
+            background-color: #f7c1e3; /* Rose moyen */
+        }
+
+        /* Boutons avec effets */
+        .btn-gradient {
+            background: linear-gradient(to right, #ff69b4, #d36d9c); /* Dégradé rose */
+            color: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #d36d9c, #ff69b4); /* Dégradé rose inversé */
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .btn-sm {
@@ -145,75 +193,15 @@
             font-size: 1.1rem;
         }
 
-        .comment-card {
-            border-left: 4px solid #ff69b4; /* Rose vif */
-            background-color: #f8e0f5; /* Rose clair */
-            padding: 10px 15px;
-            border-radius: 8px;
-        }
-
-        .comment-card:hover {
-            background-color: #f7c1e3; /* Rose moyen */
-        }
-
+        /* Animation de l'alerte de signalement */
         .alert-fade {
             animation: fadeOut 10s forwards;
         }
 
         @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                display: none;
-            }
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
-
-        .btn-gradient {
-            background: linear-gradient(to right, #ff69b4, #d36d9c); /* Dégradé rose */
-            color: white;
-            border-radius: 50px;
-            transition: background 0.3s ease;
-        }
-
-        .btn-gradient:hover {
-            background: linear-gradient(to right, #d36d9c, #ff69b4); /* Dégradé rose inversé */
-        }
-
-        .container {
-            max-width: 1000px;
-        }
-
-        .btn {
-            margin: 5px;
-        }
-
-        @keyframes rotatePin {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(15deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .epingle-alert {
-    background: linear-gradient(to right, #f7a7c8, #ff69b4); /* Dégradé de rose */
-    color: white;
-    font-size: 1.3rem;
-    padding: 12px 20px;
-    border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.2);
-    font-family: 'Roboto', sans-serif;
-}
-
-.epingle-alert span {
-    font-weight: bold;
-    font-size: 1.4rem;
-    color: white;
-}
-
-.epingle-alert .bi-pin-fill {
-    animation: rotatePin 1.5s infinite;
-}
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
