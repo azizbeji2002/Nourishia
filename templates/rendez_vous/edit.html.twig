@@ -1,8 +1,69 @@
-{% extends 'base1.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Éditer RendezVous{% endblock %}
 
 {% block body %}
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-white mb-4">Rendez-vous</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white" aria-current="page">Rendez-vous</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+
+<!-- Menu Notifications -->
+<div class="position-fixed top-0 end-0 m-3">
+    <div class="dropdown">
+        <a class="btn btn-light shadow rounded-circle p-3" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+            <i class="bi bi-bell-fill text-dark fs-4"></i>
+            {% if unreadNotificationsCount > 0 %}
+                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">{{ unreadNotificationsCount }}</span>
+            {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow p-2" style="width: 400px; border-radius: 10px;">
+            {% if notifications is empty %}
+                <div class="dropdown-item text-center text-muted py-3">
+                    <i class="bi bi-inbox"></i> Aucune nouvelle notification
+                </div>
+            {% else %}
+                <h6 class="dropdown-header text-center fw-bold">
+                    <i class="bi bi-bell text-warning me-1"></i> Notifications
+                </h6>
+                <div class="dropdown-divider"></div>
+                {% for notification in notifications %}
+                    <a href="{{ path('notification_read', {'id': notification.id}) }}" 
+                       class="dropdown-item d-flex align-items-start p-2 {% if not notification.isRead %}bg-light fw-bold{% endif %}"
+                       style="border-radius: 5px; white-space: normal; word-wrap: break-word;">
+                        <i class="bi bi-bell me-3 fs-5 {% if notification.isRead %}text-secondary{% else %}text-warning{% endif %}"></i>
+                        <div style="flex: 1;">
+                            <span>{{ notification.message }}</span>
+                            <small class="text-muted d-block">{{ notification.createdAt|date('d/m/Y H:i') }}</small>
+                        </div>
+                        <form action="{{ path('notification_delete', {'id': notification.id}) }}" method="post" class="ms-2">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ notification.id) }}">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- End Menu Notifications -->
+
     <div class="container mt-5">
         <div class="card shadow-lg p-4 border-0 rounded">
             <h2 class="text-center">Éditer le Rendez-vous - {{ rendez_vou.id }}</h2>

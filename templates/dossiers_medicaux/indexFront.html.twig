@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Dossiers Médicaux{% endblock %}
+
+{% block body %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-white mb-4">Dossiers Médicaux</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white" aria-current="page">Dossiers Médicaux</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container mt-5">
+<!-- Bouton d'ajout centré -->
+    <div class="text-center mb-4">
+        <a href="{{ path('app_dossiers_medicaux_ajoutFrontt') }}" class="btn btn-lg btn-pink shadow-sm">
+            ➕ Ajouter un Dossier
+        </a>
+    </div>
+
+    <!-- Toggle archived dossiers button -->
+    <div class="text-center mb-4">
+        <a href="{{ path('app_dossiers_medicaux_Front', {'showArchived': not showArchived}) }}" class="btn btn-lg btn-info">
+            {% if showArchived %}
+                🎭 Afficher les Dossiers Non-Archivés
+            {% else %}
+                📦 Afficher les Dossiers Archivés
+            {% endif %}
+        </a>
+    </div>
+    <!-- Formulaire de recherche -->
+    <div class="mb-4">
+        <form method="get" action="{{ path('app_dossiers_medicaux_Front') }}">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher un dossier" value="{{ search }}">
+                <button class="btn btn-outline-primary" type="submit">🔍 Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Liste des dossiers -->
+    <div class="row">
+        {% for dossier in dossiers_medicauxes %}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            🏥 Dossier de {{ dossier.patientId.nom }}
+                        </h5>
+                        <h6 class="card-subtitle text-muted">
+                            📅 Date : {{ dossier.dateCreation ? dossier.dateCreation|date('d/m/Y') : 'Non spécifié' }}
+                        </h6>
+                        <hr>
+
+                        <!-- Détails du dossier -->
+                        <div class="dossier-details">
+                            <p><strong>🩺 Diagnostic :</strong> {{ dossier.diagnostic }}</p>
+                            <p><strong>💊 Traitement :</strong> {{ dossier.traitement }}</p>
+                            <p><strong>🩸 Groupe Sanguin :</strong> {{ dossier.groupeSanguin }}</p>
+                            <p><strong>👶 Sexe Bébé :</strong> {{ dossier.sexeBebe }}</p>
+                            <p><strong>🚨 Allergie :</strong> {{ dossier.allergie }}</p>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="d-flex justify-content-between mt-3 align-items-center">
+                            {% if dossier.fichier %}
+                                <a href="{{ asset('uploads/' ~ dossier.fichier) }}" target="_blank" class="btn btn-info btn-sm">
+                                    📄 Voir Fichier
+                                </a>
+                            {% else %}
+                                <span class="badge bg-danger">Aucun fichier</span>
+                            {% endif %}
+
+                            <div class="btn-group">
+                                <a href="{{ path('app_dossiers_medicaux_aff', {'id': dossier.id}) }}" class="btn btn-outline-primary btn-sm">👁 Voir</a>
+                                <a href="{{ path('app_dossiers_medicaux_updateFront', {'id': dossier.id}) }}" class="btn btn-outline-warning btn-sm">✏️ Modifier</a>
+                                <form action="{{ path('app_dossiers_medicaux_archive', {'id': dossier.id}) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-warning">📦 Archiver</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center">
+                <p class="text-muted">Aucun dossier trouvé.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% block styles %}
+<style>
+    .btn-pink {
+        background-color: rgb(205, 85, 141) !important;
+        border-color: rgb(214, 102, 154) !important;
+        color: white !important;
+        transition: 0.3s;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 8px;
+    }
+
+    .btn-pink:hover {
+        background-color: rgb(211, 98, 154) !important;
+        border-color: #d63384 !important;
+        transform: scale(1.05);
+    }
+
+    .card-custom {
+        transition: 0.3s;
+        border-radius: 12px;
+        border: none;
+    }
+
+    .card-custom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .card-body p {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    .btn-group a {
+        margin: 0 5px;
+    }
+</style>
+{% endblock %}
+{% endblock %}

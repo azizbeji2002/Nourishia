@@ -113,11 +113,7 @@ class DossiersMedicauxType extends AbstractType
                 'choice_label' => 'nom',
             ])
 
-            // Docteur
-            ->add('docteur_id', EntityType::class, [
-                'class' => Docteur::class,
-                'choice_label' => 'nom',
-            ]);
+            ;
     }
     
     public function configureOptions(OptionsResolver $resolver): void

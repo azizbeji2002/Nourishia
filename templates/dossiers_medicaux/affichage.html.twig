@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dossier Médical - {{ dossiers_medicaux.id }}{% endblock %}
+
+{% block body %}
+<!-- Page Header Start -->
+        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container text-center py-5">
+                <h1 class="display-2 text-white mb-4">Dossier Médicaux</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white" aria-current="page">Dossier Médicaux</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Page Header End -->
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center text-success">Dossier Médical - {{ dossiers_medicaux.id }}</h2>
+            <hr class="mb-4">
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ dossiers_medicaux.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de Création</th>
+                        <td>{{ dossiers_medicaux.dateCreation ? dossiers_medicaux.dateCreation|date('d/m/Y') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Diagnostic</th>
+                        <td>{{ dossiers_medicaux.diagnostic }}</td>
+                    </tr>
+                    <tr>
+                        <th>Traitement</th>
+                        <td>{{ dossiers_medicaux.traitement }}</td>
+                    </tr>
+                    <tr>
+                        <th>Groupe Sanguin</th>
+                        <td>{{ dossiers_medicaux.groupeSanguin }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sexe du Bébé</th>
+                        <td>{{ dossiers_medicaux.sexeBebe }}</td>
+                    </tr>
+                    <tr>
+                        <th>Allergie</th>
+                        <td>{{ dossiers_medicaux.allergie }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fichier</th>
+                        <td>
+                            {% if dossiers_medicaux.fichier %}
+                                <a href="{{ asset('uploads/' ~ dossiers_medicaux.fichier) }}" target="_blank" class="btn btn-info btn-sm">Voir Fichier</a>
+                            {% else %}
+                                <span class="text-danger">Aucun fichier</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_dossiers_medicaux_Front') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i> ⬅️ Retour à la liste
+                </a>
+                <a href="{{ path('app_dossiers_medicaux_updateFront', {'id': dossiers_medicaux.id}) }}" class="btn btn-primary btn-lg ms-3">Modifier</a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

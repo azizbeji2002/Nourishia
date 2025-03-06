@@ -15,6 +15,10 @@ class Docteur
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $user;
+
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
@@ -33,15 +37,12 @@ class Docteur
     #[ORM\Column(length: 255)]
     private ?string $specialite = null;
 
-    /**
-     * @var Collection<int, Consultation>
-     */
-    #[ORM\OneToMany(targetEntity: Consultation::class, mappedBy: 'docteur_id')]
-    private Collection $docteur_id;
+    #[ORM\OneToMany(targetEntity: Consultation::class, mappedBy: 'docteur')]
+    private Collection $consultations;
 
     public function __construct()
     {
-        $this->docteur_id = new ArrayCollection();
+        $this->consultations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,10 +50,14 @@ class Docteur
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function getUser(): User
     {
-        $this->id = $id;
+        return $this->user;
+    }
 
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
         return $this;
     }
 
@@ -64,7 +69,6 @@ class Docteur
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -76,7 +80,6 @@ class Docteur
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -88,7 +91,6 @@ class Docteur
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -100,7 +102,6 @@ class Docteur
     public function setMotPasse(string $mot_passe): static
     {
         $this->mot_passe = $mot_passe;
-
         return $this;
     }
 
@@ -112,7 +113,6 @@ class Docteur
     public function setTelephone(string $telephone): static
     {
         $this->telephone = $telephone;
-
         return $this;
     }
 
@@ -124,37 +124,30 @@ class Docteur
     public function setSpecialite(string $specialite): static
     {
         $this->specialite = $specialite;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Consultation>
-     */
-    public function getDocteurId(): Collection
+    public function getConsultations(): Collection
     {
-        return $this->docteur_id;
+        return $this->consultations;
     }
 
-    public function addDocteurId(Consultation $docteurId): static
+    public function addConsultation(Consultation $consultation): static
     {
-        if (!$this->docteur_id->contains($docteurId)) {
-            $this->docteur_id->add($docteurId);
-            $docteurId->setDocteurId($this);
+        if (!$this->consultations->contains($consultation)) {
+            $this->consultations->add($consultation);
+            $consultation->setDocteurId($this);
         }
-
         return $this;
     }
 
-    public function removeDocteurId(Consultation $docteurId): static
+    public function removeConsultation(Consultation $consultation): static
     {
-        if ($this->docteur_id->removeElement($docteurId)) {
-            // set the owning side to null (unless already changed)
-            if ($docteurId->getDocteurId() === $this) {
-                $docteurId->setDocteurId(null);
+        if ($this->consultations->removeElement($consultation)) {
+            if ($consultation->getDocteurId() === $this) {
+                $consultation->setDocteurId(null);
             }
         }
-
         return $this;
     }
 }

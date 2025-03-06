@@ -56,6 +56,10 @@ class DossiersMedicaux
     #[Assert\Length(min: 8, max: 15, minMessage: "Le numéro doit contenir au moins 8 chiffres.", maxMessage: "Le numéro ne peut pas dépasser 15 chiffres.")]
     private ?int $contactUrgence = null;
 
+    #[ORM\Column(type: 'boolean')]
+private ?bool $isArchived = false;
+
+
     public function __construct()
     {
         $this->date_creation = new \DateTime();
@@ -192,4 +196,21 @@ class DossiersMedicaux
         $this->contactUrgence = $contactUrgence;
         return $this;
     }
+
+
+    public function archive(): void
+{
+    $this->isArchived = true;
+}
+
+public function unarchive(): void
+{
+    $this->isArchived = false;
+}
+
+public function isArchived(): bool
+{
+    return $this->isArchived;
+}
+
 }

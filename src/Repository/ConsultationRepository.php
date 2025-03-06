@@ -40,4 +40,31 @@ class ConsultationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function searchConsultations(string $searchTerm, string $sortField, string $sortOrder): \Doctrine\ORM\QueryBuilder
+{
+    $qb = $this->createQueryBuilder('c')
+        // Searching by statut
+        ->leftJoin('c.statut', 's')
+        // Searching by conseils
+        ->orWhere('c.conseils LIKE :searchTerm')
+        // Searching by poids
+        ->orWhere('c.poids LIKE :searchTerm')
+        // Searching by tension
+        ->orWhere('c.tension LIKE :searchTerm')
+        // Searching by statut (assumed to be a string or some property of the Statut enum)
+        ->orWhere('s.value LIKE :searchTerm')
+       
+        ->setParameter('searchTerm', '%' . $searchTerm . '%');
+
+    // Sorting
+    if (in_array($sortField, ['date_consultation', 'tension', 'statut'])) {
+        $qb->orderBy('c.' . $sortField, $sortOrder);
+    }
+
+    return $qb;
+}
+
+
+
 }

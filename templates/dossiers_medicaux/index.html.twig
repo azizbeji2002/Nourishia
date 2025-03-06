@@ -7,65 +7,78 @@
         <div class="card shadow-lg p-4 border-0 rounded">
             <h2 class="text-center text-success">Liste des Dossiers Médicaux</h2>
             <hr class="mb-4">
-            
-            {% if app.flashes('error') %}
-                <div class="alert alert-danger">
-                    {% for message in app.flashes('error') %}
-                        <p class="mb-0">{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
 
+            {# Formulaire de recherche et de tri #}
+            <form method="get" class="mb-4">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <input type="text" class="form-control" name="search" placeholder="Rechercher ..." value="{{ app.request.get('search') }}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <select name="sexeBebe" class="form-control">
+                            <option value="">Sélectionner Sexe</option>
+                            <option value="Masculin" {% if app.request.get('sexeBebe') == 'Masculin' %}selected{% endif %}>Masculin</option>
+                            <option value="Féminin" {% if app.request.get('sexeBebe') == 'Féminin' %}selected{% endif %}>Féminin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="sortField" class="form-control">
+                            <option value="date_creation" {% if app.request.get('sortField') == 'date_creation' %}selected{% endif %}>Trier par Date</option>
+                            <option value="sexeBebe" {% if app.request.get('sortField') == 'sexeBebe' %}selected{% endif %}>Trier par Sexe</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <select name="sortOrder" class="form-control">
+                            <option value="ASC" {% if app.request.get('sortOrder') == 'ASC' %}selected{% endif %}>Ascendant</option>
+                            <option value="DESC" {% if app.request.get('sortOrder') == 'DESC' %}selected{% endif %}>Descendant</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mb-3">
+                        <button type="submit" class="btn btn-success btn-block">Filtrer</button>
+                    </div>
+                </div>
+            </form>
+
+            {# Tableau des dossiers médicaux #}
             <div class="table-responsive">
                 <table class="table table-bordered table-hover mt-4">
                     <thead class="table-dark">
                         <tr>
-                            <th class="text-center" style="width: 10%;">ID</th>
-                            <th class="text-center" style="width: 10%;">Date de Création</th>
-                            <th class="text-center" style="width: 15%;">Diagnostic</th>
-                            <th class="text-center" style="width: 15%;">Traitement</th>
-                            <th class="text-center" style="width: 15%;">Fichier</th>
-
-                            <th class="text-center" style="width: 10%;">Groupe Sanguin</th>
-                            <th class="text-center" style="width: 10%;">Sexe Bébé</th>
-                            <th class="text-center" style="width: 10%;">Allergie</th>
-                            <th class="text-center" style="width: 15%;">Actions</th>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Date de Création</th>
+                            <th class="text-center">Diagnostic</th>
+                            <th class="text-center">Traitement</th>
+                            <th class="text-center">Fichier</th>
+                            <th class="text-center">Groupe Sanguin</th>
+                            <th class="text-center">Sexe Bébé</th>
+                            <th class="text-center">Allergie</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for dossiers_medicaux in dossiers_medicauxes %}
-                            <tr class="table-row-hover">
-                                <td class="text-center">{{ dossiers_medicaux.id }}</td>
-                                <td class="text-center">{{ dossiers_medicaux.dateCreation ? dossiers_medicaux.dateCreation|date('d/m/Y') : '' }}</td>
-                                <td class="text-center">{{ dossiers_medicaux.diagnostic }}</td>
-                                <td class="text-center">{{ dossiers_medicaux.traitement }}</td>
-
- <td class="text-center">
-                                    {% if dossiers_medicaux.fichier %}
-                                        <a href="{{ asset('uploads/' ~ dossiers_medicaux.fichier) }}" target="_blank" class="btn btn-info btn-sm">Voir Fichier</a>
+                        {% for dossier in dossiers_medicauxes %}
+                            <tr>
+                                <td class="text-center">{{ dossier.id }}</td>
+                                <td class="text-center">{{ dossier.dateCreation ? dossier.dateCreation|date('d/m/Y') : '' }}</td>
+                                <td class="text-center">{{ dossier.diagnostic }}</td>
+                                <td class="text-center">{{ dossier.traitement }}</td>
+                                <td class="text-center">
+                                    {% if dossier.fichier %}
+                                        <a href="{{ asset('uploads/' ~ dossier.fichier) }}" target="_blank" class="btn btn-info btn-sm">Voir Fichier</a>
                                     {% else %}
                                         <span class="text-danger">Aucun fichier</span>
                                     {% endif %}
                                 </td>
-                                <td class="text-center">{{ dossiers_medicaux.groupeSanguin }}</td>
-                                <td class="text-center">{{ dossiers_medicaux.sexeBebe }}</td>
-                                <td class="text-center">{{ dossiers_medicaux.allergie }}</td>
-                                <td class="text-center">
-                                    <a href="{{ path('app_dossiers_medicaux_show', {'id': dossiers_medicaux.id}) }}">📝</a>
-                                    <a href="{{ path('app_dossiers_medicaux_edit', {'id': dossiers_medicaux.id}) }}"> ✏️</a>
-                                </td>
+                                <td class="text-center">{{ dossier.groupeSanguin }}</td>
+                                <td class="text-center">{{ dossier.sexeBebe }}</td>
+                                <td class="text-center">{{ dossier.allergie }}</td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="8" class="text-center">Aucun dossier trouvé</td>
+                                <td colspan="8" class="text-center text-muted">Aucun dossier trouvé</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
-
-            <div class="text-center mt-4">
-                <a href="{{ path('app_dossiers_medicaux_new') }}" class="btn btn-ss btn-lg">Créer un Nouveau Dossier</a>
             </div>
         </div>
     </div>

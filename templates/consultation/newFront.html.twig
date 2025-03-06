@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une Nouvelle Consultation{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center">Créer une Nouvelle Consultation</h2>
+            <hr class="mb-4">
+
+            {% if app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {% for message in app.flashes('error') %}
+                        <p class="mb-0">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mt-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+                    
+                    <!-- Date de Consultation Field -->
+                    <div class="mb-3">
+                        <label for="date_consultation" class="form-label">Date de Consultation</label>
+                        {{ form_widget(form.date_consultation, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionner la date'}}) }}
+                        {% if form.date_consultation.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.date_consultation.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Patient Field -->
+                    <div class="mb-3">
+                        <label for="patient" class="form-label">Patient</label>
+                        {{ form_widget(form.patient_id, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.patient_id.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.patient_id.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Docteur Field -->
+                    <div class="mb-3">
+                        <label for="docteur" class="form-label">Docteur</label>
+                        {{ form_widget(form.docteur_id, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.docteur_id.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.docteur_id.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Conseils Field -->
+                    <div class="mb-3">
+                        <label for="conseils" class="form-label">Conseils</label>
+                        {{ form_widget(form.conseils, {'attr': {'class': 'form-control'}}) }}
+                        {% if form.conseils.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.conseils.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Poids Field -->
+                    <div class="mb-3">
+                        <label for="poids" class="form-label">Poids</label>
+                        {{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
+                        {% if form.poids.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.poids.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Tension Field -->
+                    <div class="mb-3">
+                        <label for="tension" class="form-label">Tension</label>
+                        {{ form_widget(form.tension, {'attr': {'class': 'form-control'}}) }}
+                        {% if form.tension.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.tension.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Process Grossesse Field -->
+                    <div class="mb-3">
+                        <label for="process_grossesse" class="form-label">Processus de grossesse</label>
+                        {{ form_widget(form.process_grossesse, {'attr': {'class': 'form-control'}}) }}
+                        {% if form.process_grossesse.vars.errors|length > 0 %}
+                            <div class="text-danger" style="color: red;">
+                                {% for error in form.process_grossesse.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">✅ Créer</button>
+                    </div>
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_consultation_frontConsultation') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i>⬅️ Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        let isValid = true;
+
+        document.querySelectorAll(".form-control").forEach(function (input) {
+            let errorDiv = input.parentElement.querySelector(".text-danger");
+
+            if (input.value.trim() === "") {
+                input.classList.add("is-invalid");
+                errorDiv.textContent = "⚠️ Ce champ est obligatoire";
+                isValid = false;
+            } else {
+                input.classList.remove("is-invalid");
+                errorDiv.textContent = "";
+            }
+        });
+
+        if (!isValid) event.preventDefault();
+    });
+});
+</script>
+{% endblock %}

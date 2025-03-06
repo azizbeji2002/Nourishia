@@ -55,6 +55,8 @@ class Patient
     #[ORM\OneToMany(targetEntity: Consultation::class, mappedBy: 'patient_id')]
     private Collection $patient_id;
 
+    
+
     public function __construct()
     {
         $this->Docteur_id = new ArrayCollection();

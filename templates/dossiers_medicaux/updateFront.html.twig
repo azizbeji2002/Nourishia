@@ -1,20 +1,27 @@
-{% extends 'base1.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Créer un Dossier Médical{% endblock %}
+{% block title %}Éditer Dossier Médical{% endblock %}
 
 {% block body %}
+ <!-- Page Header Start -->
+        <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container text-center py-5">
+                <h1 class="display-2 text-white mb-4">Dossier Médicaux</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white" aria-current="page">Dossier Médicaux</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Page Header End -->
+
     <div class="container mt-5">
         <div class="card shadow-lg p-4 border-0 rounded">
-            <h2 class="text-center">Créer un Nouveau Dossier Médical</h2>
+            <h2 class="text-center">Éditer le Dossier Médical - {{ dossiers_medicaux.id }}</h2>
             <hr class="mb-4">
-            
-            {% if app.flashes('error') %}
-                <div class="alert alert-danger">
-                    {% for message in app.flashes('error') %}
-                        <p class="mb-0">{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
 
             <div class="mt-4">
                 <div class="p-4 bg-light rounded shadow-sm">
@@ -25,7 +32,7 @@
                         <label for="diagnostic" class="form-label">Diagnostic</label>
                         {{ form_widget(form.diagnostic, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le diagnostic'}}) }}
                         {% if form.diagnostic.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
+                            <div class="text-danger">
                                 {% for error in form.diagnostic.vars.errors %}
                                     <p>{{ error.message }}</p>
                                 {% endfor %}
@@ -38,7 +45,7 @@
                         <label for="traitement" class="form-label">Traitement</label>
                         {{ form_widget(form.traitement, {'attr': {'class': 'form-control', 'rows': '4', 'placeholder': 'Décrivez le traitement'}}) }}
                         {% if form.traitement.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
+                            <div class="text-danger">
                                 {% for error in form.traitement.vars.errors %}
                                     <p>{{ error.message }}</p>
                                 {% endfor %}
@@ -46,74 +53,12 @@
                         {% endif %}
                     </div>
 
-                   
-
-                    <!-- New Fields: Groupe Sanguin, Taille, Sexe, Allergie, Contact Urgence -->
-                    <div class="mb-3">
-                        <label for="groupeSanguin" class="form-label">Groupe Sanguin</label>
-                        {{ form_widget(form.groupeSanguin, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A+, B-, etc.'}}) }}
-                        {% if form.groupeSanguin.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
-                                {% for error in form.groupeSanguin.vars.errors %}
-                                    <p>{{ error.message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="taille" class="form-label">Taille (en cm)</label>
-                        {{ form_widget(form.taille, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la taille en cm'}}) }}
-                        {% if form.taille.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
-                                {% for error in form.taille.vars.errors %}
-                                    <p>{{ error.message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="sexeBebe" class="form-label">Sexe du Bébé</label>
-                        {{ form_widget(form.sexeBebe, {'attr': {'class': 'form-select'}}) }}
-                        {% if form.sexeBebe.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
-                                {% for error in form.sexeBebe.vars.errors %}
-                                    <p>{{ error.message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="allergie" class="form-label">Allergie</label>
-                        {{ form_widget(form.allergie, {'attr': {'class': 'form-control', 'placeholder': 'Entrez les allergies si applicable'}}) }}
-                        {% if form.allergie.vars.errors|length > 0 %}
-                            <div class="text-danger"style="color: red;">
-                                {% for error in form.allergie.vars.errors %}
-                                    <p>{{ error.message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="contactUrgence" class="form-label">Contact d'Urgence</label>
-                        {{ form_widget(form.contactUrgence, {'attr': {'class': 'form-control', 'placeholder': 'Entrez un numéro de contact'}}) }}
-                        {% if form.contactUrgence.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
-                                {% for error in form.contactUrgence.vars.errors %}
-                                    <p>{{ error.message }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                     <!-- Fichier Field -->
+                    <!-- Fichier Field -->
                     <div class="mb-3">
                         <label for="fichier" class="form-label">Fichier (PDF seulement)</label>
                         {{ form_widget(form.fichier, {'attr': {'class': 'form-control'}}) }}
                         {% if form.fichier.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
+                            <div class="text-danger">
                                 {% for error in form.fichier.vars.errors %}
                                     <p>{{ error.message }}</p>
                                 {% endfor %}
@@ -126,7 +71,7 @@
                         <label for="patient" class="form-label">Patient</label>
                         {{ form_widget(form.patient_id, {'attr': {'class': 'form-select'}}) }}
                         {% if form.patient_id.vars.errors|length > 0 %}
-                            <div class="text-danger" style="color: red;">
+                            <div class="text-danger">
                                 {% for error in form.patient_id.vars.errors %}
                                     <p>{{ error.message }}</p>
                                 {% endfor %}
@@ -135,21 +80,82 @@
                     </div>
 
                    
+                    <!-- New Fields: Groupe Sanguin, Taille, Sexe, Allergie, Contact Urgence -->
+                    <div class="mb-3">
+                        <label for="groupeSanguin" class="form-label">Groupe Sanguin</label>
+                        {{ form_widget(form.groupeSanguin, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A+, B-, etc.'}}) }}
+                        {% if form.groupeSanguin.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.groupeSanguin.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="taille" class="form-label">Taille (en cm)</label>
+                        {{ form_widget(form.taille, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la taille en cm'}}) }}
+                        {% if form.taille.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.taille.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sexeBebe" class="form-label">Sexe du Bébé</label>
+                        {{ form_widget(form.sexeBebe, {'attr': {'class': 'form-select'}}) }}
+                        {% if form.sexeBebe.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.sexeBebe.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="allergie" class="form-label">Allergie</label>
+                        {{ form_widget(form.allergie, {'attr': {'class': 'form-control', 'placeholder': 'Entrez les allergies si applicable'}}) }}
+                        {% if form.allergie.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.allergie.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contactUrgence" class="form-label">Contact d'Urgence</label>
+                        {{ form_widget(form.contactUrgence, {'attr': {'class': 'form-control', 'placeholder': 'Entrez un numéro de contact'}}) }}
+                        {% if form.contactUrgence.vars.errors|length > 0 %}
+                            <div class="text-danger">
+                                {% for error in form.contactUrgence.vars.errors %}
+                                    <p>{{ error.message }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
 
                     <!-- Submit Button -->
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-lg">✅ Créer</button>
+                        <button type="submit" class="btn btn-primary btn-lg">✅ Mettre à jour</button>
                     </div>
                     
                     {{ form_end(form) }}
                 </div>
             </div>
-            
+
             <div class="text-center mt-4">
                 <a href="{{ path('app_dossiers_medicaux_index') }}" class="btn btn-outline-secondary btn-lg">
                     <i class="bi bi-arrow-left"></i>⬅️ Retour à la liste
                 </a>
             </div>
+
         </div>
     </div>
 {% endblock %}

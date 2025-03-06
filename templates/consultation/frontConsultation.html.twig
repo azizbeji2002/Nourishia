@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Consultations{% endblock %}
+
+{% block body %}
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-white mb-4">Consultation</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white" aria-current="page">Consultation</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 border-0 rounded">
+        <h2 class="text-center text-success fw-bold"><i class="fas fa-stethoscope"></i> Liste des Consultations</h2>
+        <hr class="mb-4">
+        <div class="mb-4">
+        <form method="get" action="{{ path('app_consultation_frontConsultation') }}">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une consultation" value="{{ searchTerm  }}">     <!-- inpuutt seaarrchhhhhh -->
+
+                <button class="btn btn-outline-primary" type="submit">🔍 Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                <p class="mb-0">{{ message }}</p>
+            </div>
+        {% endfor %}
+
+        <div class="table-responsive">
+            <table class="table table-hover mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Statut</th>
+                        <th class="text-center">Conseils</th>
+                        <th class="text-center">Poids (kg)</th>
+                        <th class="text-center">Tension</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consultation in consultations %}
+                        <tr class="align-middle">
+                            <td class="text-center fw-bold">{{ consultation.id }}</td>
+                            <td class="text-center">
+                                <span class="badge bg-primary">{{ consultation.dateConsultation ? consultation.dateConsultation|date('d/m/Y') : 'N/A' }}</span>
+                            </td>
+                            <td class="text-center">
+                                {% if consultation.statut.value == 'Annulée' %}
+                                    <span class="badge bg-warning text-dark">ANNULEE</span>
+                                {% elseif consultation.statut.value == 'Planifiée' %}
+                                    <span class="badge bg-success">PLANIFIEE</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">TERMINEE</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ consultation.conseils|default('Aucun') }}</td>
+                            <td class="text-center">{{ consultation.poids|default('N/A') }} kg</td>
+                            <td class="text-center">{{ consultation.tension|default('N/A') }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('app_consultation_affConsul', {'id': consultation.id}) }}" class="btn btn-outline-info btn-sm mx-1">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_consultation_updateCons', {'id': consultation.id}) }}" class="btn btn-outline-warning btn-sm mx-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Aucune consultation trouvée</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_consultation_newFront') }}" class="btn btn-success btn-lg">
+                <i class="fas fa-plus-circle"></i> Nouvelle Consultation
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

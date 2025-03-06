@@ -22,9 +22,10 @@ class Consultation
     private ?Patient $patient_id = null;
 
     #[ORM\ManyToOne(targetEntity: Docteur::class, inversedBy: 'consultations')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull(message: "Le docteur est obligatoire.")]
-    private ?Docteur $docteur_id = null;
+#[ORM\JoinColumn(nullable: false)]
+#[Assert\NotNull(message: "Le docteur est obligatoire.")]
+private ?Docteur $docteur_id = null;
+
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\GreaterThan(
@@ -79,7 +80,7 @@ class Consultation
         return $this->docteur_id;
     }
 
-    public function setDocteurId(?Docteur $docteur_id): static
+public function setDocteurId(?Docteur $docteur_id): static
     {
         $this->docteur_id = $docteur_id;
         return $this;
