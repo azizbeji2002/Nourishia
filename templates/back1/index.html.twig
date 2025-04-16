@@ -1,0 +1,196 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center chic-header">Liste des utilisateurs</h1>
+
+        <!-- Boutons de filtrage pour vérifié/non vérifié (alignés à droite) -->
+        <div class="flex justify-end mb-4">
+            <a href="{{ path('app_user_index', {'verified': 1}) }}" class="btn chic-btn-filter mr-2">Vérifiés</a>
+            <a href="{{ path('app_user_index', {'verified': 0}) }}" class="btn chic-btn-filter">Non Vérifiés</a>
+        </div>
+
+        <table class="table chic-table table-hover">
+            <thead class="chic-thead">
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Rôle</th>
+                    <th>Téléphone</th>
+                    <th>Adresse</th>
+                    <th>Date de naissance</th>
+                    <th>Vérifié</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="chic-tbody">
+                {% for user in users %}
+                    {% if 'ROLE_ADMIN' not in user.roles %}
+                        <tr class="chic-row">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.roles[0] }}</td>
+                            <td>{{ user.tel }}</td>
+                            <td>{{ user.adr }}</td>
+                            <td>{{ user.date ? user.date|date('Y-m-d') : 'N/A' }}</td>
+                            <td>
+                                <span class="badge {{ user.isVerified ? 'badge-verified' : 'badge-unverified' }}">
+                                    {{ user.isVerified ? 'Oui' : 'Non' }}
+                                </span>
+                            </td>
+                            <td class="actions">
+                                <a href="{{ path('app_updateAdmin', { id: user.id }) }}" class="btn chic-btn-edit">Modifier</a>
+                                <form action="{{ path('app_supp_admin', { id: user.id }) }}" method="POST" class="form-delete" style="display:inline;">
+                                    <button type="submit" class="btn chic-btn-delete">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<style>
+    /* Global styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #F4F4F4;
+    }
+
+    /* Title style */
+    .chic-header {
+        color: #4B3F72; /* Mauve foncé */
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Table styling */
+    .chic-table {
+        width: 80%; /* Réduction de la largeur du tableau */
+        margin: 0 auto;
+        border-collapse: separate;
+        border-spacing: 0 8px; /* Espacement entre les lignes */
+        background-color: rgb(239, 233, 233);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .chic-thead {
+        background-color: rgba(110, 81, 160, 0.98); /* Mauve foncé */
+        color: white;
+        text-transform: uppercase;
+        font-size: 0.85rem; /* Plus petit pour une lecture compacte */
+    }
+
+    .chic-thead th {
+        padding: 10px 15px;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    /* Table body */
+    .chic-tbody {
+        background-color: rgb(227, 219, 219);
+    }
+
+    .chic-row {
+        transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    .chic-row:hover {
+        background-color: #F3E6F8; /* Mauve clair pour le hover */
+        transform: scale(1.02);
+    }
+
+    .chic-row td {
+        padding: 8px 15px; /* Réduction du padding pour plus de compacité */
+        text-align: center;
+        font-size: 0.85rem; /* Texte plus petit pour un tableau compact */
+        color: #6A4E9C; /* Mauve foncé pour le texte */
+    }
+
+    /* Button styles */
+    .chic-btn-edit,
+    .chic-btn-delete {
+        padding: 6px 14px; /* Réduction du padding pour des boutons plus petits */
+        border-radius: 20px;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .chic-btn-edit {
+        background-color: #9C66B2; /* Mauve clair pour le bouton de modification */
+        color: white;
+        border: none;
+    }
+
+    .chic-btn-edit:hover {
+        background-color: #7D4C99; /* Mauve encore plus clair pour le hover */
+        transform: translateY(-2px);
+    }
+
+    .chic-btn-delete {
+        background-color: #9C66B2; /* Violet clair pour le bouton de suppression */
+        color: white;
+        border: none;
+    }
+
+    .chic-btn-delete:hover {
+        background-color: #7D4C99; /* Violet légèrement plus foncé pour le hover */
+        transform: translateY(-2px);
+    }
+
+    .chic-btn-filter {
+        padding: 6px 14px; /* Même padding que pour les autres boutons */
+        border-radius: 20px;
+        font-weight: 600;
+        background-color: #9C66B2; /* Violet clair pour le filtre */
+        color: white;
+        text-align: center;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .chic-btn-filter:hover {
+        background-color: #7D4C99; /* Hover plus foncé pour le filtre */
+        transform: translateY(-2px);
+    }
+
+    /* Badge style */
+    .badge {
+        padding: 4px 10px; /* Taille plus petite pour le badge */
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .badge-verified {
+        background-color: #6A4E9C; /* Mauve foncé pour vérifié */
+        color: white;
+    }
+
+    .badge-unverified {
+        background-color: #9E9E9E; /* Gris pour non vérifié */
+        color: white;
+    }
+
+    /* Action buttons layout */
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px; /* Réduction de l'espace entre les boutons */
+    }
+
+    /* Delete form styling */
+    .form-delete button {
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+{% endblock %}

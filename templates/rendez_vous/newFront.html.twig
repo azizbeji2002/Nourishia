@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Rendez-vous{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center">Prendre Rendez-vous</h2>
+            <hr class="mb-4">
+            
+            {% if app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {% for message in app.flashes('error') %}
+                        <p class="mb-0">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mt-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data', 'novalidate': 'novalidate', 'id': 'newRendezVousForm'}}) }}
+
+                        <div class="mb-3">
+                            <label for="dateRdv" class="form-label">Date et Heure du Rendez-vous</label>
+                            {{ form_widget(form.dateRdv, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date et l\'heure', 'id': 'dateRdv'}}) }}
+                            <div class="text-danger mt-1" style="color: red;">
+
+                            {{ form_errors(form.dateRdv , {'attr': {'style': 'color: red;'}}) }}
+                            </div>
+                        </div>
+
+                       
+                        <div class="mb-3">
+                            <label for="patient" class="form-label">Patient</label>
+                            {{ form_widget(form.patient, {'attr': {'class': 'form-select', 'id': 'patient'}}) }}
+                            {{ form_errors(form.patient) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="docteur" class="form-label">Docteur</label>
+                            {{ form_widget(form.docteur, {'attr': {'class': 'form-select', 'id': 'docteur'}}) }}
+                            {{ form_errors(form.docteur, {'attr': {'style': 'color: red;'}}) }}
+                        </div>
+                        
+
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">✅ Créer</button>
+                        </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction de validation du formulaire
+        document.getElementById('newRendezVousForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Validation de la date du rendez-vous
+            const dateRdv = document.getElementById('dateRdv');
+            if (!dateRdv.value) {
+                dateRdv.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                dateRdv.classList.remove('is-invalid');
+            }
+
+            // Validation du statut
+            const statut = document.getElementById('statut');
+            if (!statut.value) {
+                statut.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                statut.classList.remove('is-invalid');
+            }
+
+            // Validation du patient
+            const patient = document.getElementById('patient');
+            if (!patient.value) {
+                patient.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                patient.classList.remove('is-invalid');
+            }
+
+            // Validation du docteur
+            const docteur = document.getElementById('docteur');
+            if (!docteur.value) {
+                docteur.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                docteur.classList.remove('is-invalid');
+            }
+
+            // Si un champ est invalide, empêcher la soumission
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+{% endblock %}

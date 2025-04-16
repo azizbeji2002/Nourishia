@@ -1,0 +1,52 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Créer un Rendez-vous{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 border-0 rounded">
+            <h2 class="text-center">Créer un Nouveau Rendez-vous</h2>
+            <hr class="mb-4">
+            
+            {% if app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {% for message in app.flashes('error') %}
+                        <p class="mb-0">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mt-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+                        <div class="mb-3">
+                            <label for="dateRdv" class="form-label">Date et Heure du Rendez-vous</label>
+                            {{ form_widget(form.dateRdv, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionnez la date et l\'heure'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="statut" class="form-label">Statut du Rendez-vous</label>
+                            {{ form_widget(form.statut, {'attr': {'class': 'form-select'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="patient" class="form-label">Patient</label>
+                            {{ form_widget(form.patient, {'attr': {'class': 'form-select'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="docteur" class="form-label">Docteur</label>
+                            {{ form_widget(form.docteur, {'attr': {'class': 'form-select'}}) }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">✅ Créer</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{{ path('app_rendez_vous_index') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i>⬅️ Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

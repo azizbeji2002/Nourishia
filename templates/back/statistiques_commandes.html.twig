@@ -1,0 +1,24 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Statistiques des Commandes{% endblock %}
+
+{% block body %}
+    <h1>Statistiques des Commandes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Statut</th>
+                <th>Nombre de Commandes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for status, count in statistiques %}
+                <tr>
+                    <td>{{ status }}</td>
+                    <td>{{ count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

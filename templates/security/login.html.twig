@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block iconedec %}{% endblock %}
+
+{% block header %}
+<div class="container px-0">
+    <nav class="navbar navbar-light navbar-expand-xl py-3">
+        <a href="index.html" class="navbar-brand">
+            <h1 class="text-primary display-6">Nourishia</h1>
+            <img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30">
+        </a>
+        <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars text-primary"></span>
+        </button>
+    </nav>
+</div>
+{% endblock %}
+
+
+{% block body %}
+<form method="post" novalidate>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    {% if app.request.get('error') %}
+    <div class="alert alert-danger">
+        {{ app.request.get('error') }}
+    </div>
+{% endif %}
+
+    <div class="container d-flex justify-content-center">
+    <div class="row justify-content-center w-100">
+        <!-- Agrandir la taille de la colonne en modifiant la classe -->
+        <div class="col-md-8 col-lg-6 mb-5"> <!-- Ajout de l'espace au bas de la colonne -->
+            <div class="card shadow-sm py-4 mt-5">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="card-title pb-0 fs-5">Sign In</h5>
+                    </div>
+
+<!-- Email -->
+                        <label for="inputEmail">Email</label>
+                        <input type="email"  name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+
+                        <!-- Password -->
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="col-12">
+                         <a href="{{path('app_forgot_password_request')}}">Mot de passe oublié?</a>
+                    </div>
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Sign in
+                        </button>
+                        <div class="col-12">
+                        <p class="small mb-0">Vous n'avais pas un compte? <a href="{{path('app_register')}}">Créer un compte</a></p>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+
+

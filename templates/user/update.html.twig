@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+{% block iconedec %}
+{% endblock %}
+{% block header %}
+<div class="container px-0">
+<nav class="navbar navbar-light navbar-expand-xl py-3">
+                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Nourishia</h1><img src="{{ asset('img/logo.png')}}" alt="Logo" width="150" height="30"></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+
+                            </div>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-md-6 col-lg-5"> {# Agrandir la taille du formulaire #}
+            <div class="card shadow-sm py-4 mt-5"> {# Réduction de la hauteur et levée du formulaire #}
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="card-title pb-0 fs-5">Modifier votre Compte</h5>
+                        
+                    </div>
+
+                    {{ form_start(f, {attr: {novalidate: 'novalidate'}}) }}
+                    
+                    <div class="col-12">
+                        <label for="yourName" class="form-label">Votre Nom</label>
+                        {{ form_widget(f.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.nom) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourPrenom" class="form-label">Votre Prenom</label>
+                        {{ form_widget(f.prenom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.prenom) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourEmail" class="form-label">Votre adresse</label>
+                        {{ form_widget(f.adr, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.adr) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourDate" class="form-label">Votre date de naissance</label>
+                        {{ form_widget(f.date, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.date) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourTel" class="form-label">Votre Tel</label>
+                        {{ form_widget(f.tel, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.tel) }}
+                    </div>
+
+<div class="col-12">
+                        <label for="yourEmail" class="form-label">Votre Email</label>
+                        {{ form_widget(f.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.email) }}
+                    </div>
+                    <div class="col-12">
+                        <label for="yourPassword" class="form-label">Password</label>
+                        {{ form_widget(f.password.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.password.first) }}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="yourPassword" class="form-label">Confirm Password</label>
+                        {{ form_widget(f.password.second, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(f.password.second) }}
+
+                    </div>
+
+
+
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Modifier Compte</button>
+                    </div>
+
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(f) }}
+{% endblock %}

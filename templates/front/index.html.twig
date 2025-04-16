@@ -1,0 +1,336 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+  <!-- Hero Start -->
+<div class="container-fluid py-5 hero-header wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-7 col-md-12">
+                <!-- Nouveau titre accrocheur adapté aux femmes enceintes -->
+                <h3 class="mb-3 text-primary">Prenez Soin de Vous et de Votre Bébé</h1>
+                <h4 class="mb-5 display-1 text-white">Le Meilleur Accompagnement Pour Votre Grossesse</h1>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+  
+<!-- About Start -->
+
+<div class="container-fluid py-5 about bg-light">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <!-- Image à gauche, plus grande et stylée -->
+            <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
+                <img src="{{ asset('img/1.webp')}}" alt="Consultation Image" 
+                     class="img-fluid rounded-4 shadow-xl border-0" 
+                     style="max-width: 90%; height: auto; transform: scale(1.05); transition: transform 0.3s ease-in-out;">
+            </div>
+            
+            <!-- Texte à droite -->
+            <div class="col-lg-7 wow fadeIn" data-wow-delay="0.3s">
+                <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">À Propos de Nous</h4>
+                <h1 class="text-dark mb-4 display-5">Accompagnement Bienveillant Pour Les Futures Mamans Et Médecins</h1>
+                <p class="text-dark mb-4">Nous offrons des services spécialisés pour les femmes enceintes, y compris des consultations médicales, des plans nutritionnels sur mesure et des événements pour un bien-être optimal pendant la grossesse. Les docteurs peuvent aussi s'inscrire pour proposer des consultations personnalisées et suivre les plans nutritionnels des patientes. Un espace dédié aux professionnels de la santé pour faciliter l'accompagnement des futures mamans.</p>
+                
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <h6 class="mb-3"><i class="fas fa-check-circle me-2"></i>Consultations Pratiques</h6>
+                        <h6 class="mb-3"><i class="fas fa-check-circle me-2 text-primary"></i>Suivi Nutritionnel Personnalisé</h6>
+                        <h6 class="mb-3"><i class="fas fa-check-circle me-2 text-secondary"></i>Événements de Soutien</h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6 class="mb-3"><i class="fas fa-check-circle me-2"></i>Accès Médecins pour Consultations</h6>
+                        <h6 class="mb-3"><i class="fas fa-check-circle me-2 text-primary"></i>Espace Professionnels de Santé</h6>
+                        <h6><i class="fas fa-check-circle me-2 text-secondary"></i>Formation en Nutrition Spécialisée</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About End -->
+
+       <!-- Events Start -->
+<div class="container-fluid events py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 700px;">
+            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">Nos Événements</h4>
+            <h1 class="mb-5 display-3">Nos Événements à Venir</h1>
+        </div>
+        <div class="row g-5 justify-content-center">
+            <!-- Premier événement -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.1s">
+                <div class="events-item bg-primary rounded">
+                    <div class="events-inner position-relative">
+                        <div class="events-img overflow-hidden rounded-circle position-relative">
+                            <img src="{{ asset('img/event-1.jpg')}}" class="img-fluid w-100 rounded-circle" alt="Image événement">
+                            <div class="event-overlay">
+                                <a href="{{ asset('img/event-1.jpg')}}" data-lightbox="event-1"><i class="fas fa-search-plus text-white fa-2x"></i></a>
+                            </div>
+                        </div>
+                        <div class="px-4 py-2 bg-secondary text-white text-center events-rate">5 Mars</div>
+                        <div class="d-flex justify-content-between px-4 py-2 bg-secondary">
+                            <small class="text-white"><i class="fas fa-calendar me-1 text-primary"></i> 10:00am - 12:00pm</small>
+                            <small class="text-white"><i class="fas fa-map-marker-alt me-1 text-primary"></i> Tunis, Centre Médical</small>
+                        </div>
+                    </div>
+                    <div class="events-text p-4 border border-primary bg-white border-top-0 rounded-bottom">
+                        <a href="#" class="h4">Atelier Nutrition pour Femmes Enceintes</a>
+                        <p class="mb-0 mt-3">Rejoignez-nous pour un atelier interactif où vous apprendrez les meilleures pratiques nutritionnelles pendant la grossesse.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deuxième événement -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.3s">
+                <div class="events-item bg-primary rounded">
+                    <div class="events-inner position-relative">
+                        <div class="events-img overflow-hidden rounded-circle position-relative">
+                            <img src="{{ asset('img/event-2.jpg')}}" class="img-fluid w-100 rounded-circle" alt="Image événement">
+                            <div class="event-overlay">
+                                <a href="{{ asset('img/event-2.jpg')}}" data-lightbox="event-2"><i class="fas fa-search-plus text-white fa-2x"></i></a>
+                            </div>
+                        </div>
+                        <div class="px-4 py-2 bg-secondary text-white text-center events-rate">15 Mars</div>
+                        <div class="d-flex justify-content-between px-4 py-2 bg-secondary">
+                            <small class="text-white"><i class="fas fa-calendar me-1 text-primary"></i> 2:00pm - 4:00pm</small>
+                            <small class="text-white"><i class="fas fa-map-marker-alt me-1 text-primary"></i> Tunis, Centre Médical</small>
+                        </div>
+                    </div>
+                    <div class="events-text p-4 border border-primary bg-white border-top-0 rounded-bottom">
+                        <a href="#" class="h4">Séance de Q/R pour Futures Mamans</a>
+                        <p class="mb-0 mt-3">Un événement dédié pour répondre à toutes vos questions liées à la grossesse, aux soins et à la santé.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troisième événement -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.5s">
+                <div class="events-item bg-primary rounded">
+                    <div class="events-inner position-relative">
+                        <div class="events-img overflow-hidden rounded-circle position-relative">
+                            <img src="{{ asset('img/event-3.jpg')}}" class="img-fluid w-100 rounded-circle" alt="Image événement">
+                            <div class="event-overlay">
+                                <a href="{{ asset('img/event-3.jpg')}}" data-lightbox="event-3"><i class="fas fa-search-plus text-white fa-2x"></i></a>
+                            </div>
+                        </div>
+                        <div class="px-4 py-2 bg-secondary text-white text-center events-rate">25 Mars</div>
+                        <div class="d-flex justify-content-between px-4 py-2 bg-secondary">
+                            <small class="text-white"><i class="fas fa-calendar me-1 text-primary"></i> 3:00pm - 5:00pm</small>
+                            <small class="text-white"><i class="fas fa-map-marker-alt me-1 text-primary"></i> Tunis, Centre Médical</small>
+                        </div>
+                    </div>
+                    <div class="events-text p-4 border border-primary bg-white border-top-0 rounded-bottom">
+                        <a href="#" class="h4">Consultation en Nutrition Personnalisée pour Maman</a>
+                        <p class="mb-0 mt-3">Bénéficiez de conseils pratiques et personnalisés pour un suivi nutritionnel optimal durant votre grossesse.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Events End -->
+
+      
+
+
+<!-- Blog Start-->
+<div class="container-fluid blog py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">Actualités et Blog</h4>
+            <h1 class="mb-5 display-3">Lisez nos Dernières Actualités et Articles</h1>
+        </div>
+        <div class="row g-5 justify-content-center">
+            <!-- Premier article -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.1s">
+                <div class="blog-item rounded-bottom">
+                    <div class="blog-img overflow-hidden position-relative img-border-radius">
+                        <img src="{{ asset('img/blog-1.jpg')}}" class="img-fluid w-100" alt="Image Blog">
+                    </div>
+                    <div class="d-flex justify-content-between px-4 py-3 bg-light border-bottom border-primary blog-date-comments">
+                        <small class="text-dark"><i class="fas fa-calendar me-1 text-dark"></i> 10 Février 2025</small>
+                        <small class="text-dark"><i class="fas fa-comment-alt me-1 text-dark"></i> Commentaires (10)</small>
+                    </div>
+                    <div class="blog-content d-flex align-items-center px-4 py-3 bg-light">
+                        <div class="overflow-hidden rounded-circle rounded-top border border-primary">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-primary">Dr. Marie Dubois</h6>
+                            <p class="text-muted">Nutrition & Maternité</p>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 bg-light rounded-bottom">
+                        <div class="blog-text-inner">
+                            <a href="#" class="h4">Comment Prendre Soin de Votre Alimentation pendant la Grossesse ?</a>
+                            <p class="mt-3 mb-4">Découvrez des conseils nutritionnels essentiels pour vous aider à rester en bonne santé pendant la grossesse.</p>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary text-white px-4 py-2 mb-3 btn-border-radius">Voir les Détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deuxième article -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.3s">
+                <div class="blog-item rounded-bottom">
+                    <div class="blog-img overflow-hidden position-relative img-border-radius">
+                        <img src="{{ asset('img/blog-2.jpg')}}" class="img-fluid w-100" alt="Image Blog">
+                    </div>
+                    <div class="d-flex justify-content-between px-4 py-3 bg-light border-bottom border-primary blog-date-comments">
+                        <small class="text-dark"><i class="fas fa-calendar me-1 text-dark"></i> 5 Février 2025</small>
+                        <small class="text-dark"><i class="fas fa-comment-alt me-1 text-dark"></i> Commentaires (8)</small>
+                    </div>
+                    <div class="blog-content d-flex align-items-center px-4 py-3 bg-light">
+                        <div class="overflow-hidden rounded-circle rounded-top border border-primary">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-primary">Dr. Laura Simon</h6>
+                            <p class="text-muted">Santé Maternelle</p>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 bg-light rounded-bottom">
+                        <div class="blog-text-inner">
+                            <a href="#" class="h4">Le Suivi Médical Essentiel pour les Futures Mamans</a>
+                            <p class="mt-3 mb-4">Une bonne santé pendant la grossesse passe par des consultations régulières et des suivis médicaux personnalisés.</p>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary text-white px-4 py-2 mb-3 btn-border-radius">Voir les Détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troisième article -->
+            <div class="col-md-6 col-lg-6 col-xl-4 wow fadeIn" data-wow-delay="0.5s">
+                <div class="blog-item rounded-bottom">
+                    <div class="blog-img overflow-hidden position-relative img-border-radius">
+                        <img src="{{ asset('img/blog-3.jpg')}}" class="img-fluid w-100" alt="Image Blog">
+                    </div>
+                    <div class="d-flex justify-content-between px-4 py-3 bg-light border-bottom border-primary blog-date-comments">
+                        <small class="text-dark"><i class="fas fa-calendar me-1 text-dark"></i> 1 Février 2025</small>
+                        <small class="text-dark"><i class="fas fa-comment-alt me-1 text-dark"></i> Commentaires (12)</small>
+                    </div>
+                    <div class="blog-content d-flex align-items-center px-4 py-3 bg-light">
+                        <div class="overflow-hidden rounded-circle rounded-top border border-primary">
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-primary">Dr. Claire Rousseau</h6>
+                            <p class="text-muted">Soins Prénatals</p>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 bg-light rounded-bottom">
+                        <div class="blog-text-inner">
+                            <a href="#" class="h4">Comment Gérer le Stress Pendant la Grossesse ?</a>
+                            <p class="mt-3 mb-4">Le stress peut avoir un impact sur votre bien-être et celui de votre bébé. Découvrez des astuces pour le gérer efficacement.</p>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-primary text-white px-4 py-2 mb-3 btn-border-radius">Voir les Détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End-->
+
+
+
+        
+
+        <!-- Testimonial Start -->
+<div class="container-fluid testimonial py-5 bg-light">
+    <div class="container py-5">
+        <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 700px;">
+            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius">Nos Témoignages</h4>
+            <h1 class="mb-5 display-3">Ce Que les Parents Disent de Nous</h1>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeIn" data-wow-delay="0.3s">
+            <!-- Premier Témoignage -->
+            <div class="testimonial-item img-border-radius bg-light border border-primary p-4">
+                <div class="p-4 position-relative">
+                    <i class="fa fa-quote-right fa-2x text-primary position-absolute" style="top: 15px; right: 15px;"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="border border-primary bg-white rounded-circle">
+                            <img src="{{ asset('img/testimonial-1.jpg')}}" class="rounded-circle p-2" style="width: 80px; height: 80px; border-style: dotted; border-color: var(--bs-primary);" alt="">
+                        </div>
+                        <div class="ms-4">
+                            <h4 class="text-dark">Sophie & Thomas</h4>
+                            <p class="m-0 pb-3">Futurs Parents</p>
+                            <div class="d-flex pe-5">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top border-primary mt-4 pt-3">
+                        <p class="mb-0">"Grâce à ce programme, nous avons pu mieux comprendre les besoins de notre futur bébé et les soins à apporter pendant la grossesse. Les conseils sont précieux et ont beaucoup aidé à apaiser nos inquiétudes." </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deuxième Témoignage -->
+            <div class="testimonial-item img-border-radius bg-light border border-primary p-4">
+                <div class="p-4 position-relative">
+                    <i class="fa fa-quote-right fa-2x text-primary position-absolute" style="top: 15px; right: 15px;"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="border border-primary bg-white rounded-circle">
+                            <img src="{{ asset('img/testimonial-2.jpg')}}" class="rounded-circle p-2" style="width: 80px; height: 80px; border-style: dotted; border-color: var(--bs-primary);" alt="">
+                        </div>
+                        <div class="ms-4">
+                            <h4 class="text-dark">Julie & Marc</h4>
+                            <p class="m-0 pb-3">Parents Heureux</p>
+                            <div class="d-flex pe-5">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top border-primary mt-4 pt-3">
+                        <p class="mb-0">"Nous avons apprécié les conseils sur la gestion du stress pendant la grossesse. Cela nous a permis de rester sereins et préparés à l'arrivée de notre bébé. Merci pour tout le soutien !"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troisième Témoignage -->
+            <div class="testimonial-item img-border-radius bg-light border border-primary p-4">
+                <div class="p-4 position-relative">
+                    <i class="fa fa-quote-right fa-2x text-primary position-absolute" style="top: 15px; right: 15px;"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="border border-primary bg-white rounded-circle">
+                            <img src="{{ asset('img/testimonial-3.jpg')}}" class="rounded-circle p-2" style="width: 80px; height: 80px; border-style: dotted; border-color: var(--bs-primary);" alt="">
+                        </div>
+                        <div class="ms-4">
+                            <h4 class="text-dark">Camille & David</h4>
+                            <p class="m-0 pb-3">Parents Nouveaux</p>
+                            <div class="d-flex pe-5">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top border-primary mt-4 pt-3">
+                        <p class="mb-0">"Nous avons trouvé des réponses à toutes nos questions concernant les soins prénatals et la nutrition. Grâce à ce programme, nous nous sentons prêts et confiants pour accueillir notre bébé."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+{% endblock %}
